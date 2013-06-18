@@ -6,4 +6,6 @@
 # Trust@FHH
 #--------------------------------------
 
-echo "to do"
+# start ironcontrol
+sh ../../scripts/6_start_AVD.sh
+# sh ../../scripts/7_install_Ironcontrol.sh

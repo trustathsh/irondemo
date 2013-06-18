@@ -1,0 +1,41 @@
+context {
+
+    ctxWorkingHours := DATETIME > "06:00" and DATETIME < "22:00";
+
+}
+
+hint {
+    
+}
+ 
+anomaly {
+    
+}
+
+signature {
+
+    sigSuspiciousApp := "smartphone.android.app.permission.granted" = "android.permission.RECEIVE_BOOT_COMPLETED" 
+    and "smartphone.android.app.permission.granted" = "android.permission.CAMERA"
+    and "smartphone.android.app.permission.granted" = "android.permission.INTERNET";
+    
+    sigPortOpen := count ("vulnerability-scan-result.vulnerability.port") > "0";
+
+}
+
+condition {
+
+    conDataLeakDetected := sigSuspiciousApp and sigPortOpen;
+  
+}
+
+action {
+
+    appAlert := "alert.name" "Inofficial App with open port detected";
+
+}
+
+rule {
+
+    dataLeakage := if conDataLeakDetected do appAlert;
+
+}
