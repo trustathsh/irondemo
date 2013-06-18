@@ -11,11 +11,11 @@ use warnings;
 
 my($input, $project, @commands, %return);
 
-if (-d "../sources") {
-	chdir('../sources/');
-} else {
+if (!-d "../sources") {
 	mkdir("../sources");
 }
+
+chdir('../sources/');
 
 if(chdir('.git') != 1){
   system("git init");
