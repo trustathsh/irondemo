@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#!/usr/bin/perl
 #--------------------------------------
 # name: build_scenario1.sh
 # version 0.1

@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/bin/bash
 #--------------------------------------
 # name: init_scenario.sh
 # version 0.1

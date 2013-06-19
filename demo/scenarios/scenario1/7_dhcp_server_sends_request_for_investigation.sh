@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/bin/bash
 #--------------------------------------
 # name: init_scenario.sh
 # version 0.1
@@ -12,8 +12,9 @@ ARIP=10.0.0.1
 PDP=pdp1
 USER=Bob
 QUALIFIER=vulnerability-scan
+DEVICE=device1
 
 export IFMAP_USER=dhcp
 export IFMAP_PASS=dhcp
 
-java -jar req-inv.jar update $DEVICE $ARIP $QUALIFIER
+java -jar ifmapcli/req-inv.jar update $DEVICE $ARIP $QUALIFIER

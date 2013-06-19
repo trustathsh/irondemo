@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/bin/bash
 #--------------------------------------
 # name: init_scenario.sh
 # version 0.1
@@ -15,7 +15,7 @@ USER=Bob
 export IFMAP_USER=pdp
 export IFMAP_PASS=pdp
 
-java -jar ar-ip.jar update $AR $ARIP
-java -jar ar-mac.jar update $AR $ARMAC
-java -jar auth-by.jar update $AR $PDP
-java -jar auth-as.jar update $AR $USER
+java -jar ifmapcli/ar-ip.jar update $AR $ARIP
+java -jar ifmapcli/ar-mac.jar update $AR $ARMAC
+java -jar ifmapcli/auth-by.jar update $AR $PDP
+java -jar ifmapcli/auth-as.jar update $AR $USER

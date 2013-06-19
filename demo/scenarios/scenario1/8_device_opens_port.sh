@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/bin/bash
 #--------------------------------------
 # name: init_scenario.sh
 # version 0.1
@@ -14,8 +14,9 @@ USER=Bob
 FEATURE=vulnerability-scan-result.vulnerability.port
 TYPE=qualified
 VALUE=22
+DEVICE=device1
 
 export IFMAP_USER=sensor
 export IFMAP_PASS=sensor
 
-java -jar featureSingle.jar -d $DEVICE -i $FEATURE -t $TYPE -v $VALUE -u
+java -jar ifmapcli/featureSingle.jar -d $DEVICE -i $FEATURE -t $TYPE -v $VALUE -u

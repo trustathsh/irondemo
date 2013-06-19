@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/bin/bash
 #--------------------------------------
 # name: init_scenario.sh
 # version 0.1
@@ -16,4 +16,4 @@ EVENTNAME="port open"
 export IFMAP_USER=ironvas
 export IFMAP_PASS=ironvas
 
-java -jar event.jar update $ARIP $EVENTNAME
+java -jar ifmapcli/event.jar update -i ip -v $ARIP -n $EVENTNAME

@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/bin/bash
 #--------------------------------------
 # name: init_scenario.sh
 # version 0.1
@@ -6,7 +6,6 @@
 # Trust@FHH
 #--------------------------------------
 
-echo "to do"
 # start irond
 cd irond*/
 sh start.sh
