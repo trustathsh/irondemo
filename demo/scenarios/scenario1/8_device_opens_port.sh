@@ -16,7 +16,7 @@ TYPE=arbitrary
 VALUE=22
 DEVICE=device1
 
-export IFMAP_USER=sensor
-export IFMAP_PASS=sensor
+export IFMAP_USER=ironvas
+export IFMAP_PASS=ironvas
 
 java -jar ifmapcli/featureSingle.jar -d $DEVICE -i $FEATURE -t $TYPE -v $VALUE -u
