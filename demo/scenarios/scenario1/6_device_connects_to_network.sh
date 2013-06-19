@@ -18,10 +18,10 @@ export IFMAP_USER=sensor
 export IFMAP_PASS=sensor
 
 # create device
-java -jar ar-dev.jar update $AR $DEVICE
+java -jar ifmapcli/ar-dev.jar update $AR $DEVICE
 
 # create categories and features
-java -jar feature2.jar -i $DEVICE
+java -jar ifmapcli/feature2.jar -i $DEVICE
 
 FEATURE_1=smartphone.android.app:11.permission:0.Name
 VALUE_1=RECEIVE_BOOT_COMPLETED

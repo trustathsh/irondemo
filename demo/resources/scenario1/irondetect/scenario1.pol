@@ -14,9 +14,9 @@ anomaly {
 
 signature {
 
-    sigSuspiciousApp := "smartphone.android.app.permission.Name" = "RECEIVE_BOOT_COMPLETED" 
-    and "smartphone.android.app.permission.Name" = "CAMERA"
-    and "smartphone.android.app.permission.Name" = "INTERNET";
+    sigPermBoot := "smartphone.android.app.permission.Name" = "RECEIVE_BOOT_COMPLETED";
+    sigPermCamera := "smartphone.android.app.permission.Name" = "CAMERA";
+    sigPermInternet := "smartphone.android.app.permission.Name" = "INTERNET";
     
     sigPortOpen := count ("vulnerability-scan-result.vulnerability.port") > "0";
 
@@ -24,7 +24,7 @@ signature {
 
 condition {
 
-    conDataLeakDetected := sigSuspiciousApp and sigPortOpen;
+    conDataLeakDetected := sigPermBoot and sigPermCamera and sigPermInternet and sigPortOpen;
   
 }
 

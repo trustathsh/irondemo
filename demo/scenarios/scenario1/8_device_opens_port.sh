@@ -12,7 +12,7 @@ ARIP=10.0.0.1
 PDP=pdp1
 USER=Bob
 FEATURE=vulnerability-scan-result.vulnerability.port
-TYPE=qualified
+TYPE=arbitrary
 VALUE=22
 DEVICE=device1
 
