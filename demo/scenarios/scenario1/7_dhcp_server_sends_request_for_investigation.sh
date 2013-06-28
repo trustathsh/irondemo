@@ -6,7 +6,7 @@
 # Trust@FHH
 #--------------------------------------
 
-AR=access-request1
+AR=111:33
 ARMAC=aa:bb:cc:dd:ee:ff
 ARIP=10.0.0.1
 PDP=pdp1
