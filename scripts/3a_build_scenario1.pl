@@ -11,12 +11,14 @@ use warnings;
 
 my ($bundlePath);
 
-my @projects = <"irond" "irondetect" "irongui" "visitmeta">;
 my $scenario_prefix = "../scenarios/scenario1";
 my $sources_prefix = "../sources";
 my $resources_prefix = "../resources/scenario1/";
 
-for (@projects) {
+
+my @projectsBundles = <"irond" "irondetect" "irongui" "VisITMeta/visitmeta-distribution">;
+
+for (@projectsBundles) {
 
  $bundlePath = &getPath("Bundle", $_);
  
@@ -30,16 +32,16 @@ my $cliPath = &getPath("bin", "ifmapcli/ifmapcli-distribution");
 &copy("-a", $cliPath, "/ifmapcli");
 
 # copy config for irond
-&copy("-a", "$resources_prefix/irond/basicauthusers.properties", "/irond/");
+&copy("-a", "$resources_prefix/irond/basicauthusers.properties", "/irond-*");
 
 # copy policy for irondetect
-&copy("-a", "$resources_prefix/irondetect/scenario1.pol", "/irondetect/policy/");
+&copy("-a", "$resources_prefix/irondetect/scenario1.pol", "/irondetect-*/policy");
 
 # copy config for irondetect
-&copy("-a", "$resources_prefix/irondetect/configuration.properties", "/irondetect/");
+&copy("-a", "$resources_prefix/irondetect/configuration.properties", "/irondetect-*");
 
 # copy config for VisITMeta
-&copy("-a", "$resources_prefix/visitmeta/config.properties", "/visitmeta/");
+&copy("-a", "$resources_prefix/visitmeta/config.properties", "/visitmeta-*/config");
 
 sub getPath {
   
