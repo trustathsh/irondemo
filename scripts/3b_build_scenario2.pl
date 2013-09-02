@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #--------------------------------------
-# name: build_scenario1.sh
+# name: build_scenario1.pl
 # version 0.1
 # date 12-06-2013
 # Trust@FHH
@@ -30,10 +30,10 @@ my $cliPath = &getPath("bin", "ifmapcli/ifmapcli-distribution");
 &copy("-a", $cliPath, "/ifmapcli");
 
 # copy config for irond
-&copy("-a", "$resources_prefix/irond/basicauthusers.properties", "/irond/");
+&copy("-a", "$resources_prefix/irond/basicauthusers.properties", "/irond-*");
 
 # copy config for VisITMeta
-&copy("-a", "$resources_prefix/visitmeta/config.properties", "/visitmeta/");
+&copy("-a", "$resources_prefix/visitmeta/config.properties", "/visitmeta-*/config");
 
 sub getPath {
   

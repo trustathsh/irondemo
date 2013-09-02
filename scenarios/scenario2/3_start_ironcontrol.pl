@@ -1,13 +1,13 @@
 #!/usr/bin/perl
 #--------------------------------------
-# name: create_new_AVD.pl
+# name: 4_start_ironcontrol.pl
 # version 0.1
-# date 04-06-2013
-# autor Trust@FHH
+# date 19-08-2013
 # Trust@FHH
 #--------------------------------------
 
 use strict;
 use warnings;
 
-exec("/usr/local/android-sdk/tools/android create avd -n AVD -t 1 --abi x86 -c 16M");
+# start ironcontrol
+exec("../../scripts/6_start_AVD.pl");

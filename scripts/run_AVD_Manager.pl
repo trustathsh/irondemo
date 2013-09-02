@@ -1,6 +1,6 @@
-#! /usr/bin/perl
+#!/usr/bin/perl
 #--------------------------------------
-# name: run_AVD_Manager.sh
+# name: run_AVD_Manager.pl
 # version 0.1
 # date 04-06-2013
 # autor Trust@FHH

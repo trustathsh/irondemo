@@ -1,6 +1,6 @@
-#! /usr/bin/perl
+#!/usr/bin/perl
 #--------------------------------------
-# name: clean_sources.sh
+# name: clean_sources.pl
 # version 0.1
 # date 04-06-2013
 # autor Trust@FHH

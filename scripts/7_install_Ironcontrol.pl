@@ -1,6 +1,6 @@
-#! /usr/bin/perl
+#!/usr/bin/perl
 #--------------------------------------
-# name: install_Ironcontrol.sh
+# name: install_Ironcontrol.pl
 # version 0.1
 # date 04-06-2013
 # autor Trust@FHH

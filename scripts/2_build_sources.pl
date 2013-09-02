@@ -1,6 +1,6 @@
-#! /usr/bin/perl
+#!/usr/bin/perl
 #--------------------------------------
-# name: build_sources.sh
+# name: build_sources.pl
 # version 0.1
 # date 04-06-2013
 # Trust@FHH

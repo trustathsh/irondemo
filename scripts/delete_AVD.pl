@@ -1,6 +1,6 @@
-#! /usr/bin/perl
+#!/usr/bin/perl
 #--------------------------------------
-# name: delete_AVD.sh
+# name: delete_AVD.pl
 # version 0.1
 # date 04-06-2013
 # autor Trust@FHH

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #--------------------------------------
-# name: build_scenario1.sh
+# name: build_scenario1.pl
 # version 0.1
 # date 12-06-2013
 # Trust@FHH
@@ -11,14 +11,12 @@ use warnings;
 
 my ($bundlePath);
 
+my @projects = <"irond" "irondetect" "irongui" "VisITMeta/visitmeta-distribution">;
 my $scenario_prefix = "../scenarios/scenario1";
 my $sources_prefix = "../sources";
 my $resources_prefix = "../resources/scenario1/";
 
-
-my @projectsBundles = <"irond" "irondetect" "irongui" "VisITMeta/visitmeta-distribution">;
-
-for (@projectsBundles) {
+for (@projects) {
 
  $bundlePath = &getPath("Bundle", $_);
  
