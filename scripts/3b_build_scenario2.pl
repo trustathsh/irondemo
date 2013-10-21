@@ -11,7 +11,7 @@ use warnings;
 
 my ($bundlePath);
 
-my @projects = <"irond" "irongui" "visitmeta">;
+my @projects = <"irond" "irongui" "VisITMeta/visitmeta-distribution">;
 my $scenario_prefix = "../scenarios/scenario2";
 my $sources_prefix = "../sources";
 my $resources_prefix = "../resources/scenario2/";
