@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #--------------------------------------
-# name: start_irondetect.pl
+# name: start_visitmeta_gui.pl
 # version 0.12
 # date 11-08-2013
 # Trust@FHH
@@ -12,7 +12,7 @@ use File::Spec;
 use File::Basename;
 
 
-my $project = 'irondetect';
+my $project = 'visitmeta';
 my $start_script = 'start.sh';
 
 my $scenario_dir = File::Spec->rel2abs(File::Spec->updir, dirname(__FILE__));
@@ -31,9 +31,9 @@ chdir($iron_dir) or die "Cannot change to $iron_dir: $!";
 
 my $os = $^O;
 if ($os eq 'linux') {
-	my $start_script = File::Spec->catfile($iron_dir, 'start.sh');
+	my $start_script = File::Spec->catfile($iron_dir, 'start-visualization.sh');
 	system($start_script);
 } elsif ($os eq 'MSWin32') {
-	my $start_script = File::Spec->catfile($iron_dir, 'start.bat');
+	my $start_script = File::Spec->catfile($iron_dir, 'start-visualization.bat');
 	system($start_script);
 }

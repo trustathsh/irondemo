@@ -16,7 +16,7 @@ projects:
 
 #  - id: ironcontrol-for-Android
 
-  - id: ifmapcli
+#  - id: ifmapcli
 
   - id: visitmeta
     files:
