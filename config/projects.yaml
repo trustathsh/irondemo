@@ -1,0 +1,94 @@
+irond:
+  sources:
+    scm: git
+    uri: http://github.com/trustatfhh/irond.git
+  build: 
+    tool: mvn
+    commands:
+      - mvn package
+
+  
+ifmapj:
+  sources:
+    scm: git
+    uri: http://github.com/trustatfhh/ifmapj.git
+  build: 
+    tool: mvn
+    commands:
+      - mvn package
+
+ifmapj-examples:
+  sources:
+    scm: git
+    uri: http://github.com/trustatfhh/ifmapj-examples.git
+  build: 
+    tool: mvn
+    commands:
+      - mvn package
+
+ifmapcli:
+  sources:
+    scm: git
+    uri: http://github.com/trustatfhh/ifmapcli.git
+  build: 
+    tool: mvn
+    commands:
+      - mvn package
+  binaries: 
+    path: ifmapcli-distribution/target
+
+irongui:
+  sources:
+    scm: git
+    uri: http://github.com/trustatfhh/irongui.git
+  build: 
+    tool: mvn
+    commands:
+      - mvn package
+
+irondetect:
+  sources:
+    scm: git
+    uri: http://github.com/trustatfhh/irondetect.git
+  build: 
+    tool: mvn
+    commands:
+      - mvn package
+
+irondhcp:
+  sources:
+    scm: git
+    uri: http://github.com/trustatfhh/irondhcp.git
+  build: 
+    tool: mvn
+    commands:
+      - mvn package
+
+ironvas:
+  sources:
+    scm: git
+    uri: http://github.com/trustatfhh/ironvas.git
+  build:
+    tool: mvn
+    commands:
+     - mvn package
+
+visitmeta:
+  sources:
+    scm: git
+    uri: https://github.com/trustatfhh/visitmeta.git
+  build:
+    tool: mvn
+    commands:
+     - mvn package
+  binaries: 
+    path: visitmeta-distribution/target/
+
+ironcontrol-for-android:
+  sources:
+    scm: git
+    uri: https://github.com/trustatfhh/ironcontrol-for-android.git
+  build:
+    tool: mvn
+    commands:
+     - mvn package

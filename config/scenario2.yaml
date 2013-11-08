@@ -1,0 +1,23 @@
+projects:
+
+  - id: irond
+    files:
+     - source: irond/basicauthusers.properties
+       destination: /
+
+  - id: irongui
+
+#  - id: VisITMeta
+#    files:
+#      - source: visitmeta/config.properties
+#        destination: config
+
+files:
+  - source: README.md
+    destination: /
+
+directories:
+  - source: scripts
+    destination: /
+
+execute: 
