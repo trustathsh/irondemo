@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #--------------------------------------
 # name: update_sources.pl
-# version 0.11
+# version 0.12
 # date 11-06-2013
 # Trust@FHH
 #--------------------------------------
@@ -10,6 +10,7 @@ use strict;
 use warnings;
 use File::Basename;
 use File::Spec;
+use YAML qw/LoadFile/;
 
 my ($config_fh, $config_file, $config_directory, $project_directory, $scripts_directory, $sources_directory);
 my (%return);
@@ -18,19 +19,18 @@ $project_directory = File::Spec->rel2abs(File::Spec->updir, dirname(__FILE__));
 $scripts_directory = File::Spec->catdir($project_directory, 'scripts');
 $sources_directory = File::Spec->catdir($project_directory, 'sources');
 $config_directory  = File::Spec->catdir($project_directory, 'config');
-$config_file       = File::Spec->catfile($config_directory, 'sources.conf');
+$config_file       = File::Spec->catfile($config_directory, 'projects.yaml');
 
 mkdir($sources_directory) unless (-d $sources_directory); 
 
-chdir($sources_directory) or die "Could not change directory: $! \n";
-
 open($config_fh, '<', "$config_file") or die "Could not open config file $config_file: $! \n";
 
-while(<$config_fh>) {
-	next if /^#/;
-	
-	my ($project, $scm, $url) = split(/;/,$_);
-	
+my $config = LoadFile($config_fh);
+
+for my $project (keys %$config) {
+	my $scm = $config->{$project}->{sources}->{scm};
+	my $url = $config->{$project}->{sources}->{uri};
+
 	print "\n\n";
 	print "||||| Looking for source directory of: $project |||||\n";
 
@@ -62,7 +62,7 @@ close $config_fh;
 
 for my $project (keys %return) {
 	if($return{$project} != 0){
-		warn "WARNING! Retrieving sources of project " . $project . " failed! \n";
+		warn "ERROR! Retrieving sources of project " . $project . " failed! \n";
 	} else {
 		print "Retrieving sources of project " . $project . " succedeed. \n";
 	}
