@@ -7,10 +7,10 @@ projects:
 
   - id: irongui
 
-#  - id: VisITMeta
-#    files:
-#      - source: visitmeta/config.properties
-#        destination: config
+  - id: visitmeta
+    files:
+      - source: visitmeta/config.properties
+        destination: config
 
 files:
   - source: README.md

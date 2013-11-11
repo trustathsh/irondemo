@@ -64,6 +64,6 @@ for my $project (keys %return) {
 	if($return{$project} != 0){
 		warn "ERROR! Retrieving sources of project " . $project . " failed! \n";
 	} else {
-		print "Retrieving sources of project " . $project . " succedeed. \n";
+		print "Retrieving sources of project " . $project . " succeedeed. \n";
 	}
 }

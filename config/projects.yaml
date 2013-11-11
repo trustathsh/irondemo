@@ -7,7 +7,6 @@ irond:
     commands:
       - mvn package
 
-  
 ifmapj:
   sources:
     scm: git

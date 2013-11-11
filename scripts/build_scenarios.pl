@@ -41,8 +41,6 @@ for my $project (@{$config->{projects}}) {
 		$build_dir = File::Spec->catdir($sources_dir, $id, 'target');
 	}
 	
-	print "$build_dir \n";
-	
 	opendir(TARGET, $build_dir);
 	my @archives = grep(/$id.*-bundle.zip$/, readdir(TARGET));
 	if (@archives > 1) {

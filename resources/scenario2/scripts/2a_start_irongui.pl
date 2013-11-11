@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #--------------------------------------
-# name: start_visitmeta_dataservice.pl
+# name: start_irongui.pl
 # version 0.12
 # date 11-08-2013
 # Trust@FHH
@@ -11,7 +11,8 @@ use warnings;
 use File::Spec;
 use File::Basename;
 
-my $project = 'visitmeta';
+
+my $project = 'irongui';
 my $start_script = 'start.sh';
 
 my $scenario_dir = File::Spec->rel2abs(File::Spec->updir, dirname(__FILE__));
@@ -30,9 +31,9 @@ chdir($iron_dir) or die "Cannot change to $iron_dir: $!";
 
 my $os = $^O;
 if ($os eq 'linux') {
-	my $start_script = File::Spec->catfile($iron_dir, 'start-dataservice.sh');
+	my $start_script = File::Spec->catfile($iron_dir, 'start.sh');
 	system($start_script);
 } elsif ($os eq 'MSWin32') {
-	my $start_script = File::Spec->catfile($iron_dir, 'start-dataservice.bat');
+	my $start_script = File::Spec->catfile($iron_dir, 'start.bat');
 	system($start_script);
 }

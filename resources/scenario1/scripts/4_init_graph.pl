@@ -11,6 +11,15 @@ use warnings;
 use File::Spec;
 use File::Basename;
 
+my $AR = "111:33";
+my $ARMAC = "aa:bb:cc:dd:ee:ff";
+my $ARIP = "10.0.0.1";
+my $PDP = "pdp1";
+my $USER = "Bob";
+
+$ENV{'IFMAP_USER'} = 'pdp';
+$ENV{'IFMAP_PASS'} = 'pdp';
+
 my $project = 'ifmapcli-distribution';
 my $scenario_dir = File::Spec->rel2abs(File::Spec->updir, dirname(__FILE__));
 
@@ -24,15 +33,6 @@ unless (@dirs == 1){
 }
 
 my $ifmapcli_dir = File::Spec->catdir($scenario_dir, $dirs[0]);
-
-my $AR = "111:33";
-my $ARMAC = "aa:bb:cc:dd:ee:ff";
-my $ARIP = "10.0.0.1";
-my $PDP = "pdp1";
-my $USER = "Bob";
-
-$ENV{'IFMAP_USER'} = 'pdp';
-$ENV{'IFMAP_PASS'} = 'pdp';
 
 chdir($ifmapcli_dir) or die "Could not open directory $ifmapcli_dir: $! \n";
 

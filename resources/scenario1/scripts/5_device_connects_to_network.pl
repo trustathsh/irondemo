@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #--------------------------------------
-# name: 6_device_connects_to_network.pl
+# name: device_connects_to_network.pl
 # version 0.12
 # date 11-08-2013
 # Trust@FHH

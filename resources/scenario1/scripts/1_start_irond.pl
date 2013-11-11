@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #--------------------------------------
-# name: 1_start_irond.pl
+# name: start_irond.pl
 # version 0.12
 # date 11-08-2013
 # Trust@FHH

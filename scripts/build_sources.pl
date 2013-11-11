@@ -63,7 +63,7 @@ for my $project (keys %return) {
 	if($return{$project} != 0){
 		warn "ERROR! Build of project " . $project . " failed! \n";
 	} else {
-		print "Build of project " . $project . " succedeed. \n";
+		print "Build of project " . $project . " succeedeed. \n";
 	}
 }
 
