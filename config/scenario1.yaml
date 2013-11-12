@@ -14,9 +14,7 @@ projects:
 
   - id: irongui
 
-#  - id: ironcontrol-for-android
-
-#  - id: ifmapcli
+  - id: ifmapcli
 
   - id: visitmeta
     files:

@@ -1,26 +1,27 @@
 irondemo
 ========
-irondemo is a set of shell and Perl scripts as well as some resources, to build a environment containing our IF-MAP based software from scratch.
-Development was done by Hochschule Hannover (Hannover University of Applied Sciences and Arts).
+irondemo uses a set Perl scripts to build different scenarios/demo environments for the iron* software suite, various IF-MAP tools developed by the Trust@FHH research group at Hochschule Hannover (Hannover University of Applied Sciences and Arts).
+
+NOTE: This is an alpha-release - might still contain a couple of bugs.
 
 Prerequisites
 =============
-Prior to use irondemo, you must download and install the following software:
+In order to use irondemo, you will need the following software installed on your system:
 * [Git][git]
 * a [Java JDK (1.7)][java]
 * and [Maven 3][maven]
+* Perl 5
 
-At the moment, irondemo supports Linux and Mac OS X. (We will change the existing Shell scripts to Perl in the future to also support Windows system).
-
+Irondemo should run on any unix based system as well as Microsoft Windows. If you experience problems on your platform, please report.
 
 Structure
 ========
-It mainly consists of several folders, with the following content/functionality:
+Irondemo's directory structure is organized as follows:
 
 config/
 -------
-Contains information about how to get and build the different software packages; currently supports: 
-	* ifmapj (and examples)
+Contains irondemo's main config file projects.yaml, that contains instructions how to retrieve and build the iron* suite's sources. Currently includes: 
+	* ifmapj
 	* ifmapj-examples
 	* ifmapcli
 	* irond
@@ -28,23 +29,24 @@ Contains information about how to get and build the different software packages;
 	* irondetect
 	* irondhcp
 	* ironvas
-	* and VisITMeta
+	* visitmeta
+Also contains one file per scenario that contains instructions how the scenario is assembled.
 
 scripts/
 --------
-Contains scripts to download all sources, build them, create the provided scenarios (by copying all needed binaries and resources to the specific folder unter *scenarios*), as well as scripts to install Android SDK, create a virtual Android machine and administrate this (start, stop, install our Android-based software, ...)
+Contains the irondemo scripts to download and build the sources and assemble the scenarios.
 
 scenarios/
 ----------
-Contains scripts to *play* different scenarios with our tools; the scripts are numbered and will start all components and create the metadata needed for that specific scenario
+This is the place where the scenarios are assembled. Contains a dedicated subdirectory for each scenario.
 
 resources/
 ----------
-Contains resources needed for the scenarios (configurations, etc.)
+Contains the scenarios' resources such as config files for various tools, etc.
 
 sources/
 --------
-Here all sourcecode and the compiled binaries will reside; is created during first run of the `1_update_sources.pl` script.
+Sourcecode and the compiled binaries reside here; is created during first run of the `update_sources.pl` script.
 
 Building
 ========
@@ -52,34 +54,23 @@ To use irondemo, simply download it via
 
 	$ git clone https://github.com/trustatfhh/irondemo.git
 
-and run the first two scripts in the `scripts` directory; 
-
-	$ perl 01_update_sources.pl
-	$ perl 02_build_sources.pl
-
+and run `update_sources.pl` and `build_sources.pl` script from the `scripts` directory; 
 you will end up with compiled versions of our software within the `sources` folder.
 
 Using the scenarios
 ===================
-After you downloaded the sources and build the binaries, you can build the provided scenarios.
-Inside the `scripts` directory, you will find the scripts starting with a number `3`.
-They will
-* copy all needed binaries from the `source` folder into the folder of the specific scenario (according to which scenario-build-script you run)
-* copy all resources for that specific scenario from the `resources` folder into the according folders of the needed tools for that scenario (i.e. irond configuration into the irond-folder)
+After downloading and compiling the sources, you can build the scenarios. Simply call the `build_scenarios.pl` script from the scripts` directory providing the name of the scenario (which is identical to its config file). This will result in the scenario being assembled in the scenarios directory.
 
-The idea behind that is, that you will end up in folders for every scenario, packed with everything you need for that scenario.
-If you make changes in files for that scenario, it won't affect the other scenarios, and you can just archive a scenario-folder and execute it anywhere with the specific versions of the used software.
-
-Update the sources
+Updating the sources
 ==================
 Simply re-run the scripts mentioned in Building, and you will have the latest **stable** versions of our software downloaded and build.
 
-If you want to use the new versions with the scenarios, make sure you re-run the proper `build the scenario` script, as it will copy the binary into the specific scenario folder.
+If you want to use the new versions with the scenarios, make sure you reconstruct the scenarios using the `build_scenarios.pl` script as well.
 
 
 Contact
 =======
-Please contact us via <trust@f4-i.fh-hannover.de> if you have any questions.
+Feel free to get in touch with us at <trust@f4-i.fh-hannover.de> to post feedback, ask for help or report bugs.
 
 ---
 
