@@ -29,7 +29,7 @@ my $iron_dir = File::Spec->catdir($scenario_dir, $dirs[0]);
 chdir($iron_dir) or die "Cannot change to $iron_dir: $!";
 
 my $os = $^O;
-if ($os eq 'linux') {
+if ($os eq 'linux' or $os eq 'darwin') {
 	my $start_script = File::Spec->catfile($iron_dir, 'start-dataservice.sh');
 	system($start_script);
 } elsif ($os eq 'MSWin32') {
