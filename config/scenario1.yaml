@@ -10,7 +10,7 @@ projects:
       - source: irondetect/configuration.properties
         destination: /
       - source: irondetect/scenario1.pol
-        destination: policies
+        destination: policy
 
   - id: irongui
 
