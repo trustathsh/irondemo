@@ -28,7 +28,7 @@ my $scenario_dir = File::Spec->rel2abs(File::Spec->updir, dirname(__FILE__));
 opendir(SCENARIO, $scenario_dir)
 	or die "Could not open directory $scenario_dir: $! \n";
 	
-my @dirs = grep {/^$project-/} readdir(SCENARIO);
+my @dirs = grep {/^$project/} readdir(SCENARIO);
 
 unless (@dirs == 1){
   die "ERROR, cannot find directory for $project!\n";
