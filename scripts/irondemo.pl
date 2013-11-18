@@ -226,8 +226,8 @@ sub build_scenarios {
 
 		# copy scenario files
 		if ( $scenario_config->{files} ) {
-			for my $file ( @{ $config->{files} } ) {
-				my $source = File::Spec->catfile( $resources_dir, $file->{source} );
+			for my $file ( @{ $scenario_config->{files} } ) {
+				my $source = File::Spec->catfile( $scenario_resources_dir, $file->{source} );
 				my $destination = File::Spec->catdir( $scenario_dir, $file->{destination} );
 				copy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
 			}
@@ -235,8 +235,8 @@ sub build_scenarios {
 
 		# copy scenario dirs
 		if ( $scenario_config->{directories} ) {
-			for my $dir ( @{ $config->{directories} } ) {
-				my $source = File::Spec->catdir( $resources_dir, $dir->{source} );
+			for my $dir ( @{ $scenario_config->{directories} } ) {
+				my $source = File::Spec->catdir( $scenario_resources_dir, $dir->{source} );
 				my $destination =
 				  File::Spec->catdir( $scenario_dir, $dir->{destination},
 					basename( $dir->{source} ) );
@@ -246,8 +246,8 @@ sub build_scenarios {
 
 		# execute scenario scripts
 		if ( $scenario_config->{execute} ) {
-			for my $executable ( @{ $config->{execute} } ) {
-				system( File::Spec->catfile( $resources_dir, $executable ) );
+			for my $executable ( @{ $scenario_config->{execute} } ) {
+				system( File::Spec->catfile( $scenario_resources_dir, $executable ) );
 			}
 		}
 
