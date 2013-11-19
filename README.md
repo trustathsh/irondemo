@@ -10,7 +10,10 @@ In order to use irondemo, you will need the following software installed on your
 * [Git][git]
 * a [Java JDK (1.7)][java]
 * and [Maven 3][maven]
-* Perl 5
+* [Perl 5][perl]
+* The following Perl modules:
+	-Archive::Extract
+	-YAML
 
 Irondemo should run on any unix based system as well as Microsoft Windows. If you experience problems on your platform, please report.
 
@@ -78,3 +81,4 @@ Feel free to get in touch with us at <trust@f4-i.fh-hannover.de> to post feedbac
 [git]: http://git-scm.com/
 [java]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
 [maven]: http://maven.apache.org/
+[perl]: http://www.perl.org/

@@ -1,11 +1,3 @@
-#!/usr/bin/perl
-#--------------------------------------
-# name: irondemo.pl
-# version 0.2
-# date 11-06-2013
-# Trust@FHH
-#--------------------------------------
-
 use strict;
 use warnings;
 use File::Basename;
@@ -299,5 +291,35 @@ Prints this manpage.
 B<irondemo> builds different scenarios/demo environments for the iron* software suite, various IF-MAP tools developed by the Trust@FHH research group at Hochschule Hannover (Hannover University of Applied Sciences and Arts).
 
 B<NOTE:> This is an alpha-release - might still contain a couple of bugs.
+
+=head1 AUTHORS
+
+Developed by the Trust@HSH research group (see http://trust.f4.hs-hannover.de/). Use trust@f4-i.fh-hannover.de to get in touch.
+
+=head2 Main contributors: 
+
+=over 8
+
+=item Marcel Reichenbach
+
+=item Thomas Rossow
+
+=back
+
+=head1 LICENSE
+
+Copyright (C) 2013 Trust@HSH
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 =cut
