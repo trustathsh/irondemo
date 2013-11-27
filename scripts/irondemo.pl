@@ -45,6 +45,7 @@ my $config = LoadFile($config_fh);
 #dispatch command
 my $command = shift;
 my @targets = @ARGV;
+pod2usage(1) unless defined $command;
 
 my %return;
 if ( $command eq 'update' ) {
