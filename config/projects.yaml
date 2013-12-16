@@ -1,7 +1,7 @@
 irond:
   sources:
     scm: git
-    uri: http://github.com/trustatfhh/irond.git
+    uri: http://github.com/trustathsh/irond.git
   build: 
     tool: mvn
     commands:
@@ -10,7 +10,7 @@ irond:
 ifmapj:
   sources:
     scm: git
-    uri: http://github.com/trustatfhh/ifmapj.git
+    uri: http://github.com/trustathsh/ifmapj.git
   build: 
     tool: mvn
     commands:
@@ -19,7 +19,7 @@ ifmapj:
 ifmapj-examples:
   sources:
     scm: git
-    uri: http://github.com/trustatfhh/ifmapj-examples.git
+    uri: http://github.com/trustathsh/ifmapj-examples.git
   build: 
     tool: mvn
     commands:
@@ -28,7 +28,7 @@ ifmapj-examples:
 ifmapcli:
   sources:
     scm: git
-    uri: http://github.com/trustatfhh/ifmapcli.git
+    uri: http://github.com/trustathsh/ifmapcli.git
   build: 
     tool: mvn
     commands:
@@ -39,7 +39,7 @@ ifmapcli:
 irongui:
   sources:
     scm: git
-    uri: http://github.com/trustatfhh/irongui.git
+    uri: http://github.com/trustathsh/irongui.git
   build: 
     tool: mvn
     commands:
@@ -48,7 +48,7 @@ irongui:
 irondetect:
   sources:
     scm: git
-    uri: http://github.com/trustatfhh/irondetect.git
+    uri: http://github.com/trustathsh/irondetect.git
   build: 
     tool: mvn
     commands:
@@ -57,7 +57,7 @@ irondetect:
 irondhcp:
   sources:
     scm: git
-    uri: http://github.com/trustatfhh/irondhcp.git
+    uri: http://github.com/trustathsh/irondhcp.git
   build: 
     tool: mvn
     commands:
@@ -66,7 +66,7 @@ irondhcp:
 ironvas:
   sources:
     scm: git
-    uri: http://github.com/trustatfhh/ironvas.git
+    uri: http://github.com/trustathsh/ironvas.git
   build:
     tool: mvn
     commands:
@@ -75,7 +75,7 @@ ironvas:
 visitmeta:
   sources:
     scm: git
-    uri: https://github.com/trustatfhh/visitmeta.git
+    uri: https://github.com/trustathsh/visitmeta.git
   build:
     tool: mvn
     commands:
@@ -86,7 +86,7 @@ visitmeta:
 ironcontrol-for-android:
   sources:
     scm: git
-    uri: https://github.com/trustatfhh/ironcontrol-for-android.git
+    uri: https://github.com/trustathsh/ironcontrol-for-android.git
   build:
     tool: mvn
     commands:
