@@ -1,6 +1,6 @@
 irondemo
 ========
-irondemo uses a set Perl scripts to build different scenarios/demo environments for the iron* software suite, various IF-MAP tools developed by the Trust@FHH research group at Hochschule Hannover (Hannover University of Applied Sciences and Arts).
+irondemo uses a set Perl scripts to build different scenarios/demo environments for the iron* software suite, various IF-MAP tools developed by the [Trust@HsH research group][trustathsh] at Hochschule Hannover (Hannover University of Applied Sciences and Arts).
 
 NOTE: This is an alpha-release - might still contain a couple of bugs.
 
@@ -82,3 +82,4 @@ Feel free to get in touch with us at <trust@f4-i.fh-hannover.de> to post feedbac
 [java]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
 [maven]: http://maven.apache.org/
 [perl]: http://www.perl.org/
+[trustathsh]: http://trust.f4.hs-hannover.de
