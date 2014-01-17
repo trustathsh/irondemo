@@ -1,7 +1,5 @@
 context {
 
-    ctxWorkingHours := DATETIME > "06:00" and DATETIME < "22:00";
-
 }
 
 hint {
@@ -30,7 +28,7 @@ condition {
 
 action {
 
-    appAlert := "alert.name" "Inofficial App with open port detected";
+    appAlert := "alert.name" "Video data leakage by smartphone detected";
 
 }
 

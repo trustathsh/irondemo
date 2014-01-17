@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 #--------------------------------------
-# name: device_connects_to_network.pl
-# version 0.12
-# date 11-08-2013
-# Trust@FHH
+# name: smartphone_connects_to_network.pl
+# version 0.13
+# date 17-01-2014
+# Trust@HsH
 #--------------------------------------
 
 use strict;
@@ -29,9 +29,9 @@ chdir($ifmapcli_dir) or die "Could not open directory $ifmapcli_dir: $! \n";
 my $AR = '111:33';
 my $ARMAC = 'aa:bb:cc:dd:ee:ff';
 my $ARIP = '10.0.0.1';
-my $PDP = 'pdp1';
+my $PDP = 'freeradius-pdp';
 my $USER = 'Bob';
-my $DEVICE = 'device1';
+my $DEVICE = 'android-smartphone';
 my $TYPE = 'arbitrary';
 
 $ENV{'IFMAP_USER'} = 'sensor';

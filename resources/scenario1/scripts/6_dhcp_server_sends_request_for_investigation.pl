@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 #--------------------------------------
 # name: dhcp_server_sends_request_for_investigation.pl
-# version 0.12
-# date 26-06-2013
-# Trust@FHH
+# version 0.13
+# date 17-01-2014
+# Trust@HsH
 #--------------------------------------
 
 use strict;
@@ -14,10 +14,10 @@ use File::Basename;
 my $AR = '111:33';
 my $ARMAC = 'aa:bb:cc:dd:ee:ff';
 my $ARIP = '10.0.0.1';
-my $PDP = 'pdp1';
+my $PDP = 'freeradius-pdp';
 my $USER = 'Bob';
 my $QUALIFIER = 'vulnerability-scan';
-my $DEVICE = 'device1';
+my $DEVICE = 'android-smartphone';
 
 $ENV{'IFMAP_USER'} = 'dhcp';
 $ENV{'IFMAP_PASS'} = 'dhcp';

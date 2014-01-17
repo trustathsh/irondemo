@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 #--------------------------------------
-# name: open_port_detected.pl
-# version 0.12
-# date 26-06-2013
-# Trust@FHH
+# name: openvas_detects_open_port_on_smartphone.pl
+# version 0.13
+# date 17-01-2014
+# Trust@HsH
 #--------------------------------------
 
 use strict;
@@ -14,12 +14,12 @@ use File::Basename;
 my $AR = '111:33';
 my $ARMAC = 'aa:bb:cc:dd:ee:ff';
 my $ARIP = '10.0.0.1';
-my $PDP = 'pdp1';
+my $PDP = 'freeradius-pdp';
 my $USER = 'Bob';
 my $FEATURE = 'vulnerability-scan-result.vulnerability.port';
 my $TYPE = 'arbitrary';
 my $VALUE = '22';
-my $DEVICE = 'device1';
+my $DEVICE = 'android-smartphone';
 
 $ENV{'IFMAP_USER'} = 'ironvas';
 $ENV{'IFMAP_PASS'} = 'ironvas';

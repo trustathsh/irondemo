@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 #--------------------------------------
-# name: init_graph.pl
-# version 0.12
-# date 11-08-2013
-# Trust@FHH
+# name: pdp_initializes_graph.pl
+# version 0.14
+# date 17-01-2014
+# Trust@HsH
 #--------------------------------------
 
 use strict;
@@ -14,7 +14,7 @@ use File::Basename;
 my $AR = "111:33";
 my $ARMAC = "aa:bb:cc:dd:ee:ff";
 my $ARIP = "10.0.0.1";
-my $PDP = "pdp1";
+my $PDP = "freeradius-pdp";
 my $USER = "Bob";
 
 $ENV{'IFMAP_USER'} = 'pdp';
