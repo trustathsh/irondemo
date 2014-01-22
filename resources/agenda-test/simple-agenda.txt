@@ -1,0 +1,6 @@
+UserLogin(name => john, attr => value5,attr2=>value0)
+UserLogin(name => jack, attr => value6,attr2=>value11)
+UserLogin(name => jim, attr => value7,attr2=>value66)
+UserLogin(name => joseph, attr => value9,attr2=>value33)
+UserLogin(name => joseph, attr => value9,attr2=>value33)
+UserLogin(name => jonny johnson, attr => value8,attr2=>value42)

@@ -261,7 +261,7 @@ sub build_scenarios {
 }    #end build_scenarios
 
 sub run_scenario {
-	my @data = TrustAtHsH::Irondemo::AgendaParser->new({'path' => '/home/foo/blah'})->getActions();
+	my @data = TrustAtHsH::Irondemo::AgendaParser->new({'path' => 'resources/agenda-test/simple-agenda.txt'})->getActions();
 	print Dumper(@data);
 }
 
@@ -314,7 +314,7 @@ B<NOTE:> This is an alpha-release - might still contain a couple of bugs.
 
 Developed by the Trust@HSH research group (see http://trust.f4.hs-hannover.de/). Use trust@f4-i.fh-hannover.de to get in touch.
 
-=head2 Main contributors: 
+=head2 Main contributors:
 
 =over 8
 
@@ -333,20 +333,20 @@ Developed by the Trust@HSH research group (see http://trust.f4.hs-hannover.de/).
    | | | |  | |_| \__ \ |_| | (_| |  _  |\__ \|  _  |
    |_| |_|   \__,_|___/\__|\ \__,_|_| |_||___/|_| |_|
                             \____/
- 
+
 =====================================================
- 
+
 Hochschule Hannover
 (University of Applied Sciences and Arts, Hannover)
 Faculty IV, Dept. of Computer Science
 Ricklinger Stadtweg 118, 30459 Hannover, Germany
-  
+
 Email: trust@f4-i.fh-hannover.de
 Website: http://trust.f4.hs-hannover.de/
- 
+
 This file is part of irondemo, implemented by the Trust@HsH
 research group at the Hochschule Hannover.
- 
+
 
 Copyright (C) 2013,2014 Trust@HSH
 
