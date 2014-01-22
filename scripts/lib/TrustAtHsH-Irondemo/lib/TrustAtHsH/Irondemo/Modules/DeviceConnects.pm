@@ -11,4 +11,9 @@ use parent 'TrustAtHsH::Irondemo::AbstractModule';
 sub execute {
 	print "Binky \n";
 }
+
+sub init {
+	
+}
+
 1;
