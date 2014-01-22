@@ -12,6 +12,13 @@ use Getopt::Long;
 use Pod::Usage;
 use File::Path qw/remove_tree make_path/;
 
+use FindBin;
+use lib "$FindBin::Bin/lib/TrustAtHsH-Irondemo/lib";
+use TrustAtHsH::Irondemo::AgendaParser;
+
+#imports for developement
+use Data::Dumper;
+
 our $VERSION = '0.2';
 
 #process commandline options
@@ -50,14 +57,17 @@ my @targets = @ARGV;
 pod2usage(1) unless defined $command;
 
 my %return;
-if ( $command eq 'update' ) {
+if    ( $command eq 'update' )       {
 	%return = update_sources();
 }
-elsif ( $command eq 'build' ) {
+elsif ( $command eq 'build' )        {
 	%return = build_sources();
 }
-elsif ( $command eq 'scenario' ) {
+elsif ( $command eq 'scenario' )     {
 	%return = build_scenarios();
+}
+elsif ( $command eq 'run_scenario' ) {
+	run_scenario();
 }
 else {
 	pod2usage(1);
@@ -249,6 +259,11 @@ sub build_scenarios {
 	}    #end scenarios for
 	return %return;
 }    #end build_scenarios
+
+sub run_scenario {
+	my @data = TrustAtHsH::Irondemo::AgendaParser->new({'path' => '/home/foo/blah'})->getActions();
+	print Dumper(@data);
+}
 
 sub clean {
 	my $dir = shift;
