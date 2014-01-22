@@ -65,10 +65,10 @@ else {
 
 for my $project ( keys %return ) {
 	if ( $return{$project} != 0 ) {
-		warn "ERROR! Retrieving sources of project " . $project . " failed! \n";
+		warn "ERROR! Processing " . $project . " failed! \n";
 	}
 	else {
-		print "Retrieving sources of project " . $project . " succeedeed. \n";
+		print "Processing " . $project . " succeedeed. \n";
 	}
 }
 
