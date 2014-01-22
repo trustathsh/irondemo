@@ -12,10 +12,6 @@ use Getopt::Long;
 use Pod::Usage;
 use File::Path qw/remove_tree make_path/;
 
-use FindBin;
-use lib "$FindBin::Bin/lib/TrustAtHsH-Irondemo/lib";
-use TrustAtHsH::Irondemo::AgendaParser;
-
 #imports for developement
 use Data::Dumper;
 
@@ -261,8 +257,6 @@ sub build_scenarios {
 }    #end build_scenarios
 
 sub run_scenario {
-	my @data = TrustAtHsH::Irondemo::AgendaParser->new({'path' => '/home/foo/blah'})->getActions();
-	print Dumper(@data);
 }
 
 sub clean {
