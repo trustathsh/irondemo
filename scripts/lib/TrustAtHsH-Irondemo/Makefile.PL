@@ -6,6 +6,7 @@ author   q{Trust@HsH <trust@f4-i.fh-hannover.de>};
 license  'apache';
 
 build_requires 'Test::More';
+build_requires 'Test::Kwalitee';
 
 auto_install;
 
