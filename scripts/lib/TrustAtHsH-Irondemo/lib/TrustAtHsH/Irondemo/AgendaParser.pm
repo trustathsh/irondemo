@@ -25,11 +25,12 @@ sub new {
 sub getActions {
 	my $self = shift;
 
-    my @actions = [];
+    my @actions;
     my $filename = $self->{'agenda_path'};
     my $agenda_file = IO::File->new($filename, 'r');
     if (defined $agenda_file) {
         while( my $line = $agenda_file->getline() ) {
+        	# check for comment symbol or 'empty' line 
             my $action = parseLine($line);
             push(@actions, $action);
         }
@@ -54,8 +55,8 @@ sub parseLine {
     for my $arg (@argsStrings) {
         my @keyValue = split(/=>/, $arg);
         trimStrings(\@keyValue);
-        my $key = @keyValue[0];
-        my $value = @keyValue[1];
+        my $key = $keyValue[0];
+        my $value = $keyValue[1];
 
         $args->{$key} = $value;
     }

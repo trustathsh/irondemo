@@ -16,6 +16,7 @@ sub new {
 }
 
 sub run {
+	my $self = shift;
 	my $module = shift;
 	
 	$module->execute();
@@ -24,3 +25,5 @@ sub run {
 sub run_concurrent {
 	croak('Concurrent execution of modules is not yet implemented. Very sadz and zory.');
 }
+
+1;

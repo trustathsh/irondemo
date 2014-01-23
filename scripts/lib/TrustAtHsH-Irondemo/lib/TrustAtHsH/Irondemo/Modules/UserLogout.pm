@@ -1,4 +1,4 @@
-package TrustAtHsH::Irondemo::Modules::DeviceConnects;
+package TrustAtHsH::Irondemo::Modules::UserLogout;
 
 use 5.006;
 use strict;
@@ -18,17 +18,16 @@ sub execute {
 	
 	my $ifmapcli_path = File::Spec->catdir($ENV{'HOME'}, "ifmapcli");
 	
-	my $pdp = $data->{'pdp'};
+	my $name = $data->{'name'};
+	my $role = $data->{'role'};
 	my $access_request = $data->{'access-request'};
-	my $mac = $data->{'mac'};
 	$ENV{'IFMAP_USER'} = $data->{'ifmap-user'};
 	$ENV{'IFMAP_PASS'} = $data->{'ifmap-pass'};
 
 	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
 	
-	system("java -jar auth-by.jar update $access_request $pdp");
-	system("java -jar ar-mac.jar update $access_request $mac");
-
+	system("java -jar auth-as.jar delete $access_request '$name'");
+	system("java -jar role.jar delete $access_request '$name' $role");
 	
 }
 

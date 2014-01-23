@@ -1,4 +1,4 @@
-package TrustAtHsH::Irondemo::Modules::DeviceConnects;
+package TrustAtHsH::Irondemo::Modules::DeviceDisconnects;
 
 use 5.006;
 use strict;
@@ -26,8 +26,8 @@ sub execute {
 
 	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
 	
-	system("java -jar auth-by.jar update $access_request $pdp");
-	system("java -jar ar-mac.jar update $access_request $mac");
+	system("java -jar auth-by.jar delete $access_request $pdp");
+	system("java -jar ar-mac.jar delete $access_request $mac");
 
 	
 }

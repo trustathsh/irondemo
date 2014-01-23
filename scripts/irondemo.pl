@@ -12,6 +12,12 @@ use Getopt::Long;
 use Pod::Usage;
 use File::Path qw/remove_tree make_path/;
 
+use FindBin;
+use lib "$FindBin::Bin/lib/TrustAtHsH-Irondemo/lib";
+use TrustAtHsH::Irondemo::AgendaParser;
+use TrustAtHsH::Irondemo::ModuleFactory;
+use TrustAtHsH::Irondemo::Executor;
+
 #imports for developement
 use Data::Dumper;
 
@@ -257,6 +263,17 @@ sub build_scenarios {
 }    #end build_scenarios
 
 sub run_scenario {
+	my @data = TrustAtHsH::Irondemo::AgendaParser->new({'path' => 'resources/agenda-test/generated-agenda.txt'})->getActions();
+	
+	my $executor = TrustAtHsH::Irondemo::Executor->new;
+	
+	for my $action (@data) {
+		my $action_name = "TrustAtHsH::Irondemo::Modules::".$action->{'action'};
+		my $action_args = $action->{'args'};
+		my $module_object = TrustAtHsH::Irondemo::ModuleFactory->loadModule($action_name, $action_args);
+		$executor->run($module_object);
+	}
+	
 }
 
 sub clean {
