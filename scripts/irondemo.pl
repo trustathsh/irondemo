@@ -264,16 +264,23 @@ sub build_scenarios {
 
 sub run_scenario {
 	my @data = TrustAtHsH::Irondemo::AgendaParser->new({'path' => 'resources/agenda-test/generated-agenda.txt'})->getActions();
-	
+	my @jobs;	
 	my $executor = TrustAtHsH::Irondemo::Executor->new;
 	
 	for my $action (@data) {
 		my $action_name = "TrustAtHsH::Irondemo::Modules::".$action->{'action'};
 		my $action_args = $action->{'args'};
 		my $module_object = TrustAtHsH::Irondemo::ModuleFactory->loadModule($action_name, $action_args);
-		$executor->run($module_object);
+		push @jobs, $module_object;
 	}
+	$executor->run_concurrent(@jobs);
 	
+	my $elements = @jobs;
+	my $processed  = 0;
+	while ( $processed < $elements ) {
+		my $result = $executor->get_result_queue()->dequeue();
+		$processed++;
+	}
 }
 
 sub clean {
