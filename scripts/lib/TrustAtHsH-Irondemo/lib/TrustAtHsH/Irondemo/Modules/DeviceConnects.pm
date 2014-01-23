@@ -21,14 +21,20 @@ sub execute {
 	my $pdp = $data->{'pdp'};
 	my $access_request = $data->{'access-request'};
 	my $mac = $data->{'mac'};
-	$ENV{'IFMAP_USER'} = $data->{'ifmap-user'};
-	$ENV{'IFMAP_PASS'} = $data->{'ifmap-pass'};
+	my $ip = $data->{'ip-address'};
 
 	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
 	
+	# PDP
+	$ENV{'IFMAP_USER'} = $data->{'ifmap-user-pdp'};
+	$ENV{'IFMAP_PASS'} = $data->{'ifmap-pass-pdp'};
 	system("java -jar auth-by.jar update $access_request $pdp");
 	system("java -jar ar-mac.jar update $access_request $mac");
-
+	
+	# DHCP
+	$ENV{'IFMAP_USER'} = $data->{'ifmap-user-dhcp'};
+	$ENV{'IFMAP_PASS'} = $data->{'ifmap-pass-dhcp'};
+	system("java -jar ip-mac.jar update $ip $mac");
 	
 }
 

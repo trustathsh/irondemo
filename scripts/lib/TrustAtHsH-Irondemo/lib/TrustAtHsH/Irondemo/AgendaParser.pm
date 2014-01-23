@@ -30,7 +30,8 @@ sub getActions {
     my $agenda_file = IO::File->new($filename, 'r');
     if (defined $agenda_file) {
         while( my $line = $agenda_file->getline() ) {
-        	# check for comment symbol or 'empty' line 
+        	next if $line =~ /^\s*#/;
+        	next if $line =~ /^\s*$/; 
             my $action = parseLine($line);
             push(@actions, $action);
         }
