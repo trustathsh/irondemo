@@ -6,12 +6,14 @@ use warnings;
 use Carp qw(croak);
 use File::Spec;
 use File::Basename;
-
-use Data::Dumper;
-
 use lib '../../../';
 use parent 'TrustAtHsH::Irondemo::AbstractModule';
 
+### INSTANCE METHOD ###
+# Purpose     :
+# Returns     : True value on success, false value on failure
+# Parameters  : None
+# Comments    :
 sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
@@ -28,14 +30,37 @@ sub execute {
 	
 	system("java -jar auth-as.jar delete $access_request '$name' ".$self->ifmapcliOptions);
 	system("java -jar role.jar delete $access_request '$name' $role ".$self->ifmapcliOptions);
+	#TODO check system's exit statuses and return something meaningful
 	
 }
 
-sub init {
+### INTERNAL UTILITY ###
+# Purpose     :
+# Returns     :
+# Parameters  : data ->
+#                 ifmap-user          ->(optional)
+#                 ifmap-pass          ->(optional)
+#                 ifmap-url           ->(optional)
+#                 ifmap-keystore-path ->(optional)
+#                 ifmap-keystore-pass ->(optional)
+#                 name                 >
+#                 role                ->
+#                 access-request      ->
+#
+sub _init {
 	my $self = shift;
 	my $args = shift;
 	
-	$self->{'data'} = $args;
+	#TODO should check if needed parameters have been defined or set defaults 
+	while ( my ($key, $val) = each %{$args} ) {
+		$self->{'data'}->{$key} = $val;
+	}
+}
+
+#to be removed
+sub ifmapcliOptions {
+	my $self = shift;
+	return "$self->{'data'}->{'ifmap-url'} $self->{'data'}->{'ifmap-user'} $self->{'data'}->{'ifmap-pass'} $self->{'data'}->{'ifmap-keystore-path'} $self->{'data'}->{'ifmap-keystore-pass'}";
 }
 
 1;

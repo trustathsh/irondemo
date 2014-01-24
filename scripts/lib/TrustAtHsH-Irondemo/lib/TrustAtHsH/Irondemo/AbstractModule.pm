@@ -20,15 +20,16 @@ sub new {
 	my $self  = {};
 	bless $self, $class;
 
+	#default values for if-map modules
+	$self->{'data'}->{'ifmap-user'} = 'test';
+	$self->{'data'}->{'ifmap-pass'} = 'test';
+	$self->{'data'}->{'ifmap-url'} = 'https://localhost:8443';
+	$self->{'data'}->{'ifmap-keystore-path'} = '/ifmapcli.jks';
+	$self->{'data'}->{'ifmap-keystore-pass'} = 'ifmapcli';
+
 	$self->_init($args);
 	$self->_check_interface();
 
-	#default values for if-map modules
-	$self->{'ifmap-user'} = 'test';
-	$self->{'ifmap-pass'} = 'test';
-	$self->{'ifmap-url'} = 'https://localhost:8443';
-	$self->{'ifmap-keystore-path'} = '/ifmapcli.jks';
-	$self->{'ifmap-keystore-pass'} = 'ifmapcli';
 
 	return $self;
 }
@@ -55,12 +56,6 @@ sub _check_interface {
 	for my $method (@interface) {
 		$self->can($method) or croak('Sub classes of ' . caller() . ' must implement' . $method . '.');
 	}
-}
-
-#to be deleted
-sub ifmapcliOptions {
-	my $self = shift;
-	return "$self->{'ifmap-url'} $self->{'ifmap-user'} $self->{'ifmap-pass'} $self->{'ifmap-keystore-path'} $self->{'ifmap-keystore-pass'}";
 }
 
 1;
