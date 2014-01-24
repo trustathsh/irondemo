@@ -40,7 +40,6 @@ sub getActions {
         die("could not open $filename\n");
     }
     my @sortedActions = sort { $a->{'args'}->{'time'} <=> $b->{'args'}->{'time'} } @actions;
-
 	return @sortedActions;
 }
 

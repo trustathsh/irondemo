@@ -22,7 +22,7 @@ sub execute {
 	
 	my $name = $data->{'name'};
 	my $role = $data->{'role'};
-	my $access_request = $self->{'access-request'};
+	my $access_request = $data->{'access-request'};
 
 	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
 	
