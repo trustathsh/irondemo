@@ -136,7 +136,7 @@ sub DESTROY {
 
 	#make sure all threads end
 	for my $thread ( @{$self->{'pool'}} ) {
-		$self->get_working_queue()->enqueue(undef);
+		$self->_get_working_queue()->enqueue(undef);
 	}
 	
 	#wait for all threads to finish
