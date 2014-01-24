@@ -26,16 +26,11 @@ sub execute {
 	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
 	
 	# PDP
-	$ENV{'IFMAP_USER'} = $data->{'ifmap-user-pdp'};
-	$ENV{'IFMAP_PASS'} = $data->{'ifmap-pass-pdp'};
-	system("java -jar auth-by.jar update $access_request $pdp");
-	system("java -jar ar-mac.jar update $access_request $mac");
+	system("java -jar auth-by.jar update $access_request $pdp $self->{'ifmap-url'} $data->{'ifmap-user-pdp'} $data->{'ifmap-pass-pdp'} $self->{'ifmap-keystore-path'} $self->{'ifmap-keystore-pass'}");
+	system("java -jar ar-mac.jar update $access_request $mac $self->{'ifmap-url'} $data->{'ifmap-user-pdp'} $data->{'ifmap-pass-pdp'} $self->{'ifmap-keystore-path'} $self->{'ifmap-keystore-pass'}");
 	
 	# DHCP
-	$ENV{'IFMAP_USER'} = $data->{'ifmap-user-dhcp'};
-	$ENV{'IFMAP_PASS'} = $data->{'ifmap-pass-dhcp'};
-	system("java -jar ip-mac.jar update $ip $mac");
-	
+	system("java -jar ip-mac.jar update $ip $mac $self->{'ifmap-url'} $data->{'ifmap-user-dhcp'} $data->{'ifmap-pass-dhcp'} $self->{'ifmap-keystore-path'} $self->{'ifmap-keystore-pass'}");
 }
 
 sub init {

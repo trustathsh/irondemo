@@ -31,7 +31,7 @@ sub getActions {
     if (defined $agenda_file) {
         while( my $line = $agenda_file->getline() ) {
         	next if $line =~ /^\s*#/;
-        	next if $line =~ /^\s*$/; 
+        	next if $line =~ /^\s*$/;
             my $action = parseLine($line);
             push(@actions, $action);
         }
@@ -39,7 +39,9 @@ sub getActions {
     } else {
         die("could not open $filename\n");
     }
-	return @actions;
+    my @sortedActions = sort { $a->{'args'}->{'time'} <=> $b->{'args'}->{'time'} } @actions;
+
+	return @sortedActions;
 }
 
 

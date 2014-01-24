@@ -264,22 +264,52 @@ sub build_scenarios {
 
 sub run_scenario {
 	my @data = TrustAtHsH::Irondemo::AgendaParser->new({'path' => 'resources/agenda-test/generated-agenda.txt'})->getActions();
-	my @jobs;	
-	my $executor = TrustAtHsH::Irondemo::Executor->new;
-	
+
+	# group the actions by time
+	my %groupedActions;
 	for my $action (@data) {
-		my $action_name = "TrustAtHsH::Irondemo::Modules::".$action->{'action'};
-		my $action_args = $action->{'args'};
-		my $module_object = TrustAtHsH::Irondemo::ModuleFactory->loadModule($action_name, $action_args);
-		push @jobs, $module_object;
+		my $time = $action->{'args'}->{'time'};
+		if (defined $groupedActions{$time}) {
+			push $groupedActions{$time}, $action;
+		} else {
+			$groupedActions{$time} = [$action];
+		}
 	}
-	$executor->run_concurrent(@jobs);
-	
-	my $elements = @jobs;
-	my $processed  = 0;
-	while ( $processed < $elements ) {
-		my $result = $executor->get_result_queue()->dequeue();
-		$processed++;
+
+	my $executor = TrustAtHsH::Irondemo::Executor->new;
+
+	my $currentTime = 0;
+	while (%groupedActions) {
+		my @jobs;
+		if (defined $groupedActions{$currentTime}) {
+			my @currentActions = @{$groupedActions{$currentTime}};
+			my $actionCount = @currentActions;
+			print "[irondemo] executing ".$actionCount." actions at $currentTime\n";
+
+			# execut actions for this timestamp
+			for my $action (@currentActions) {
+				my $action_name = "TrustAtHsH::Irondemo::Modules::".$action->{'action'};
+				my $action_args = $action->{'args'};
+				my $module_object = TrustAtHsH::Irondemo::ModuleFactory->loadModule($action_name, $action_args);
+				push @jobs, $module_object;
+			}
+			delete $groupedActions{$currentTime};
+
+			$executor->run_concurrent(@jobs);
+			my $elements = @jobs;
+			my $processed  = 0;
+			while ( $processed < $elements ) {
+				my $result = $executor->get_result_queue()->dequeue();
+				$processed++;
+				print "\r[irondemo] $processed jobs completed";
+			}
+			print "\n";
+			print "[irondemo] all done for $currentTime\n";
+		} else {
+			print "[irondemo] nothing to do at $currentTime ...sleeping...\n";
+		}
+		sleep(1);
+		$currentTime++;
 	}
 }
 

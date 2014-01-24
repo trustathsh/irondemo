@@ -21,13 +21,13 @@ sub execute {
 	my $name = $data->{'name'};
 	my $role = $data->{'role'};
 	my $access_request = $data->{'access-request'};
-	$ENV{'IFMAP_USER'} = $data->{'ifmap-user'};
-	$ENV{'IFMAP_PASS'} = $data->{'ifmap-pass'};
+	$self->{'ifmap-user'} = $data->{'ifmap-user'};
+	$self->{'ifmap-pass'} = $data->{'ifmap-pass'};
 
 	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
 	
-	system("java -jar auth-as.jar update $access_request '$name'");
-	system("java -jar role.jar update $access_request '$name' $role");
+	system("java -jar auth-as.jar update $access_request '$name' ".$self->ifmapcliOptions);
+	system("java -jar role.jar update $access_request '$name' $role ".$self->ifmapcliOptions);
 	
 }
 
