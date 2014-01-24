@@ -14,9 +14,7 @@ use File::Path qw/remove_tree make_path/;
 
 use FindBin;
 use lib "$FindBin::Bin/lib/TrustAtHsH-Irondemo/lib";
-use TrustAtHsH::Irondemo::AgendaParser;
-use TrustAtHsH::Irondemo::ModuleFactory;
-use TrustAtHsH::Irondemo::Executor;
+use TrustAtHsH::Irondemo;
 
 #imports for developement
 use Data::Dumper;
@@ -263,54 +261,9 @@ sub build_scenarios {
 }    #end build_scenarios
 
 sub run_scenario {
-	my @data = TrustAtHsH::Irondemo::AgendaParser->new({'path' => 'resources/agenda-test/generated-agenda.txt'})->getActions();
-
-	# group the actions by time
-	my %groupedActions;
-	for my $action (@data) {
-		my $time = $action->{'args'}->{'time'};
-		if (defined $groupedActions{$time}) {
-			push $groupedActions{$time}, $action;
-		} else {
-			$groupedActions{$time} = [$action];
-		}
-	}
-
-	my $executor = TrustAtHsH::Irondemo::Executor->new;
-
-	my $currentTime = 0;
-	while (%groupedActions) {
-		my @jobs;
-		if (defined $groupedActions{$currentTime}) {
-			my @currentActions = @{$groupedActions{$currentTime}};
-			my $actionCount = @currentActions;
-			print "[irondemo] executing ".$actionCount." actions at $currentTime\n";
-
-			# execut actions for this timestamp
-			for my $action (@currentActions) {
-				my $action_name = "TrustAtHsH::Irondemo::Modules::".$action->{'action'};
-				my $action_args = $action->{'args'};
-				my $module_object = TrustAtHsH::Irondemo::ModuleFactory->loadModule($action_name, $action_args);
-				push @jobs, $module_object;
-			}
-			delete $groupedActions{$currentTime};
-
-			$executor->run_concurrent(@jobs);
-			my $elements = @jobs;
-			my $processed  = 0;
-			while ( $processed < $elements ) {
-				my $result = $executor->get_result_queue()->dequeue();
-				$processed++;
-				print "\r[irondemo] $processed jobs completed";
-			}
-			print "\n";
-			print "[irondemo] all done for $currentTime\n";
-		} else {
-			print "[irondemo] nothing to do at $currentTime ...sleeping...\n";
-		}
-		sleep(1);
-		$currentTime++;
-	}
+	TrustAtHsH::Irondemo->run_agenda({
+		'agenda_path' => File::Spec->catfile($resources_dir, 'agenda-test', 'generated-agenda.txt'),
+	});
 }
 
 sub clean {

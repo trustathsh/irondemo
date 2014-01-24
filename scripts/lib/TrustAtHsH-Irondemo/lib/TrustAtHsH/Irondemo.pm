@@ -4,6 +4,11 @@ use 5.006;
 use strict;
 use warnings;
 
+use lib '..';
+use TrustAtHsH::Irondemo::AgendaParser;
+use TrustAtHsH::Irondemo::Executor;
+use TrustAtHsH::Irondemo::ModuleFactory;
+
 =head1 NAME
 
 TrustAtHsH::Irondemo - The great new TrustAtHsH::Irondemo!
@@ -39,7 +44,60 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =cut
 
-sub function1 {
+sub run_agenda {
+	my $class = shift;
+	my $opts = shift;
+	
+	my @data = TrustAtHsH::Irondemo::AgendaParser->new({
+		'path' => $opts->{'agenda_path'},
+	})->getActions();
+
+	# group the actions by time
+	my %groupedActions;
+	for my $action (@data) {
+		my $time = $action->{'args'}->{'time'};
+		if (defined $groupedActions{$time}) {
+			push $groupedActions{$time}, $action;
+		} else {
+			$groupedActions{$time} = [$action];
+		}
+	}
+
+	my $executor = TrustAtHsH::Irondemo::Executor->new;
+
+	my $currentTime = 0;
+	while (%groupedActions) {
+		my @jobs;
+		if (defined $groupedActions{$currentTime}) {
+			my @currentActions = @{$groupedActions{$currentTime}};
+			my $actionCount = @currentActions;
+			print "[irondemo] executing ".$actionCount." actions at $currentTime\n";
+
+			# execut actions for this timestamp
+			for my $action (@currentActions) {
+				my $action_name = "TrustAtHsH::Irondemo::Modules::".$action->{'action'};
+				my $action_args = $action->{'args'};
+				my $module_object = TrustAtHsH::Irondemo::ModuleFactory->loadModule($action_name, $action_args);
+				push @jobs, $module_object;
+			}
+			delete $groupedActions{$currentTime};
+
+			$executor->run_concurrent(@jobs);
+			my $elements = @jobs;
+			my $processed  = 0;
+			while ( $processed < $elements ) {
+				my $result = $executor->get_result_queue()->dequeue();
+				$processed++;
+				print "\r[irondemo] $processed jobs completed";
+			}
+			print "\n";
+			print "[irondemo] all done for $currentTime\n";
+		} else {
+			print "[irondemo] nothing to do at $currentTime ...sleeping...\n";
+		}
+		sleep(1);
+		$currentTime++;
+	}
 }
 
 =head2 function2
