@@ -33,36 +33,43 @@ sub getActions {
         	next if $line =~ /^\s*#/;
         	next if $line =~ /^\s*$/;
             my $action = parseLine($line);
-            push(@actions, $action);
+            push(@actions, $action) if $action;
         }
         undef $agenda_file;
     } else {
         die("could not open $filename\n");
     }
-    my @sortedActions = sort { $a->{'args'}->{'time'} <=> $b->{'args'}->{'time'} } @actions;
+    my @sortedActions = sort { $a->{'time'} <=> $b->{'time'} } @actions;
 	return @sortedActions;
 }
 
 
 sub parseLine {
     my $line = shift;
-    my ($name, $argsString) = ($line =~ m/(\w+)\((.*)\)/);
-    my $action = {};
-    my $args = {};
-    $action->{'action'} = $name;
-    $action->{'args'} = $args;
+    my @matchedLines = ($line =~ m/^At\s+(\d+)\s+do\s+(\w+)\((.*)\)/);
+    if (@matchedLines) {
+	    my ($time, $name, $argsString) = @matchedLines;
+	    my $action = {};
+	    my $args = {};
+	    $action->{'action'} = $name;
+	    $action->{'time'} = $time;
+	    $action->{'args'} = $args;
 
-    my @argsStrings = split(/,/, $argsString);
-    trimStrings(\@argsStrings);
-    for my $arg (@argsStrings) {
-        my @keyValue = split(/=>/, $arg);
-        trimStrings(\@keyValue);
-        my $key = $keyValue[0];
-        my $value = $keyValue[1];
+	    my @argsStrings = split(/,/, $argsString);
+	    trimStrings(\@argsStrings);
+	    for my $arg (@argsStrings) {
+	        my @keyValue = split(/=>/, $arg);
+	        trimStrings(\@keyValue);
+	        my $key = $keyValue[0];
+	        my $value = $keyValue[1];
 
-        $args->{$key} = $value;
-    }
-    return $action;
+	        $args->{$key} = $value;
+	    }
+	    return $action;
+	} else {
+		# todo log warning
+		return 0;
+	}
 }
 
 

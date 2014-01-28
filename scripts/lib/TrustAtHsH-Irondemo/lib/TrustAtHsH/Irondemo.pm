@@ -55,9 +55,9 @@ sub run_agenda {
 	# group the actions by time
 	my %groupedActions;
 	for my $action (@data) {
-		my $time = $action->{'args'}->{'time'};
+		my $time = $action->{'time'};
 		if (defined $groupedActions{$time}) {
-			push $groupedActions{$time}, $action;
+			push @{$groupedActions{$time}}, $action;
 		} else {
 			$groupedActions{$time} = [$action];
 		}
