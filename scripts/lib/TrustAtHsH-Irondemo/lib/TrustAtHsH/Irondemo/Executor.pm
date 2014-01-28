@@ -42,9 +42,17 @@ sub run {
 	my $self = shift;
 	
 	my $job  = shift;
+	my $return;
 	
 	$log->debug('Executing 1 module');
-	return $job->execute();
+	my $return = $job->execute();
+	
+	if ($result) {
+			$log->debug("Thread $tid: ... execution returned SUCCESS");
+	} else {
+			$log->debug("Thread $tid: ... execution returned FAILURE");
+	}
+	return $return;
 }
 
 
@@ -153,6 +161,7 @@ sub _get_working_queue {
 # Comments    : 
 sub DESTROY {
 	my $self = shift;
+	my $joined;
 
 	#make sure all threads end
 	for my $thread ( @{$self->{'pool'}} ) {
@@ -162,7 +171,10 @@ sub DESTROY {
 	$log->debug('Waiting for all threads to finish');
 	#wait for all threads to finish
 	for my $thread ( @{$self->{'pool'}} ) {
+		my $tid = $thread->tid();
 		$thread->join;
+		$joined++;
+		$log->debug("Joined thread $tid ($joined of $self->{'threads'} threads joined)")
 	}
 	$log->debug('All threads joined successfully');
 }
