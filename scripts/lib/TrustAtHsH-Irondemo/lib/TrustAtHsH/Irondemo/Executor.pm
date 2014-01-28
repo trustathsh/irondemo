@@ -6,7 +6,10 @@ use warnings;
 use threads;
 use Thread::Queue;
 use Carp qw(croak);
+use Log::Log4perl;
 use Scalar::Util qw(blessed);
+
+my $log = Log::Log4perl->get_logger();
 
 ### CONSTRUCTOR ###
 # Purpose    : Constructor
@@ -40,6 +43,7 @@ sub run {
 	
 	my $job  = shift;
 	
+	$log->debug('Executing 1 module');
 	return $job->execute();
 }
 
@@ -51,9 +55,10 @@ sub run {
 # Comments    :
 sub run_concurrent {
 	my $self = shift;
-	
 	my @jobs = @_;
 	
+	
+	$log->debug('Executing ' . @jobs . ' module(s) concurrently');
 	for my $job ( @jobs ) {
 		$self->_get_working_queue->enqueue($job);
 	}
@@ -83,6 +88,7 @@ sub _create_thread_pool {
 	my $threads = $self->{'threads'};
 	my @pool;
 	
+	$log->debug("Creating threadpool with $threads threads");
 	for (1..$threads) {
 		my $thread = threads->create(
 			\&_worker, $self->_get_working_queue(),
@@ -106,10 +112,24 @@ sub _worker {
 
 	while( my $job = $Qwork->dequeue ) {
 		my $class = blessed $job;
+		
 		eval "require $class";
+		if (my $error = @$) {
+			$log->error("Thread $tid: Cannot load $class: $@");
+			croak($error);
+		};
+		
+		$log->debug("Thread $tid: Executing $class ...");
 		my $result = $job->execute();
+		
+		if ($result) {
+			$log->debug("Thread $tid: ... execution returned SUCCESS");
+		} else {
+			$log->debug("Thread $tid: ... execution returned FAILURE");
+		}
 		$Qresults->enqueue( {$tid => $result} );
 	}
+	$log->debug("Thread $tid has finished, ready to join");
 	return $tid;
 }
 
@@ -139,10 +159,12 @@ sub DESTROY {
 		$self->_get_working_queue()->enqueue(undef);
 	}
 	
+	$log->debug('Waiting for all threads to finish');
 	#wait for all threads to finish
 	for my $thread ( @{$self->{'pool'}} ) {
 		$thread->join;
 	}
+	$log->debug('All threads joined successfully');
 }
 
 
