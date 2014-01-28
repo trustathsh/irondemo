@@ -8,6 +8,8 @@ license  'apache';
 build_requires 'Test::More';
 build_requires 'Test::Kwalitee';
 
+requires 'Log::Log4perl';
+
 auto_install;
 
 WriteAll;

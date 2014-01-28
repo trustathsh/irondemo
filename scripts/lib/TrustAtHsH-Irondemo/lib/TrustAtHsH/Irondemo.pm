@@ -8,6 +8,7 @@ use lib '..';
 use TrustAtHsH::Irondemo::AgendaParser;
 use TrustAtHsH::Irondemo::Executor;
 use TrustAtHsH::Irondemo::ModuleFactory;
+use Log::Log4perl;
 
 =head1 NAME
 
@@ -20,7 +21,8 @@ Version 0.01
 =cut
 
 our $VERSION = '0.01';
-
+my $VERBOSE  = 1;
+my $log      = Log::Log4perl->get_logger();
 
 =head1 SYNOPSIS
 
@@ -44,10 +46,29 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =cut
 
+sub _init() {
+	my $class = shift;
+	
+	my $format;
+	if ($VERBOSE) {
+		$format = '%d %M: %m %n';
+	} else {
+		$format = '%m %n';
+	}
+	#	"%F "
+	Log::Log4perl->easy_init({
+		file     => 'STDERR',
+		layout   => '[irondemo] ' . $format, 
+	});
+}
+
 sub run_agenda {
 	my $class = shift;
 	my $opts = shift;
 	
+	_init();
+
+	$log->debug("Calling AgendaParser ...");
 	my @data = TrustAtHsH::Irondemo::AgendaParser->new({
 		'path' => $opts->{'agenda_path'},
 	})->getActions();
