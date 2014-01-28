@@ -44,15 +44,15 @@ sub run {
 	my $job  = shift;
 	my $return;
 	
-	$log->debug('Executing 1 module');
-	my $return = $job->execute();
+	$log->debug('Executing 1 module ...');
+	my $result = $job->execute();
 	
 	if ($result) {
-			$log->debug("Thread $tid: ... execution returned SUCCESS");
+			$log->debug("... execution returned SUCCESS");
 	} else {
-			$log->debug("Thread $tid: ... execution returned FAILURE");
+			$log->debug(" ... execution returned FAILURE");
 	}
-	return $return;
+	return $result;
 }
 
 
