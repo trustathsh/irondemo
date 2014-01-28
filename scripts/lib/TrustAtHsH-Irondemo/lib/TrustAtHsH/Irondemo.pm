@@ -92,7 +92,7 @@ sub run_agenda {
 		if (defined $groupedActions{$currentTime}) {
 			my @currentActions = @{$groupedActions{$currentTime}};
 			my $actionCount = @currentActions;
-			print "[irondemo] executing ".$actionCount." actions at $currentTime\n";
+			$log->info("Executing ".$actionCount." actions at $currentTime");
 
 			# execut actions for this timestamp
 			for my $action (@currentActions) {
@@ -109,12 +109,10 @@ sub run_agenda {
 			while ( $processed < $elements ) {
 				my $result = $executor->get_result_queue()->dequeue();
 				$processed++;
-				print "\r[irondemo] $processed jobs completed";
 			}
-			print "\n";
-			print "[irondemo] all done for $currentTime\n";
+			$log->info("All done for $currentTime");
 		} else {
-			print "[irondemo] nothing to do at $currentTime ...sleeping...\n";
+			$log->info("Nothing to do at $currentTime ...sleeping...");
 		}
 		sleep(1);
 		$currentTime++;
