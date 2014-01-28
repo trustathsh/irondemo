@@ -8,6 +8,9 @@ use Carp qw(croak);
 use Data::Dumper;
 use IO::File;
 
+use Log::Log4perl;
+
+my $log = Log::Log4perl->get_logger();
 
 sub new {
 	my $class = shift;
@@ -46,7 +49,7 @@ sub getActions {
 
 sub parseLine {
     my $line = shift;
-    my @matchedLines = ($line =~ m/^At\s+(\d+)\s+do\s+(\w+)\((.*)\)/);
+    my @matchedLines = ($line =~ m/^\s*At\s+(\d+)\s+do\s+(\w+)\((.*)\)/);
     if (@matchedLines) {
 	    my ($time, $name, $argsString) = @matchedLines;
 	    my $action = {};
@@ -67,7 +70,7 @@ sub parseLine {
 	    }
 	    return $action;
 	} else {
-		# todo log warning
+		$log->warn("Could not parse line $line");
 		return 0;
 	}
 }
