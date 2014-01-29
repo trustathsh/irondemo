@@ -7,8 +7,20 @@ use Carp qw(croak);
 use File::Spec;
 use File::Basename;
 use lib '../../../';
-use parent 'TrustAtHsH::Irondemo::AbstractModule';
+use parent 'TrustAtHsH::Irondemo::AbstractIfmapCliModule';
 
+
+my $ACCESS_REQUEST = 'access-request';
+my $PDP = 'pdp';
+my $MAC = 'mac';
+my $IP = 'ip-address';
+my $USER_PDP = 'ifmap-user-pdp';
+my $PASS_PDP = 'ifmap-pass-pdp';
+my $USER_DHCP = 'ifmap-user-dhcp';
+my $PASS_DHCP = 'ifmap-pass-dhcp';
+
+my @REQUIRED_ARGS = (
+	$ACCESS_REQUEST, $PDP, $MAC, $IP, $USER_PDP, $PASS_PDP, $USER_DHCP, $PASS_DHCP);
 
 ### INSTANCE METHOD ###
 # Purpose     :
@@ -18,23 +30,21 @@ use parent 'TrustAtHsH::Irondemo::AbstractModule';
 sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
-	
-	my $ifmapcli_path = File::Spec->catdir($ENV{'HOME'}, "ifmapcli");
-	
-	my $pdp = $data->{'pdp'};
-	my $access_request = $data->{'access-request'};
-	my $mac = $data->{'mac'};
-	my $ip = $data->{'ip-address'};
 
-	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
-	
-	# PDP
-	system("java -jar auth-by.jar update $access_request $pdp $data->{'ifmap-url'} $data->{'ifmap-user-pdp'} $data->{'ifmap-pass-pdp'} $data->{'ifmap-keystore-path'} $data->{'ifmap-keystore-pass'}");
-	system("java -jar ar-mac.jar update $access_request $mac $data->{'ifmap-url'} $data->{'ifmap-user-pdp'} $data->{'ifmap-pass-pdp'} $data->{'ifmap-keystore-path'} $data->{'ifmap-keystore-pass'}");
-	
-	# DHCP
-	system("java -jar ip-mac.jar update $ip $mac $data->{'ifmap-url'} $data->{'ifmap-user-dhcp'} $data->{'ifmap-pass-dhcp'} $data->{'ifmap-keystore-path'} $data->{'ifmap-keystore-pass'}");
-	#TODO check system's exit statuses and return something meaningful
+	my @argsListAuthBy = ($data->{$ACCESS_REQUEST}, $data->{$PDP});
+	my $connectionUserPdp = {
+		"ifmap-user" => $data->{$USER_PDP},
+		"ifmap-pass" => $data->{$PASS_PDP}};
+	my @argsListArMac = ($data->{$ACCESS_REQUEST}, $data->{$MAC});
+
+	my @argsListIpMac = ($data->{$IP}, $data->{$MAC});
+	my $connectionUserDhcp = {
+		"ifmap-user" => $data->{$USER_DHCP},
+		"ifmap-pass" => $data->{$PASS_DHCP}};
+
+	$self->callIfmapCli("auth-by", "update", \@argsListAuthBy, $connectionUserPdp);
+	$self->callIfmapCli("ar-mac", "update", \@argsListArMac, $connectionUserPdp);
+	$self->callIfmapCli("ip-mac", "update", \@argsListIpMac, $connectionUserDhcp);
 }
 
 ### INTERNAL UTILITY ###
@@ -54,7 +64,8 @@ sub execute {
 sub _init {
 	my $self = shift;
 	my $args = shift;
-	#TODO should check if needed parameters have been defined or set defaults 
+
+	$self->_checkArgs(\@REQUIRED_ARGS, $args);
 	while ( my ($key, $val) = each %{$args} ) {
 		$self->{'data'}->{$key} = $val;
 	}

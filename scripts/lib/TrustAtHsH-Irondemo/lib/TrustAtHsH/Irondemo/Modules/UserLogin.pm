@@ -7,7 +7,18 @@ use Carp qw(croak);
 use File::Spec;
 use File::Basename;
 use lib '../../../';
-use parent 'TrustAtHsH::Irondemo::AbstractModule';
+use parent 'TrustAtHsH::Irondemo::AbstractIfmapCliModule';
+
+
+my $ACCESS_REQUEST = 'access-request';
+my $ROLE = 'role';
+my $NAME = 'name';
+my $IFMAP_USER = 'ifmap-user';
+my $IFMAP_PASS = 'ifmap-pass';
+
+my @REQUIRED_ARGS = (
+	$ACCESS_REQUEST, $ROLE, $NAME, $IFMAP_USER, $IFMAP_PASS);
+
 
 ### INSTANCE METHOD ###
 # Purpose     :
@@ -17,18 +28,17 @@ use parent 'TrustAtHsH::Irondemo::AbstractModule';
 sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
-	
-	my $ifmapcli_path = File::Spec->catdir($ENV{'HOME'}, "ifmapcli");
-	
-	my $name = $data->{'name'};
-	my $role = $data->{'role'};
-	my $access_request = $data->{'access-request'};
 
-	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
-	
-	system("java -jar auth-as.jar update $access_request '$name' ".$self->ifmapcliOptions);
-	system("java -jar role.jar update $access_request '$name' $role ".$self->ifmapcliOptions);
-	#TODO check system's exit statuses and return something meaningful
+	my @argsList = ($data->{$ACCESS_REQUEST}, $data->{$NAME});
+	my $connectionArgs = {
+		"ifmap-user" => $data->{$IFMAP_USER},
+		"ifmap-pass" => $data->{$IFMAP_PASS}
+	};
+
+	my @argsListRole = ($data->{$ACCESS_REQUEST}, $data->{$NAME}, $data->{$ROLE});
+
+	$self->callIfmapCli("auth-as", "update", \@argsList, $connectionArgs);
+	$self->callIfmapCli("role", "update", \@argsListRole, $connectionArgs);
 }
 
 ### INTERNAL UTILITY ###
@@ -48,17 +58,12 @@ sub execute {
 sub _init {
 	my $self = shift;
 	my $args = shift;
-	
-	#TODO should check if needed parameters have been defined or set defaults 
+
+	$self->_checkArgs(\@REQUIRED_ARGS, $args);
 	while ( my ($key, $val) = each %{$args} ) {
 		$self->{'data'}->{$key} = $val;
 	}
 }
 
-#to be removed
-sub ifmapcliOptions {
-	my $self = shift;
-	return "$self->{'data'}->{'ifmap-url'} $self->{'data'}->{'ifmap-user'} $self->{'data'}->{'ifmap-pass'} $self->{'data'}->{'ifmap-keystore-path'} $self->{'data'}->{'ifmap-keystore-pass'}";
-}
 
 1;

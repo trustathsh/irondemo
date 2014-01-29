@@ -4,8 +4,11 @@ use 5.006;
 use strict;
 use warnings;
 use Carp qw(croak);
+use Log::Log4perl;
 
 my @interface = qw[execute];
+
+my $log = Log::Log4perl->get_logger();
 
 
 ### CONSTRUCTOR ###
@@ -42,6 +45,25 @@ sub new {
 # Comments    :
 sub _init {
 	croak(caller() . ' is an abstract base class and must not be instantiated.');
+}
+
+
+### INTERNAL UTILITY ###
+# Purpose     : Check if all required arguments are available
+# Returns     : Nothing, throws exception if required argument is missing
+# Parameters  : required and given argument lists
+# Comments    :
+sub _checkArgs {
+	my $self = shift;
+	my $required = shift;
+	my $actual = shift;
+	for my $req (@{$required}) {
+		if (!defined $actual->{$req}) {
+			my $error = "required argument '$req' not found";
+			$log->error($error);
+			croak($error);
+		}
+	}
 }
 
 
