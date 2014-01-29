@@ -52,14 +52,14 @@ sub _init() {
 	
 	my $format;
 	if ($VERBOSE) {
-		$format = '%d %M: %m %n';
+		$format = '%d %M: %m{chomp} %n';
 	} else {
-		$format = '%m %n';
+		$format = '%m{chomp} %n';
 	}
 	#	"%F "
 	Log::Log4perl->easy_init({
 		file     => 'STDERR',
-		layout   => '[irondemo] ' . $format, 
+		layout   => '[irondemo] %p: ' . $format, 
 	});
 }
 
