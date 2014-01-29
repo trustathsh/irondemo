@@ -8,6 +8,7 @@ use File::Spec;
 use File::Basename;
 use Log::Log4perl;
 use IPC::Run qw(run);
+use Try::Tiny;
 use lib '../../';
 use parent 'TrustAtHsH::Irondemo::AbstractModule';
 
@@ -45,8 +46,14 @@ sub callIfmapCli {
 	push @command, @{$argsList};
 	
 	$log->debug("Executing '@command'");
-	my ($out, $err);
-	my $result = run \@command, '>', sub {$log->debug(@_)}, '2>', sub {$log->error(@_)};
+	my $result;
+	try {
+		$result = run \@command, '>', sub {$log->debug(@_)}, '2>', sub {$log->error(@_)};
+	} catch {
+		my $error = $_;
+		log->error("Execution of $cli_tool failed: $error");
+		croak($error);
+	};
 	$log->debug("Executed '$cli_tool', exit code is '$result'");
 
 	return $result;
