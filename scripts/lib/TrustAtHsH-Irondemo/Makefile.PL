@@ -9,6 +9,8 @@ build_requires 'Test::More';
 build_requires 'Test::Kwalitee';
 
 requires 'Log::Log4perl';
+requires 'Try::Tiny';
+requires 'IPC::Run';
 
 auto_install;
 

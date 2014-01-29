@@ -8,6 +8,7 @@ use lib '..';
 use TrustAtHsH::Irondemo::AgendaParser;
 use TrustAtHsH::Irondemo::Executor;
 use TrustAtHsH::Irondemo::ModuleFactory;
+use Try::Tiny;
 use Log::Log4perl;
 
 =head1 NAME
@@ -94,16 +95,24 @@ sub run_agenda {
 			my $actionCount = @currentActions;
 			$log->info("Executing ".$actionCount." actions at $currentTime");
 
-			# execut actions for this timestamp
+			# execute actions for this timestamp
 			for my $action (@currentActions) {
 				my $action_name = "TrustAtHsH::Irondemo::Modules::".$action->{'action'};
 				my $action_args = $action->{'args'};
-				my $module_object = TrustAtHsH::Irondemo::ModuleFactory->loadModule($action_name, $action_args);
-				push @jobs, $module_object;
+				my $module_object;
+				try {
+					$module_object = TrustAtHsH::Irondemo::ModuleFactory->loadModule($action_name, $action_args); 
+					push @jobs, $module_object;
+				} catch {
+					$log->info("Module $ $action_name failed to load");
+				};
 			}
 			delete $groupedActions{$currentTime};
-
-			$executor->run_concurrent(@jobs);
+			try {
+				$executor->run_concurrent(@jobs);
+			} catch {
+				$log->info("Some modules failed to execute");
+			};
 			my $elements = @jobs;
 			my $processed  = 0;
 			while ( $processed < $elements ) {
