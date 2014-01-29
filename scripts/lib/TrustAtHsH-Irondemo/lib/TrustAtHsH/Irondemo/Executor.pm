@@ -8,6 +8,7 @@ use Thread::Queue;
 use Carp qw(croak);
 use Log::Log4perl;
 use Scalar::Util qw(blessed);
+use Try::Tiny;
 
 my $log = Log::Log4perl->get_logger();
 
@@ -121,9 +122,11 @@ sub _worker {
 	while( my $job = $Qwork->dequeue ) {
 		my $class = blessed $job;
 		
-		eval "require $class";
-		if (my $error = @$) {
-			$log->error("Thread $tid: Cannot load $class: $@");
+		try {
+			eval "require $class";
+		} catch {
+			my$error = $_;
+			$log->error("Thread $tid: Cannot load $class: $error");
 			croak($error);
 		};
 		
