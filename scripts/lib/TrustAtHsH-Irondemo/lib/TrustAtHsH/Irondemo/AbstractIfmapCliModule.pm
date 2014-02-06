@@ -18,7 +18,7 @@ my $log = Log::Log4perl->get_logger();
 
 ### INSTANCE METHOD ###
 # Purpose     : Calls the ifmapcli command-line tool.
-# Returns     : Exit code of ifmapcli call
+# Returns     : True value on success, false value on failure
 # Parameters  : ifmapcli tool name (required)
 #				mode of the ifmapcli call, publish/delete (required)
 #				argument list for the ifmapcli tool (required)
