@@ -72,7 +72,7 @@ sub run_agenda {
 	$log->debug("Calling AgendaParser ...");
 	my @data = TrustAtHsH::Irondemo::AgendaParser->new({
 		'path' => $opts->{'agenda_path'},
-	})->getActions();
+	})->get_actions();
 
 	# group the actions by time
 	my %groupedActions;
