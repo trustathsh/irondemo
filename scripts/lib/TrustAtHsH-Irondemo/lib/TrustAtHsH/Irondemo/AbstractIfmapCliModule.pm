@@ -54,8 +54,6 @@ sub callIfmapCli {
 		log->error("Execution of $cli_tool failed: $error");
 		croak($error);
 	};
-	$log->debug("Executed '$cli_tool', exit code is '$result'");
-
 	return $result;
 }
 
