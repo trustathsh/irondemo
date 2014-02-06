@@ -138,7 +138,11 @@ sub _worker {
 		} else {
 			$log->debug("Thread $tid: ... execution returned FAILURE");
 		}
-		$Qresults->enqueue( {$tid => $result} );
+		$Qresults->enqueue({
+			'tid'    => $tid,
+			'result' => $result,
+			'module' => $class,
+		});
 	}
 	$log->debug("Thread $tid has finished, ready to join");
 	return $tid;

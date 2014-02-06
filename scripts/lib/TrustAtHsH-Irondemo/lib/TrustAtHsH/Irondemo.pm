@@ -9,7 +9,7 @@ use TrustAtHsH::Irondemo::AgendaParser;
 use TrustAtHsH::Irondemo::Executor;
 use TrustAtHsH::Irondemo::ModuleFactory;
 use Try::Tiny;
-use Log::Log4perl;
+use Log::Log4perl qw(:easy);
 
 =head1 NAME
 
@@ -60,6 +60,7 @@ sub _init() {
 	Log::Log4perl->easy_init({
 		file     => 'STDERR',
 		layout   => '[irondemo] %p: ' . $format, 
+		level    => $INFO,
 	});
 }
 
@@ -117,6 +118,11 @@ sub run_agenda {
 			my $processed  = 0;
 			while ( $processed < $elements ) {
 				my $result = $executor->get_result_queue()->dequeue();
+				if ($result->{'result'}) {
+					$log->info("Thread " . $result->{'tid'} . " reports SUCCESS executing " . $result->{'module'});
+				} else {
+					$log->info("Thread " . $result->{'tid'} . " reports FAILURE executing " . $result->{'module'});
+				}
 				$processed++;
 			}
 			$log->info("All done for $currentTime");
