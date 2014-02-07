@@ -24,7 +24,7 @@ our $VERSION = '0.2';
 #process commandline options
 my %options;
 Getopt::Long::Configure( 'gnu_getopt', 'auto_help', 'auto_version' );
-GetOptions( \%options, 'clean', 'man', 'agenda=s', 'threadpool-size=i');
+GetOptions( \%options, 'clean', 'man', 'agenda=s', 'threadpool-size=i', 'timescale=i');
 
 pod2usage( -exitval => 0, -verbose => 2 ) if $options{'man'};
 
@@ -282,9 +282,10 @@ sub run_scenario {
 		
 		my $agenda = $options{'agenda'} || 'agenda.txt';
 		TrustAtHsH::Irondemo->run_agenda({
-			'agenda_path'    => File::Spec->catfile($scenario_dir, $agenda),
-			'modules_config' => $modules_config,
+			'agenda_path'     => File::Spec->catfile($scenario_dir, $agenda),
+			'modules_config'  => $modules_config,
 			'threadpool_size' => $options{'threadpool-size'},
+			'timescale'       => $options{'timescale'},
 		});
 	}
 }

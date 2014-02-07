@@ -72,6 +72,7 @@ sub run_agenda {
 	my $opts            = shift;
 	my $agenda_path     = $opts->{'agenda_path'};
 	my $modules_config  = $opts->{'modules_config'};
+	my $timescale       = $opts->{'timescale'} || 1;
 	my %modules_aliases;
 	
 	while ( my ($module, $params) = each %$modules_config ) {
@@ -154,7 +155,7 @@ sub run_agenda {
 		} else {
 			$log->info("Nothing to do at $currentTime ...sleeping...");
 		}
-		sleep(1);
+		sleep($timescale);
 		$currentTime++;
 	}
 }
