@@ -39,12 +39,30 @@ sub callIfmapCli {
 	my $pass = $connection_args->{'ifmap-pass'} || $data->{'ifmap-pass'};
 	my $keystorePath = $connection_args->{'ifmap-keystore-path'} || $data->{'ifmap-keystore-path'};
 	my $keystorePass = $connection_args->{'ifmap-keystore-pass'} || $data->{'ifmap-keystore-pass'};
+	my $verbosity = '-v';
 
 	#construct array with command and argument list
 	my @command =  qw (java -jar);
 	push @command, $cli_jar, $mode;
 	push @command, @{$argsList};
-	
+
+	push @command, '--url';
+	push @command, $url;
+
+	push @command, '--user';
+	push @command, $user;
+
+	push @command, '--pass';
+	push @command, $pass;
+
+	push @command, '--keystore-path';
+	push @command, $keystorePath;
+
+	push @command, '--keystore-pass';
+	push @command, $keystorePass;
+
+	push @command, $verbosity;
+
 	$log->debug("Executing '@command'");
 	my $result;
 	try {
