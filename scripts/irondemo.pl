@@ -24,7 +24,7 @@ our $VERSION = '0.2';
 #process commandline options
 my %options;
 Getopt::Long::Configure( 'gnu_getopt', 'auto_help', 'auto_version' );
-GetOptions( \%options, 'clean', 'man' );
+GetOptions( \%options, 'clean', 'man', 'agenda=s');
 
 pod2usage( -exitval => 0, -verbose => 2 ) if $options{'man'};
 
@@ -74,6 +74,9 @@ elsif ( $command eq 'scenario' )     {
 	%return = build_scenarios();
 }
 elsif ( $command eq 'run_scenario' ) {
+	if ( @targets < 1) {
+		die "ERROR! run_scenario must be called with at least one argument";
+	}
 	run_scenario();
 }
 else {
@@ -268,10 +271,21 @@ sub build_scenarios {
 }    #end build_scenarios
 
 sub run_scenario {
-	TrustAtHsH::Irondemo->run_agenda({
-		'agenda_path'   => File::Spec->catfile($resources_dir, 'agenda-test', 'generated-agenda.txt'),
-		'modules_config' => $modules_config,
-	});
+	for my $scenario (@targets) {
+		my (
+			$scenario_config_fh, $scenario_config,        $scenario_config_file,
+			$scenario_dir,       $scenario_resources_dir, $build_dir
+		);
+		$scenario_dir           = File::Spec->catdir( $scenarios_dir, $scenario );
+		$scenario_resources_dir = File::Spec->catdir( $resources_dir, $scenario );
+		$scenario_config_file = File::Spec->catfile( $config_dir, $scenario . '.yaml' );
+		
+		my $agenda = $options{'agenda'} || 'agenda.txt';
+		TrustAtHsH::Irondemo->run_agenda({
+			'agenda_path'   => File::Spec->catfile($scenario_dir, $agenda),
+			'modules_config' => $modules_config,
+		});
+	}
 }
 
 sub clean {
