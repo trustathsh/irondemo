@@ -10,6 +10,10 @@ use TrustAtHsH::Irondemo::Executor;
 use TrustAtHsH::Irondemo::ModuleFactory;
 use Try::Tiny;
 use Log::Log4perl qw(:easy);
+use Storable qw(dclone);
+
+#for developement only
+use Data::Dumper;
 
 =head1 NAME
 
@@ -47,8 +51,7 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =cut
 
-sub _init() {
-	my $class = shift;
+sub _init_logging {
 	
 	my $format;
 	if ($VERBOSE) {
@@ -65,15 +68,23 @@ sub _init() {
 }
 
 sub run_agenda {
-	my $class = shift;
-	my $opts = shift;
+	my $class           = shift;
+	my $opts            = shift;
+	my $agenda_path     = $opts->{'agenda_path'};
+	my $modules_config  = $opts->{'modules_config'};
+	my %modules_aliases;
 	
-	_init();
+	while ( my ($module, $params) = each %$modules_config ) {
+		my $alias = $params->{'alias'};
+		$modules_aliases{$alias} = $module if defined $alias;
+	}
+	
+	_init_logging();
 
 	$log->debug("Calling AgendaParser ...");
 	my @data = TrustAtHsH::Irondemo::AgendaParser->new({
-		'path' => $opts->{'agenda_path'},
-	})->get_actions();
+		'path' => $agenda_path,
+	})->getActions();
 
 	# group the actions by time
 	my %groupedActions;
@@ -98,9 +109,21 @@ sub run_agenda {
 
 			# execute actions for this timestamp
 			for my $action (@currentActions) {
-				my $action_name = "TrustAtHsH::Irondemo::Modules::".$action->{'action'};
-				my $action_args = $action->{'args'};
+				my $action_name;
+				my $action_args;
 				my $module_object;
+
+				if ( defined $modules_aliases{$action->{'action'}} ) {
+					$action_name = $modules_aliases{$action->{'action'}};
+				} else {
+					$action_name = $action->{'action'};
+				}
+				if ( defined $modules_config->{$action_name} && defined $modules_config->{$action_name}->{'config'} ) {
+					$action_args = dclone($modules_config->{$action_name}->{config});
+				}
+				while ( my ($key, $value) = each %{$action->{'args'}} ) {
+					$action_args->{$key} = $action->{'args'}->{$key};
+				};
 				try {
 					$module_object = TrustAtHsH::Irondemo::ModuleFactory->loadModule($action_name, $action_args); 
 					push @jobs, $module_object;

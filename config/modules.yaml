@@ -1,0 +1,27 @@
+"TrustAtHsH::Irondemo::Modules::DeviceConnects":
+  alias: DeviceConnects
+  config:
+    ifmap-user-pdp: pdp
+    ifmap-pass-pdp: pdp
+    ifmap-user-dhcp: dhcp
+    ifmap-pass-dhcp: dhcp
+
+"TrustAtHsH::Irondemo::Modules::DeviceDisconnects":
+  alias: DeviceDisconnects
+  config:
+    ifmap-user-pdp: pdp
+    ifmap-pass-pdp: pdp
+    ifmap-user-dhcp: dhcp
+    ifmap-pass-dhcp: dhcp
+
+"TrustAtHsH::Irondemo::Modules::UserLogin":
+  alias: UserLogin
+  config:
+    ifmap-user: test
+    ifmap-pass: test
+
+"TrustAtHsH::Irondemo::Modules::UserLogout":
+  alias: UserLogout
+  config:
+    ifmap-user: test
+    ifmap-pass: test

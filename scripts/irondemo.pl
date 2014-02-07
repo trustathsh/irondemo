@@ -30,26 +30,33 @@ pod2usage( -exitval => 0, -verbose => 2 ) if $options{'man'};
 
 #initialize files and paths
 my (
-	$config_file, $config_dir,  $resources_dir, $scenarios_dir,
-	$project_dir, $scripts_dir, $sources_dir
+	$projects_conf_file, $config_dir,  $resources_dir, $scenarios_dir,
+	$project_dir, $scripts_dir, $sources_dir, $modules_conf_file,
 );
-$project_dir = File::Spec->rel2abs( File::Spec->updir, dirname(__FILE__) );
-$scripts_dir   = File::Spec->catdir( $project_dir, 'scripts' );
-$sources_dir   = File::Spec->catdir( $project_dir, 'sources' );
-$scenarios_dir = File::Spec->catdir( $project_dir, 'scenarios' );
-$resources_dir = File::Spec->catdir( $project_dir, 'resources' );
-$config_dir    = File::Spec->catdir( $project_dir, 'config' );
-$config_file = File::Spec->catfile( $config_dir, 'projects.yaml' );
+$project_dir        = File::Spec->rel2abs( File::Spec->updir, dirname(__FILE__) );
+$scripts_dir        = File::Spec->catdir( $project_dir, 'scripts' );
+$sources_dir        = File::Spec->catdir( $project_dir, 'sources' );
+$scenarios_dir      = File::Spec->catdir( $project_dir, 'scenarios' );
+$resources_dir      = File::Spec->catdir( $project_dir, 'resources' );
+$config_dir         = File::Spec->catdir( $project_dir, 'config' );
+$projects_conf_file = File::Spec->catfile( $config_dir, 'projects.yaml' );
+$modules_conf_file  = File::Spec->catfile( $config_dir, 'modules.yaml' );
 
 mkdir($sources_dir)   unless ( -d $sources_dir );
 mkdir($scenarios_dir) unless ( -d $scenarios_dir );
 
-#read config file
-my $config_fh;
-open( $config_fh, '<', "$config_file" ) or die "Could not open config file $config_file: $! \n";
-my $config = LoadFile($config_fh);
+#read projects config file
+my $projects_conf_fh;
+open( $projects_conf_fh, '<', "$projects_conf_file" ) or die "Could not open config file $projects_conf_file: $! \n";
+my $projects_config = LoadFile($projects_conf_fh);
+close $projects_conf_fh;
 
-#close $config_fh;
+#read modules config file
+my $modules_conf_fh;
+open( $modules_conf_fh, '<', "$modules_conf_file" ) or die "Could not open config file $modules_conf_file: $! \n";
+my $modules_config = LoadFile($modules_conf_fh);
+close $modules_conf_fh;
+
 
 #dispatch command
 my $command = shift;
@@ -86,17 +93,17 @@ sub update_sources {
 
 	#if no project was supplied on the commandline, let's update all of them
 	if ( @targets < 1 ) {
-		@targets = keys %$config;
+		@targets = keys %$projects_config;
 	}
 
 	for my $project (@targets) {
-		unless ( $config->{$project} ) {
+		unless ( $projects_config->{$project} ) {
 			warn "Sorry, dont know $project, skipping ... \n";
 			next;
 		}
 
-		my $scm = $config->{$project}->{sources}->{scm};
-		my $url = $config->{$project}->{sources}->{uri};
+		my $scm = $projects_config->{$project}->{sources}->{scm};
+		my $url = $projects_config->{$project}->{sources}->{uri};
 		clean( File::Spec->catdir( $sources_dir, $project ) );
 
 		print "\n\n";
@@ -139,10 +146,10 @@ sub build_sources {
 
 	#if no project was supplied on the commandline, let's build all of them
 	if ( @targets < 1 ) {
-		@targets = keys %$config;
+		@targets = keys %$projects_config;
 	}
 	for my $project (@targets) {
-		my @commands = @{ $config->{$project}->{build}->{commands} };
+		my @commands = @{ $projects_config->{$project}->{build}->{commands} };
 
 		print "\n\n";
 		print "||||| Looking for source directory of: $project |||||\n";
@@ -152,7 +159,7 @@ sub build_sources {
 			chdir( File::Spec->catdir( $sources_dir, $project ) )
 			  or die "Could not change directory: $! \n";
 			if ( $options{clean} ) {
-				if ( $config->{$project}->{build}->{tool} =~ /mvn/ ) {
+				if ( $projects_config->{$project}->{build}->{tool} =~ /mvn/ ) {
 					system 'mvn clean';
 				}
 			}
@@ -199,9 +206,9 @@ sub build_scenarios {
 			print "$id \n";
 
 			#figure out which binary/archive to use
-			if ( $config->{$id}->{binaries}->{path} ) {
+			if ( $projects_config->{$id}->{binaries}->{path} ) {
 				$build_dir =
-				  File::Spec->catdir( $sources_dir, $id, $config->{$id}->{binaries}->{path} );
+				  File::Spec->catdir( $sources_dir, $id, $projects_config->{$id}->{binaries}->{path} );
 			}
 			else {
 				$build_dir = File::Spec->catdir( $sources_dir, $id, 'target' );
@@ -262,7 +269,8 @@ sub build_scenarios {
 
 sub run_scenario {
 	TrustAtHsH::Irondemo->run_agenda({
-		'agenda_path' => File::Spec->catfile($resources_dir, 'agenda-test', 'generated-agenda.txt'),
+		'agenda_path'   => File::Spec->catfile($resources_dir, 'agenda-test', 'generated-agenda.txt'),
+		'modules_config' => $modules_config,
 	});
 }
 
