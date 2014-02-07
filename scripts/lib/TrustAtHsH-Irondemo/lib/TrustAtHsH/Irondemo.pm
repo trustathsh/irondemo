@@ -97,7 +97,9 @@ sub run_agenda {
 		}
 	}
 
-	my $executor = TrustAtHsH::Irondemo::Executor->new;
+	my $executor = TrustAtHsH::Irondemo::Executor->new({
+		'threadpool_size' => $opts->{'threadpool_size'}
+	});
 
 	my $currentTime = 0;
 	while (%groupedActions) {
