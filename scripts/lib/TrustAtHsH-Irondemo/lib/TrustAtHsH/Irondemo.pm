@@ -50,8 +50,20 @@ if you don't export anything, such as for a purely object-oriented module.
 =head2 function1
 
 =cut
+sub new {
+	my $class = shift;
+	my $args  = shift;
+	my $self  = {};
+	
+	bless $self, $class;
+	
+	_init_logging();
+	
+	return $self;
+}
 
 sub _init_logging {
+	my $self = shift;
 	
 	my $format;
 	if ($VERBOSE) {
@@ -63,12 +75,12 @@ sub _init_logging {
 	Log::Log4perl->easy_init({
 		file     => 'STDERR',
 		layout   => '[irondemo] %p: ' . $format, 
-		level    => $INFO,
+		level    => $DEBUG,
 	});
 }
 
 sub run_agenda {
-	my $class           = shift;
+	my $self            = shift;
 	my $opts            = shift;
 	my $agenda_path     = $opts->{'agenda_path'};
 	my $modules_config  = $opts->{'modules_config'};

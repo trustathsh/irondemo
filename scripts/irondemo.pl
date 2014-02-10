@@ -280,8 +280,9 @@ sub run_scenario {
 		$scenario_resources_dir = File::Spec->catdir( $resources_dir, $scenario );
 		$scenario_config_file = File::Spec->catfile( $config_dir, $scenario . '.yaml' );
 		
-		my $agenda = $options{'agenda'} || 'agenda.txt';
-		TrustAtHsH::Irondemo->run_agenda({
+		my $agenda   = $options{'agenda'} || 'agenda.txt';
+		my $irondemo = TrustAtHsH::Irondemo->new();
+		$irondemo->run_agenda({
 			'agenda_path'     => File::Spec->catfile($scenario_dir, $agenda),
 			'modules_config'  => $modules_config,
 			'threadpool_size' => $options{'threadpool-size'},
