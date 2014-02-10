@@ -23,16 +23,8 @@ sub new {
 	my $self  = {};
 	bless $self, $class;
 
-	#default values for if-map modules
-	$self->{'data'}->{'ifmap-user'} = 'test';
-	$self->{'data'}->{'ifmap-pass'} = 'test';
-	$self->{'data'}->{'ifmap-url'} = 'https://localhost:8443';
-	$self->{'data'}->{'ifmap-keystore-path'} = '/ifmapcli.jks';
-	$self->{'data'}->{'ifmap-keystore-pass'} = 'ifmapcli';
-
 	$self->_init($args);
 	$self->_check_interface();
-
 
 	return $self;
 }
