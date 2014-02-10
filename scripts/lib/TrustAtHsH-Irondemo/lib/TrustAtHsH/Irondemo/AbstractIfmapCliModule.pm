@@ -34,11 +34,11 @@ sub callIfmapCli {
 	my $ifmapcli_path = File::Spec->catdir($ENV{'HOME'}, "ifmapcli");
 	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
 
-	my $url = $connection_args->{'ifmap-url'} || $data->{'ifmap-url'};
-	my $user = $connection_args->{'ifmap-user'} || $data->{'ifmap-user'};
-	my $pass = $connection_args->{'ifmap-pass'} || $data->{'ifmap-pass'};
-	my $keystorePath = $connection_args->{'ifmap-keystore-path'} || $data->{'ifmap-keystore-path'};
-	my $keystorePass = $connection_args->{'ifmap-keystore-pass'} || $data->{'ifmap-keystore-pass'};
+	my $url = $connection_args->{'ifmap-url'}   || 'https://localhost:8443';
+	my $user = $connection_args->{'ifmap-user'} || 'test';
+	my $pass = $connection_args->{'ifmap-pass'} || 'test';
+	my $keystorePath = $connection_args->{'ifmap-keystore-path'} || '/ifmapcli.jks';
+	my $keystorePass = $connection_args->{'ifmap-keystore-pass'} || 'ifmapcli';
 	my $verbosity = '-v';
 
 	#construct array with command and argument list
