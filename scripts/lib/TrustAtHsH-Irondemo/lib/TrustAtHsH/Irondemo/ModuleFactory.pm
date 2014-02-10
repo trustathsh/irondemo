@@ -16,6 +16,7 @@ sub loadModule {
 	my $moduleName = shift;
 	my $moduleArgs = shift;
 
+	$log->debug("Trying to load $moduleName ...");
 	try {
 		eval "require $moduleName";
 	} catch {
