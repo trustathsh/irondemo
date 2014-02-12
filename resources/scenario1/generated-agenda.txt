@@ -1,6 +1,6 @@
 # 10x Devices connect and 10x users login
 # ---------------------------------------
-At 1 do DeviceConnects(pdp => freeradius-pdp, access-request => 190, mac => 6f:e7:4e:17:b7:9c, ip-address => 99.15.229.193, ifmap-user-pdp => pdp, ifmap-pass-pdp => pdp, ifmap-user-dhcp => dhcp, ifmap-pass-dhcp => dhcp)
+At 1 do DeviceConnects(pdp => freeradius-pdp, access-request => 190, mac => 6f:e7:4e:17:b7:9c, ip-address => 99.15.229.193)
 At 2 do UserLogin(name => Ferdinand Dillard, access-request => 190, role => User, ifmap-user => test, ifmap-pass => test)
 At 3 do DeviceConnects(pdp => freeradius-pdp, access-request => 191, mac => 8b:61:ff:1a:6c:c4, ip-address => 96.235.76.84, ifmap-user-pdp => pdp, ifmap-pass-pdp => pdp, ifmap-user-dhcp => dhcp, ifmap-pass-dhcp => dhcp)
 At 5 do UserLogin(name => Brenden Lynch, access-request => 191, role => Employee, ifmap-user => test, ifmap-pass => test)

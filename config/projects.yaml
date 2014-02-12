@@ -1,3 +1,37 @@
+#<id>
+#  sources:
+#    scm: <git>
+#    uri: <uri>
+#  build:
+#    tool: <mvn>
+#    commands:
+#      - <list of commands>
+#  binaries:
+#    directories:
+#      - directory:
+#        source: 
+#          path:
+#          match:
+#        destination:
+#          path:
+#          rename:
+#    archives:
+#      -archive:
+#        source: 
+#          path:
+#          match:
+#        destination:
+#          path:
+#          rename:
+#    files:
+#      - file
+#        source: 
+#          path:
+#          match:
+#        destination:
+#          path:
+#          rename:
+
 irond:
   sources:
     scm: git
@@ -6,6 +40,15 @@ irond:
     tool: mvn
     commands:
       - mvn package
+  binaries:
+    archives:
+      - archive: 
+        source: 
+          path: target
+          match: irond-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip$
+        destination:
+          path: /
+          rename: irond
 
 ifmapj:
   sources:
@@ -34,7 +77,14 @@ ifmapcli:
     commands:
       - mvn package
   binaries: 
-    path: ifmapcli-distribution/target
+    archives:
+      - archive:
+        source:
+          path: ifmapcli-distribution/target
+          match: ifmapcli-distribution-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+        destination:
+          path: /
+          rename: ifmapcli
 
 irongui:
   sources:
@@ -44,6 +94,15 @@ irongui:
     tool: mvn
     commands:
       - mvn package
+  binaries: 
+    archives:
+      - archive:
+        source:
+          path: target
+          match: irongui-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+        destination:
+          path: /
+          rename: irongui
 
 irondetect:
   sources:
@@ -53,6 +112,15 @@ irondetect:
     tool: mvn
     commands:
       - mvn package
+  binaries: 
+    archives:
+      - archive:
+        source:
+          path: target
+          match: irongui-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+        destination:
+          path: /
+          rename: irondetect
 
 irondhcp:
   sources:
@@ -62,6 +130,15 @@ irondhcp:
     tool: mvn
     commands:
       - mvn package
+  binaries: 
+    archives:
+      - archive:
+        source:
+          path: target
+          match: irondhcp-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+        destination:
+          path: /
+          rename: irondhcp
 
 ironvas:
   sources:
@@ -71,6 +148,15 @@ ironvas:
     tool: mvn
     commands:
      - mvn package
+  binaries: 
+    archives:
+      - archive:
+        source:
+          path: target
+          match: ironvas-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+        destination:
+          path: /
+          rename: ironvas
 
 visitmeta:
   sources:
@@ -81,13 +167,11 @@ visitmeta:
     commands:
      - mvn package
   binaries: 
-    path: visitmeta-distribution/target/
-
-ironcontrol-for-android:
-  sources:
-    scm: git
-    uri: https://github.com/trustathsh/ironcontrol-for-android.git
-  build:
-    tool: mvn
-    commands:
-     - mvn package
+    archives:
+      - archive:
+        source:
+          path: visitmeta-distribution/target
+          match: visitmeta-distribution-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+        destination:
+          path: /
+          rename: visitmeta

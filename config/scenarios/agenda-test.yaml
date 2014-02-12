@@ -1,0 +1,8 @@
+projects:
+  - id: irond
+
+files:
+  - source: agendas/generated-agenda-seq.txt
+    destination: /
+  - source: agendas/simple-agenda.txt
+    destination: /

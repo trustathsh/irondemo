@@ -2,21 +2,15 @@
 
 use strict;
 use warnings;
-use File::Basename;
 use File::Spec;
-use YAML qw/LoadFile/;
-use File::Copy;
-use File::Copy::Recursive qw/dircopy/;
-use Archive::Extract;
 use Getopt::Long;
+use File::Basename;
 use Pod::Usage;
-use File::Path qw/remove_tree make_path/;
 
 use FindBin;
 use lib "$FindBin::Bin/lib/TrustAtHsH-Irondemo/lib";
 use TrustAtHsH::Irondemo;
 
-#imports for developement
 use Data::Dumper;
 
 our $VERSION = '0.2';
@@ -30,273 +24,117 @@ pod2usage( -exitval => 0, -verbose => 2 ) if $options{'man'};
 
 #initialize files and paths
 my (
-	$projects_conf_file, $config_dir,  $resources_dir, $scenarios_dir,
-	$project_dir, $scripts_dir, $sources_dir, $modules_conf_file,
+	$config_dir,  $resources_dir, $scenarios_dir,
+	$project_dir, $sources_dir, $scenarios_conf_dir,
 );
+
 $project_dir        = File::Spec->rel2abs( File::Spec->updir, dirname(__FILE__) );
-$scripts_dir        = File::Spec->catdir( $project_dir, 'scripts' );
 $sources_dir        = File::Spec->catdir( $project_dir, 'sources' );
 $scenarios_dir      = File::Spec->catdir( $project_dir, 'scenarios' );
 $resources_dir      = File::Spec->catdir( $project_dir, 'resources' );
 $config_dir         = File::Spec->catdir( $project_dir, 'config' );
-$projects_conf_file = File::Spec->catfile( $config_dir, 'projects.yaml' );
-$modules_conf_file  = File::Spec->catfile( $config_dir, 'modules.yaml' );
+$scenarios_conf_dir = File::Spec->catdir( $config_dir, 'scenarios');
 
 mkdir($sources_dir)   unless ( -d $sources_dir );
 mkdir($scenarios_dir) unless ( -d $scenarios_dir );
-
-#read projects config file
-my $projects_conf_fh;
-open( $projects_conf_fh, '<', "$projects_conf_file" ) or die "Could not open config file $projects_conf_file: $! \n";
-my $projects_config = LoadFile($projects_conf_fh);
-close $projects_conf_fh;
-
-#read modules config file
-my $modules_conf_fh;
-open( $modules_conf_fh, '<', "$modules_conf_file" ) or die "Could not open config file $modules_conf_file: $! \n";
-my $modules_config = LoadFile($modules_conf_fh);
-close $modules_conf_fh;
-
 
 #dispatch command
 my $command = shift;
 my @targets = @ARGV;
 pod2usage(1) unless defined $command;
 
-my %return;
+
+my $irondemo = TrustAtHsH::Irondemo->new({
+	resources_dir      => $resources_dir,
+	scenarios_dir      => $scenarios_dir,
+	scenarios_conf_dir => $scenarios_conf_dir,
+	sources_dir        => $sources_dir,
+	config_dir         => $config_dir,
+	threadpool_size    => $options{threadpool_size},
+	timescale          => $options{timescale},
+});
+
 if    ( $command eq 'update' )       {
-	%return = update_sources();
+	exit( update_sources( @targets ) );
 }
 elsif ( $command eq 'build' )        {
-	%return = build_sources();
+	build_sources(@targets);
 }
 elsif ( $command eq 'scenario' )     {
-	%return = build_scenarios();
+	build_scenarios(@targets);
 }
 elsif ( $command eq 'run_scenario' ) {
-	if ( @targets < 1) {
-		die "ERROR! run_scenario must be called with at least one argument";
+	if ( @targets != 1) {
+		die "ERROR! run_scenario must be called with one argument";
 	}
-	run_scenario();
-}
-else {
+	run_scenario(@targets);
+} else {
 	pod2usage(1);
 }
 
-for my $project ( keys %return ) {
-	if ( $return{$project} != 0 ) {
-		warn "ERROR! Processing " . $project . " failed! \n";
-	}
-	else {
-		print "Processing " . $project . " succeedeed. \n";
-	}
-}
-
 sub update_sources {
+	my @projects = @_;
+	my $return_val = 0;
 
-	#if no project was supplied on the commandline, let's update all of them
-	if ( @targets < 1 ) {
-		@targets = keys %$projects_config;
-	}
-
-	for my $project (@targets) {
-		unless ( $projects_config->{$project} ) {
-			warn "Sorry, dont know $project, skipping ... \n";
-			next;
-		}
-
-		my $scm = $projects_config->{$project}->{sources}->{scm};
-		my $url = $projects_config->{$project}->{sources}->{uri};
-		clean( File::Spec->catdir( $sources_dir, $project ) );
-
-		print "\n\n";
-		print "||||| Looking for source directory of: $project |||||\n";
-
-		unless ( -d File::Spec->catdir( $sources_dir, $project ) ) {
-			print "Source directory not found, checking out sources from $scm. \n";
-			chdir($sources_dir) or die "Could not change directory: $! \n";
-			if ( $scm =~ /git/ ) {
-				$return{$project} = system("git clone $url");
-			}
-			elsif ( $scm =~ /svn/ ) {
-				$return{$project} = system("svn co $url");
-			}
-			else {
-				print "Unknown source control: $scm. Doing nothing. \n";
-				$return{$project} = -1;
-			}
-		}
-		else {
-			print "Source directory found, updating sources from $scm. \n";
-			chdir( File::Spec->catdir( $sources_dir, $project ) )
-			  or die "Could not change directory: $! \n";
-			if ( $scm =~ /git/ ) {
-				$return{$project} = system("git pull");
-			}
-			elsif ( $scm =~ /svn/ ) {
-				$return{$project} = system("svn up");
-			}
-			else {
-				print "Unknown source control: $scm. Doing nothing. \n";
-				$return{$project} = -1;
-			}
-		}
-	}
-	return %return;
-}    #end update_sources
-
-sub build_sources {
-
-	#if no project was supplied on the commandline, let's build all of them
-	if ( @targets < 1 ) {
-		@targets = keys %$projects_config;
-	}
-	for my $project (@targets) {
-		my @commands = @{ $projects_config->{$project}->{build}->{commands} };
-
-		print "\n\n";
-		print "||||| Looking for source directory of: $project |||||\n";
-
-		if ( -d File::Spec->catdir( $sources_dir, $project ) ) {
-			print "Source directory found, building sources. \n";
-			chdir( File::Spec->catdir( $sources_dir, $project ) )
-			  or die "Could not change directory: $! \n";
-			if ( $options{clean} ) {
-				if ( $projects_config->{$project}->{build}->{tool} =~ /mvn/ ) {
-					system 'mvn clean';
-				}
-			}
-			for my $command (@commands) {
-				$return{$project} = system($command);
-			}
-		}
-		else {
-			print "Source directory not found, doing nothing. \n";
-			$return{$project} = -1;
-		}
-	}
-	return %return;
-}    #end build_sources
-
-sub build_scenarios {
-
-	#iterate over the scenarios
-	for my $scenario (@targets) {
-		my (
-			$scenario_config_fh, $scenario_config,        $scenario_config_file,
-			$scenario_dir,       $scenario_resources_dir, $build_dir
-		);
-		$scenario_dir           = File::Spec->catdir( $scenarios_dir, $scenario );
-		$scenario_resources_dir = File::Spec->catdir( $resources_dir, $scenario );
-		$scenario_config_file = File::Spec->catfile( $config_dir, $scenario . '.yaml' );
-
-		#read scenario configuration file
-		unless ( open( $scenario_config_fh, '<', $scenario_config_file ) ) {
-			warn
-			  "Could not open config file for scenario $scenario in $scenario_config_file: $! \n";
-			print "Skipping $scenario \n";
-			next;
-		}
-		$scenario_config = LoadFile($scenario_config_fh);
-
-		#remove old scenario dir if called with --clean
-		clean($scenario_dir);
-
-		#iterate over each project that is part of the scenario
-		for my $project ( @{ $scenario_config->{projects} } ) {
-			my $id = $project->{id};
-
-			print "$id \n";
-
-			#figure out which binary/archive to use
-			if ( $projects_config->{$id}->{binaries}->{path} ) {
-				$build_dir =
-				  File::Spec->catdir( $sources_dir, $id, $projects_config->{$id}->{binaries}->{path} );
-			}
-			else {
-				$build_dir = File::Spec->catdir( $sources_dir, $id, 'target' );
-			}
-			opendir( TARGET, $build_dir );
-			my @archives = grep( /$id.*-bundle.zip$/, readdir(TARGET) );
-			if ( @archives > 1 ) {
-				print "Cannot figure out which archive to use. Candidates: @archives";
-				next;
-			}
-
-			#copy/extract binary/archive to scenario dir
-			my $archive = File::Spec->rel2abs( File::Spec->catfile( $build_dir, $archives[0] ) );
-			my $ae = Archive::Extract->new( archive => $archive );
-			$ae->extract( to => $scenario_dir );
-			my $extract_path = $ae->extract_path;
-
-			#copy and additional files to scenario dir
-			if ( $project->{files} ) {
-				for my $file ( @{ $project->{files} } ) {
-					my $source = File::Spec->catfile( $scenario_resources_dir, $file->{source} );
-					my $destination = File::Spec->catdir( $extract_path, $file->{destination} );
-					copy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
-				}
-			}
-		}    #end projects for
-
-		# copy scenario files
-		if ( $scenario_config->{files} ) {
-			for my $file ( @{ $scenario_config->{files} } ) {
-				my $source = File::Spec->catfile( $scenario_resources_dir, $file->{source} );
-				my $destination = File::Spec->catdir( $scenario_dir, $file->{destination} );
-				copy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
-			}
-		}
-
-		# copy scenario dirs
-		if ( $scenario_config->{directories} ) {
-			for my $dir ( @{ $scenario_config->{directories} } ) {
-				my $source = File::Spec->catdir( $scenario_resources_dir, $dir->{source} );
-				my $destination =
-				  File::Spec->catdir( $scenario_dir, $dir->{destination},
-					basename( $dir->{source} ) );
-				dircopy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
-			}
-		}
-
-		# execute scenario scripts
-		if ( $scenario_config->{execute} ) {
-			for my $executable ( @{ $scenario_config->{execute} } ) {
-				system( File::Spec->catfile( $scenario_resources_dir, $executable ) );
-			}
-		}
-
-	}    #end scenarios for
-	return %return;
-}    #end build_scenarios
-
-sub run_scenario {
-	for my $scenario (@targets) {
-		my (
-			$scenario_config_fh, $scenario_config,        $scenario_config_file,
-			$scenario_dir,       $scenario_resources_dir, $build_dir
-		);
-		$scenario_dir           = File::Spec->catdir( $scenarios_dir, $scenario );
-		$scenario_resources_dir = File::Spec->catdir( $resources_dir, $scenario );
-		$scenario_config_file = File::Spec->catfile( $config_dir, $scenario . '.yaml' );
-		
-		my $agenda   = $options{'agenda'} || 'agenda.txt';
-		my $irondemo = TrustAtHsH::Irondemo->new();
-		$irondemo->run_agenda({
-			'agenda_path'     => File::Spec->catfile($scenario_dir, $agenda),
-			'modules_config'  => $modules_config,
-			'threadpool_size' => $options{'threadpool-size'},
-			'timescale'       => $options{'timescale'},
+	if ( @projects < 1 ) {
+		@projects = $irondemo->get_projects();
+	}	
+	for my $project (@projects) {
+		$return_val |= $irondemo->update_project({
+			project_id => $project,
+			clean      => $options{clean},
 		});
 	}
+	
+	return $return_val;
 }
 
-sub clean {
-	my $dir = shift;
-	if ( $options{clean} and -d $dir ) {
-		remove_tree( $dir, { keep_root => '0', safe => '0' } );
-		make_path($dir);
+sub build_sources {
+	my @projects = @_;
+	my $return_val = 0;
+
+	if ( @projects < 1 ) {
+		@projects = $irondemo->get_projects();
 	}
+	for my $project ( @projects ) {
+		$return_val |= $irondemo->build_project({
+			project_id => $project,
+			clean      => $options{clean},
+		});
+	}
+	
+	return $return_val;
+}
+
+sub build_scenarios {
+	my @scenarios = @_;
+	my $return_val = 0;
+	
+	if ( @scenarios < 1 ) {
+		@scenarios = $irondemo->get_scenarios();
+	}
+	for my $scenario ( @scenarios ) {
+		$return_val |= $irondemo->build_scenario({
+			scenario => $scenario,
+			clean    => $options{clean}
+		});
+	}
+	
+	return $return_val;
+}
+
+sub run_scenario {
+	my $scenario   = shift;
+	my $return_val = 0;
+	my $agenda     = $options{agenda} || 'agenda.txt';
+	
+	print "$agenda \n";
+	$return_val = $irondemo->run_scenario({
+		scenario => $scenario,
+		agenda   => $agenda,
+	});
+	
+	return $return_val;
 }
 
 =head1 NAME
