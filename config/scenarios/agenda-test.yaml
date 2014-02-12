@@ -4,5 +4,5 @@ projects:
 files:
   - source: agendas/generated-agenda-seq.txt
     destination: /
-  - source: agendas/simple-agenda.txt
+  - source: agendas/generated-agenda-timed.txt
     destination: /

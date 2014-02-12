@@ -1,2 +1,0 @@
-DeviceConnects(pdp => freeradius-pdp, access-request => 111:33, mac => aa:bb:cc:dd:ee:ff, ifmap-user => pdp, ifmap-pass => pdp)
-UserLogin(name => John, access-request => 111:33, role => Admin, ifmap-user => test, ifmap-pass => test)

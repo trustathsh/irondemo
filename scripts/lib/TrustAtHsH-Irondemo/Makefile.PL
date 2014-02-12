@@ -9,6 +9,7 @@ build_requires 'Test::More';
 build_requires 'Test::Kwalitee';
 
 requires 'Log::Log4perl';
+requires 'Parse::RecDescent';
 requires 'Try::Tiny';
 requires 'IPC::Run';
 
