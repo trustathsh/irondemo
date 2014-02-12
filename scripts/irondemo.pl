@@ -79,7 +79,7 @@ sub update_sources {
 	if ( @projects < 1 ) {
 		@projects = $irondemo->get_projects();
 	}	
-	for my $project (@projects) {
+	for my $project ( @projects ) {
 		$return_val |= $irondemo->update_project({
 			project_id => $project,
 			clean      => $options{clean},

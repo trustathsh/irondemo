@@ -69,7 +69,8 @@ sub get_scenarios {
 
 sub update_project {
 	my $self         = shift;
-	my $project_id   = shift;
+	my $opts         = shift;
+	my $project_id   = $opts->{project_id};
 	my $sources_dir  = $self->{sources_dir};
 	my $project_conf = $self->{projects_conf}->{$project_id};
 	croak("Sorry, dont know $project_id") unless defined $project_conf;
@@ -109,6 +110,7 @@ sub update_project {
 			$return_val = -1;
 		}
 	}
+	return $return_val;
 }
 
 sub build_project {
