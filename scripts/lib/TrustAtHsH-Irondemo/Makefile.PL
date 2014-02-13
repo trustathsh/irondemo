@@ -12,6 +12,7 @@ requires 'Log::Log4perl';
 requires 'Parse::RecDescent';
 requires 'Try::Tiny';
 requires 'IPC::Run';
+requires 'File::Copy::Recursive';
 
 auto_install;
 
