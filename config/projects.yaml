@@ -117,7 +117,7 @@ irondetect:
       - archive:
         source:
           path: target
-          match: irongui-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+          match: irondetect-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
         destination:
           path: /
           rename: irondetect
