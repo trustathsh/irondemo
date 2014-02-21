@@ -37,8 +37,8 @@ sub execute {
 
 	my @argsListRole = ($data->{$ACCESS_REQUEST}, $data->{$NAME}, $data->{$ROLE});
 
-	$self->callIfmapCli("auth-as", "delete", \@argsList, $connectionArgs);
-	$self->callIfmapCli("role", "delete", \@argsListRole, $connectionArgs);
+	$self->call_ifmap_cli("auth-as", "delete", \@argsList, $connectionArgs);
+	$self->call_ifmap_cli("role", "delete", \@argsListRole, $connectionArgs);
 }
 
 ### INTERNAL UTILITY ###

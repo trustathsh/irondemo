@@ -24,14 +24,14 @@ my $log = Log::Log4perl->get_logger();
 #				argument list for the ifmapcli tool (required)
 #				connection arguments (optional)
 # Comments    :
-sub callIfmapCli {
+sub call_ifmap_cli {
 	my $self = shift;
 	my $data = $self->{'data'};
 
 	my ($cli_tool, $mode, $argsList, $connection_args) = @_;
 
 	my $cli_jar       = $cli_tool . '.jar';
-	my $ifmapcli_path = File::Spec->catdir($ENV{'HOME'}, "ifmapcli");
+	my $ifmapcli_path = $self->_bin_dir_for( 'ifmapcli' );
 	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
 
 	my $url = $connection_args->{'ifmap-url'}   || 'https://localhost:8443';

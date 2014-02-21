@@ -43,9 +43,9 @@ sub execute {
 		"ifmap-user" => $data->{$USER_DHCP},
 		"ifmap-pass" => $data->{$PASS_DHCP}};
 
-	$self->callIfmapCli("auth-by", "delete", \@argsListAuthBy, $connectionUserPdp);
-	$self->callIfmapCli("ar-mac", "delete", \@argsListArMac, $connectionUserPdp);
-	$self->callIfmapCli("ip-mac", "delete", \@argsListIpMac, $connectionUserDhcp);
+	$self->call_ifmap_cli("auth-by", "delete", \@argsListAuthBy, $connectionUserPdp);
+	$self->call_ifmap_cli("ar-mac", "delete", \@argsListArMac, $connectionUserPdp);
+	$self->call_ifmap_cli("ip-mac", "delete", \@argsListIpMac, $connectionUserDhcp);
 }
 
 ### INTERNAL UTILITY ###

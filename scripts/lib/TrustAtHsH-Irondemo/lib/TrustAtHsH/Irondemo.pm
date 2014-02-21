@@ -8,6 +8,7 @@ use lib '..';
 use TrustAtHsH::Irondemo::AgendaParser;
 use TrustAtHsH::Irondemo::Executor;
 use TrustAtHsH::Irondemo::ModuleFactory;
+use TrustAtHsH::Irondemo::Config;
 use File::Basename;
 use Archive::Extract;
 use Try::Tiny;
@@ -27,6 +28,12 @@ our $VERSION = '0.01';
 my $VERBOSE = 1;
 my $log     = Log::Log4perl->get_logger();
 
+
+### CONSTRUCTOR ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub new {
 	my $class = shift;
 	my $args  = shift;
@@ -40,23 +47,39 @@ sub new {
 		$self->{$key} = $value;
 	}
 
-	$self->{modules_conf} = $self->_read_yaml_file(
-		File::Spec->catfile( $self->{config_dir}, 'modules.yaml' )
+	my $config = TrustAtHsH::Irondemo::Config->instance;
+	
+	$config->set_modules_config(
+		$self->_read_yaml_file(
+			File::Spec->catfile( $self->{config_dir}, 'modules.yaml' )
+		)
 	);
-
-	$self->{projects_conf} = $self->_read_yaml_file(
-		File::Spec->catfile( $self->{config_dir}, 'projects.yaml' )
+	$config->set_projects_config(
+		$self->_read_yaml_file(
+			File::Spec->catfile( $self->{config_dir}, 'projects.yaml' )
+		)
 	);
-
+	
 	return $self;
 }
 
+
+### INSTANCE_METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub get_projects {
 	my $self = shift;
 
-	return keys %{ $self->{projects_conf} };
+	return keys TrustAtHsH::Irondemo::Config->instance->get_projects_config;
 }
-
+	
+### INSTANCE_METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub get_scenarios {
 	my $self               = shift;
 	my $scenarios_conf_dir = $self->{scenarios_conf_dir};
@@ -67,19 +90,26 @@ sub get_scenarios {
 	return @scenarios;
 }
 
+
+### INSTANCE_METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub update_project {
 	my $self         = shift;
 	my $opts         = shift;
 	my $project_id   = $opts->{project_id};
 	my $sources_dir  = $self->{sources_dir};
-	my $project_conf = $self->{projects_conf}->{$project_id};
+	my $clean        = $opts->{clean};
+	my $project_conf = TrustAtHsH::Irondemo::Config->instance->get_project_config( $project_id );
 	croak("Sorry, dont know $project_id") unless defined $project_conf;
 	my $return_val;
 
 	my $scm = $project_conf->{sources}->{scm};
 	my $url = $project_conf->{sources}->{uri};
 
-	#clean( File::Spec->catdir( $sources_dir, $project ) );
+	_clear_directory( $sources_dir ) if $clean;
 
 	$log->debug("Looking for source directory of: $project_id");
 
@@ -95,15 +125,13 @@ sub update_project {
 			$log->debug("Unknown source control: $scm. Doing nothing. \n");
 			$return_val = -1;
 		}
-	}
-	else {
+	} else {
 		$log->debug("Source directory found, updating sources from $scm. \n");
 		chdir( File::Spec->catdir( $sources_dir, $project_id ) )
 		  or die "Could not change directory: $! \n";
 		if ( $scm =~ /git/ ) {
 			$return_val = system("git pull");
-		}
-		elsif ( $scm =~ /svn/ ) {
+		} elsif ( $scm =~ /svn/ ) {
 			$return_val = system("svn up");
 		} else {
 			$log->debug("Unknown source control: $scm. Doing nothing. \n");
@@ -113,13 +141,19 @@ sub update_project {
 	return $return_val;
 }
 
+
+### INSTANCE_METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub build_project {
 	my $self         = shift;
 	my $opts         = shift;
 	my $clean        = $opts->{clean};
 	my $project_id   = $opts->{project_id};
 	my $sources_dir  = $self->{sources_dir};
-	my $project_conf = $self->{projects_conf}->{$project_id};
+	my $project_conf = TrustAtHsH::Irondemo::Config->instance->get_project_config( $project_id );
 	my @commands     = @{ $project_conf->{build}->{commands} };
 	croak("Sorry, dont know $project_id") unless defined $project_conf;
 	my $return_val = 0;
@@ -145,6 +179,12 @@ sub build_project {
 	return $return_val;
 }
 
+
+### INSTANCE_METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub build_scenario {
 	my $self                   = shift;
 	my $opts                   = shift;
@@ -170,7 +210,7 @@ sub build_scenario {
 	#iterate over each project that is part of the scenario
 	for my $project ( @{ $scenario_conf->{projects} } ) {
 		my $project_id   = $project->{id};
-		my $project_conf = $projects_conf->{$project_id};
+		my $project_conf = TrustAtHsH::Irondemo::Config->instance->get_project_config( $project_id );
 		my $project_dir  = File::Spec->catdir( $sources_dir, $project_id );
 
 		#copy all directories
@@ -283,15 +323,25 @@ sub build_scenario {
 	}
 }
 
+
+### INSTANCE_METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub run_scenario {
 	my $self           = shift;
 	my $opts           = shift;
 	my $agenda         = $opts->{agenda};
 	my $scenario       = $opts->{scenario};
 	my $agenda_path    = File::Spec->catfile( $self->{scenarios_dir}, $scenario, $agenda );
-	my $modules_config = $self->{modules_conf};
+	my $modules_config = TrustAtHsH::Irondemo::Config->instance->get_modules_config;
 	my $timescale      = $opts->{timescale} || $self->{timescale};
 	my %modules_aliases;
+	
+	TrustAtHsH::Irondemo::Config->instance->set_current_scenario_dir(
+		File::Spec->catfile( $self->{scenarios_dir}, $scenario )
+	);
 
 	while ( my ( $module, $params ) = each %$modules_config ) {
 		my $alias = $params->{alias};
@@ -314,7 +364,7 @@ sub run_scenario {
 	}
 
 	my $executor =
-	  TrustAtHsH::Irondemo::Executor->new( { threadpool_size => $opts->{threadpool_size} } );
+		TrustAtHsH::Irondemo::Executor->new( { threadpool_size => $opts->{threadpool_size} } );
 
 	my $currentTime = 0;
 	while (%groupedActions) {
@@ -386,6 +436,12 @@ sub run_scenario {
 	}
 }
 
+
+### INTERNAL_UTILITY ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub _read_yaml_file {
 	my $self      = shift;
 	my $yaml_path = shift;
@@ -394,10 +450,16 @@ sub _read_yaml_file {
 	$log->debug("Reading $yaml_path");
 	open( $yaml_fh, '<', "$yaml_path" ) or die "Could not open config file $yaml_path: $! \n";
 	$yaml = LoadFile($yaml_fh);
-	close $$yaml_fh;
+	close $yaml_fh;
 	return $yaml;
 }
 
+
+### INTERNAL_UTILITY ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub _init_logging {
 	my $self = shift;
 
@@ -419,6 +481,12 @@ sub _init_logging {
 	);
 }
 
+
+### INTERNAL_UTILITY ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub _clear_directory {
 	my $self = shift;
 	my $dir  = shift;

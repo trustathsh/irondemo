@@ -1,5 +1,6 @@
 projects:
   - id: irond
+  - id: ifmapcli
 
 files:
   - source: agendas/generated-agenda-seq.txt

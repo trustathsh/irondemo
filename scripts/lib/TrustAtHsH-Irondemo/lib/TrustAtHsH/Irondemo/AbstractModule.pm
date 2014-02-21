@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Carp qw(croak);
 use Log::Log4perl;
+use File::Spec;
 
 my @interface = qw[execute];
 
@@ -27,6 +28,20 @@ sub new {
 	$self->_check_interface();
 
 	return $self;
+}
+
+### INTERNAL_UTILITY ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub _bin_dir_for {
+	my $self         = shift;
+	my $project_id   = shift;
+	my $scenario_dir = TrustAtHsH::Irondemo::Config->instance->get_current_scenario_dir;
+	my $project_conf = TrustAtHsH::Irondemo::Config->instance->get_project_config( $project_id );
+	
+	return File::Spec->catdir( $scenario_dir, $project_conf->{executables_dir} );
 }
 
 

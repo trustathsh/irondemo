@@ -42,9 +42,9 @@ sub execute {
 		"ifmap-user" => $data->{$USER_DHCP},
 		"ifmap-pass" => $data->{$PASS_DHCP}};
 
-	$self->callIfmapCli("auth-by", "update", \@argsListAuthBy, $connectionUserPdp);
-	$self->callIfmapCli("ar-mac", "update", \@argsListArMac, $connectionUserPdp);
-	$self->callIfmapCli("ip-mac", "update", \@argsListIpMac, $connectionUserDhcp);
+	$self->call_ifmap_cli("auth-by", "update", \@argsListAuthBy, $connectionUserPdp);
+	$self->call_ifmap_cli("ar-mac", "update", \@argsListArMac, $connectionUserPdp);
+	$self->call_ifmap_cli("ip-mac", "update", \@argsListIpMac, $connectionUserDhcp);
 }
 
 ### INTERNAL UTILITY ###

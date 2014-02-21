@@ -51,7 +51,7 @@ my $irondemo = TrustAtHsH::Irondemo->new({
 	sources_dir        => $sources_dir,
 	config_dir         => $config_dir,
 	threadpool_size    => $options{threadpool_size},
-	timescale          => $options{timescale},
+	timescale          => $options{timescale} || 1,
 });
 
 if    ( $command eq 'update' )       {

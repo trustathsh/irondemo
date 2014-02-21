@@ -31,6 +31,7 @@
 #        destination:
 #          path:
 #          rename:
+#  executables_dir:
 
 irond:
   sources:
@@ -49,6 +50,7 @@ irond:
         destination:
           path: /
           rename: irond
+  executable_dir: irond
 
 ifmapj:
   sources:
@@ -76,7 +78,7 @@ ifmapcli:
     tool: mvn
     commands:
       - mvn package
-  binaries: 
+  binaries:
     archives:
       - archive:
         source:
@@ -85,6 +87,7 @@ ifmapcli:
         destination:
           path: /
           rename: ifmapcli
+  executables_dir: ifmapcli
 
 irongui:
   sources:
