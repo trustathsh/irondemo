@@ -7,7 +7,7 @@ use Carp qw(croak);
 use Log::Log4perl;
 use File::Spec;
 
-my @interface = qw[execute];
+my @interface = qw[execute get_required_arguments];
 
 my $log = Log::Log4perl->get_logger();
 
@@ -18,14 +18,18 @@ my $log = Log::Log4perl->get_logger();
 # Parameters  : Hashref that is passed to sub classes' _init()
 # Comments    : MUST NOT be overriden by sub classes
 sub new {
-	my $class = shift;
-	my $args  = shift;
+	my $class    = shift;
+	my $args     = shift;
 
 	my $self  = {};
 	bless $self, $class;
 
-	$self->_init($args);
 	$self->_check_interface();
+
+	my @required = $self->get_required_arguments;
+	$self->_check_args( \@required, $args );
+
+	$self->_init( $args );
 
 	return $self;
 }
@@ -60,7 +64,7 @@ sub _init {
 # Returns     : Nothing, throws exception if required argument is missing
 # Parameters  : required and given argument lists
 # Comments    :
-sub _checkArgs {
+sub _check_args {
 	my $self = shift;
 	my $required = shift;
 	my $actual = shift;

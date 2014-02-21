@@ -41,6 +41,19 @@ sub execute {
 	$self->call_ifmap_cli("role", "delete", \@argsListRole, $connectionArgs);
 }
 
+
+### INSTANCE METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub get_required_arguments {
+	my $self = shift;
+	
+	return @REQUIRED_ARGS;
+}
+
+
 ### INTERNAL UTILITY ###
 # Purpose     :
 # Returns     :
@@ -58,7 +71,6 @@ sub _init {
 	my $self = shift;
 	my $args = shift;
 
-	$self->_checkArgs(\@REQUIRED_ARGS, $args);
 	while ( my ($key, $val) = each %{$args} ) {
 		$self->{'data'}->{$key} = $val;
 	}
