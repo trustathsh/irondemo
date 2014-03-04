@@ -1,6 +1,6 @@
 irondemo
 ========
-irondemo uses a set Perl scripts to build different scenarios/demo environments for the iron* software suite, various IF-MAP tools developed by the [Trust@HsH research group][trustathsh] at Hochschule Hannover (Hannover University of Applied Sciences and Arts).
+irondemo is intended to make creation of demonstration and testing environments for if-map software easy and consistent, it is developed by the [Trust@HsH research group][trustathsh] at Hochschule Hannover (Hannover University of Applied Sciences and Arts).
 
 NOTE: This is an alpha-release - might still contain a couple of bugs.
 
@@ -12,10 +12,13 @@ In order to use irondemo, you will need the following software installed on your
 * and [Maven 3][maven]
 * [Perl 5][perl]
 * The following Perl modules:
-	-Archive::Extract
-	-YAML
+	-Module::Install
+	-File::Spec
+	-Getopt::Long
+	-File::Basename
+	-Pod::Usage
 
-Irondemo should run on any unix based system as well as Microsoft Windows. If you experience problems on your platform, please report.
+irondemo should work on any unix based system as well as Microsoft Windows. If you experience problems on your platform, please report.
 
 Structure
 ========
@@ -23,7 +26,7 @@ Irondemo's directory structure is organized as follows:
 
 config/
 -------
-Contains irondemo's main config file projects.yaml, that contains instructions how to retrieve and build the iron* suite's sources. Currently includes: 
+Contains irondemo's project config file **projects.yaml**, that contains instructions how to retrieve and built different tools (called *projects* ) which can be combined to create different *scenarios*. Theoretically any third party tool can be integrated pretty easily. Feel free to get in touch if you want your tool to be included in the default configuration file. Currently the default configuration includes: 
 	* ifmapj
 	* ifmapj-examples
 	* ifmapcli
@@ -33,15 +36,18 @@ Contains irondemo's main config file projects.yaml, that contains instructions h
 	* irondhcp
 	* ironvas
 	* visitmeta
-Also contains one file per scenario that contains instructions how the scenario is assembled.
+
+The **modules.yaml** configuration file contains configuration properties for executable *modules* used in irondemo. Modules define vocabulary to be used in *agendas*, i.e. they carry out operations that you can use to put together a demonstration, simulation, test case ... you name it. You can easily build your own modules, just take a look at our modules in the /scripts/lib/ directory for examples or get in touch if you need help.
+
+The **scenarios** subdirectory contains one yaml file per scenario that contains instructions which projects a scenario uses, which resources need to be copied, etc.
 
 scripts/
 --------
-Contains the irondemo scripts to download and build the sources and assemble the scenarios.
+Contains the irondemo main script and (as of now) the irondemo perl module that takes care of most of irondemo's tasks - we might migrate the latter to CPAN at some point.
 
 scenarios/
 ----------
-This is the place where the scenarios are assembled. Contains a dedicated subdirectory for each scenario.
+This is where the scenarios get assembled. Each scenario is constructed in a dedicated subdirectory for the sake of isolation.
 
 resources/
 ----------
@@ -49,27 +55,34 @@ Contains the scenarios' resources such as config files for various tools, etc.
 
 sources/
 --------
-Sourcecode and the compiled binaries reside here; is created during first run of the `update_sources.pl` script.
+Sourcecode and the compiled binaries of projects reside here.
 
 Building
 ========
-To use irondemo, simply download it via 
-
+Download:
 	$ git clone https://github.com/trustatfhh/irondemo.git
 
-and run `update_sources.pl` and `build_sources.pl` script from the `scripts` directory; 
-you will end up with compiled versions of our software within the `sources` folder.
+Install dependencies:
+	$ cd <irondemo root>/scripts/lib/TrustAtHsH-Irondemo/
+	$ perl Makefile.PL
+	$ make installdeps
+
+Fetch and build the projects' sources:
+	$ cd <irondemo root>/scripts/
+	$ perl irondemo.pl update_projects
+	$ perl irondemo.pl build_projects
 
 Using the scenarios
 ===================
-After downloading and compiling the sources, you can build the scenarios. Simply call the `build_scenarios.pl` script from the scripts` directory providing the name of the scenario (which is identical to its config file). This will result in the scenario being assembled in the scenarios directory.
+After downloading and compiling the sources, you can build the scenarios. Call `$ irondemo.pl build_scenarios <scenario>` providing the name of the scenario you would like to built (which is identical to the name of its config file without the file ending). The corresponding scenario will be assembled in the scenarios directory.
 
 Updating the sources
-==================
-Simply re-run the scripts mentioned in Building, and you will have the latest **stable** versions of our software downloaded and build.
+====================
+Just re-run the last step of the instructions for building irondemo. This will update the sources and build them. You will need to also rebuilt any scenarios using the projects that got updated if you want them to make use of the new versionsn.
 
-If you want to use the new versions with the scenarios, make sure you reconstruct the scenarios using the `build_scenarios.pl` script as well.
-
+More Information
+================
+Try `$ irondemo.pl --man` or just ask the devs ;)
 
 Contact
 =======
