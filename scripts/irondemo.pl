@@ -54,13 +54,13 @@ my $irondemo = TrustAtHsH::Irondemo->new({
 	timescale          => $options{timescale} || 1,
 });
 
-if    ( $command eq 'update' )       {
+if    ( $command eq 'update_projects' )       {
 	exit( update_sources( @targets ) );
 }
-elsif ( $command eq 'build' )        {
+elsif ( $command eq 'build_projects' )        {
 	build_sources(@targets);
 }
-elsif ( $command eq 'scenario' )     {
+elsif ( $command eq 'build_scenarios' )     {
 	build_scenarios(@targets);
 }
 elsif ( $command eq 'run_scenario' ) {
@@ -143,16 +143,19 @@ irondemo
 
 =head1 SYNOPSIS
 
-irondemo.pl [options] <update|build|scenario> [targets]
+=item irondemo.pl [options] 
 
-	Options:
-	-?, -help         print this message
-	--man             print long manual
-	--clean           remove (old) target before execution
+=over 8
+
+=item [ update_projects | build_projects | build_scenario [I<targets>] ] |
+
+=item [ [run_options] --agenda=I<agenda> run_scenario I<scenario>] ]
+
+=back
 
 =head1 OPTIONS
 
-=over 10
+=over 18
 
 =item B<?,--help>
 
@@ -165,6 +168,20 @@ Removes the (old) target before execution.
 =item B<--man>
 
 Prints this manpage.
+
+=back
+
+=head1 RUN OPTIONS
+
+=over 18
+
+=item B<--threadpool_size>
+
+Number of threads that irondemo spawns for taks execution, defaults to 10.
+
+=item B<--timescale>
+
+Number of seconds that an agenda tick takes.
 
 =back
 
@@ -181,8 +198,6 @@ Developed by the Trust@HSH research group (see http://trust.f4.hs-hannover.de/).
 =head2 Main contributors:
 
 =over 8
-
-=item Marcel Reichenbach
 
 =item Thomas Rossow
 
