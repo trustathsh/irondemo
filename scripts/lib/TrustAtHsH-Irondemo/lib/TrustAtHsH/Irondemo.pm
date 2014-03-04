@@ -30,9 +30,15 @@ my $log     = Log::Log4perl->get_logger();
 
 
 ### CONSTRUCTOR ###
-# Purpose     :
-# Returns     :
-# Parameters  :
+# Purpose     : Constructor
+# Returns     : Instance
+# Parameters  : timescale          -> Number of seconds that an agenda tick takes
+#               config_dir         -> Path to config directory
+#               resources_dir      -> Path to resources directory
+#               scenarios_dir      -> Path to scenarios (target) directory
+#               scenarios_conf_dir -> Path to scenarios config directory 
+#               sources_dir        -> Path to sources (target) directory
+#               threadpool_size    -> Number of threads that Irondemo uses to execute agenda tasks
 # Comments    :
 sub new {
 	my $class = shift;
@@ -65,9 +71,9 @@ sub new {
 
 
 ### INSTANCE_METHOD ###
-# Purpose     :
-# Returns     :
-# Parameters  :
+# Purpose     : Retrieve list of projects supported by irondemo
+# Returns     : List of all projects that appear in projects.conf
+# Parameters  : None
 # Comments    :
 sub get_projects {
 	my $self = shift;
@@ -76,10 +82,11 @@ sub get_projects {
 }
 	
 ### INSTANCE_METHOD ###
-# Purpose     :
-# Returns     :
+# Purpose     : Retrieve list of scenarios that are supported by irondemo
+# Returns     : List of scenarios, i.e. the names of all *.yaml files in 
+#               config/scenarios without the .yaml file ending
 # Parameters  :
-# Comments    :
+# Comments    : TODO error handling for readdir and opendir
 sub get_scenarios {
 	my $self               = shift;
 	my $scenarios_conf_dir = $self->{scenarios_conf_dir};
@@ -92,9 +99,10 @@ sub get_scenarios {
 
 
 ### INSTANCE_METHOD ###
-# Purpose     :
-# Returns     :
-# Parameters  :
+# Purpose     : Update the sources of a project
+# Returns     : True value on success, false value on failure
+# Parameters  : project_id -> id of the project to be updated
+#               clear      -> existing source directory will be purged if set to a true value
 # Comments    :
 sub update_project {
 	my $self         = shift;
@@ -109,7 +117,7 @@ sub update_project {
 	my $scm = $project_conf->{sources}->{scm};
 	my $url = $project_conf->{sources}->{uri};
 
-	_clear_directory( $sources_dir ) if $clean;
+	$self->_clear_directory( $sources_dir ) if $clean;
 
 	$log->debug("Looking for source directory of: $project_id");
 
@@ -143,9 +151,10 @@ sub update_project {
 
 
 ### INSTANCE_METHOD ###
-# Purpose     :
-# Returns     :
-# Parameters  :
+# Purpose     : Build/compile the sources of a project
+# Returns     : True value on success, false value on failure
+# Parameters  : project_id -> id of the project to be built
+#               clean      -> will attempt to make a clean rebuilt if set to a true value
 # Comments    :
 sub build_project {
 	my $self         = shift;
@@ -181,10 +190,13 @@ sub build_project {
 
 
 ### INSTANCE_METHOD ###
-# Purpose     :
-# Returns     :
+# Purpose     : Construct the given the scenario by copying/extracting the necessary files as 
+#               specified in the scenario's config
+# Returns     : True value on success, false value on failure
 # Parameters  :
-# Comments    :
+# Comments    : TODO: Check if target directories/files exist before copying
+#               TODO: Extended logging
+#               TODO: Check return vals of copy and move operations and build meaningful return val
 sub build_scenario {
 	my $self                   = shift;
 	my $opts                   = shift;
@@ -202,7 +214,7 @@ sub build_scenario {
 	my ( $build_dir, $return_val );
 
 	#clear scenario directory if called with 'clean'
-	_clear_directory($scenario_dir) if $clean;
+	$self->_clear_directory($scenario_dir) if $clean;
 
 	#make sure scenario dir exists
 	mkdir($scenario_dir) unless ( -d $scenario_dir );
@@ -325,10 +337,14 @@ sub build_scenario {
 
 
 ### INSTANCE_METHOD ###
-# Purpose     :
-# Returns     :
-# Parameters  :
-# Comments    :
+# Purpose     : Run a scenario
+# Returns     : True value on success, false value on failure
+# Parameters  : agenda  -> relative (to scenario base dir) path to agenda file
+#               scenario-> the scenario to work with
+# Comments    : TODO proper error handling
+#               TODO calculate and return proper value for success/failure
+#               TODO calculate time to sleep properly
+#               TODO issue warnings if execution of tasks takes longer than 1 tick
 sub run_scenario {
 	my $self           = shift;
 	my $opts           = shift;
@@ -438,10 +454,10 @@ sub run_scenario {
 
 
 ### INTERNAL_UTILITY ###
-# Purpose     :
-# Returns     :
-# Parameters  :
-# Comments    :
+# Purpose     : Open and read a yaml file
+# Returns     : HashRef that contains the yaml file's structure
+# Parameters  : Path to a yaml file
+# Comments    : TODO proper error handling/logging
 sub _read_yaml_file {
 	my $self      = shift;
 	my $yaml_path = shift;
@@ -456,9 +472,9 @@ sub _read_yaml_file {
 
 
 ### INTERNAL_UTILITY ###
-# Purpose     :
-# Returns     :
-# Parameters  :
+# Purpose     : Initialize and configure the Log4perl logger
+# Returns     : Nothing
+# Parameters  : None
 # Comments    :
 sub _init_logging {
 	my $self = shift;
@@ -483,10 +499,10 @@ sub _init_logging {
 
 
 ### INTERNAL_UTILITY ###
-# Purpose     :
-# Returns     :
-# Parameters  :
-# Comments    :
+# Purpose     : Remove all the contents of a directory recursively
+# Returns     : Nothing
+# Parameters  : Path to directory that need wiping
+# Comments    : TODO proper error handling
 sub _clear_directory {
 	my $self = shift;
 	my $dir  = shift;
@@ -506,8 +522,6 @@ TrustAtHsH::Irondemo - The great new TrustAtHsH::Irondemo!
 
 Version 0.01
 
-=cut
-
 =head1 SYNOPSIS
 
 Quick summary of what the module does.
@@ -517,18 +531,22 @@ Perhaps a little code snippet.
     use TrustAtHsH::Irondemo;
 
     my $foo = TrustAtHsH::Irondemo->new();
-    ...
-
-=head1 EXPORT
-
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 function1
+=head2 new
 
-=cut
+=head2 get_projects
+
+=head2 get_scenarios
+
+=head2 update_project
+
+=head2 build_project
+
+=head2 build_scenario
+
+=head2 run_scenario
 
 =head1 AUTHOR
 
@@ -540,15 +558,11 @@ Please report any bugs or feature requests to C<bug-trustathsh-irondemo at rt.cp
 the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=TrustAtHsH-Irondemo>.  I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
 
-
-
-
 =head1 SUPPORT
 
 You can find documentation for this module with the perldoc command.
 
     perldoc TrustAtHsH::Irondemo
-
 
 You can also look for information at:
 
@@ -572,9 +586,7 @@ L<http://search.cpan.org/dist/TrustAtHsH-Irondemo/>
 
 =back
 
-
 =head1 ACKNOWLEDGEMENTS
-
 
 =head1 LICENSE AND COPYRIGHT
 
