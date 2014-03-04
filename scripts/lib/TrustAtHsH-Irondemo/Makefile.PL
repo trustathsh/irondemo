@@ -12,7 +12,20 @@ requires 'Log::Log4perl';
 requires 'Parse::RecDescent';
 requires 'Try::Tiny';
 requires 'IPC::Run';
+requires 'File::Copy';
 requires 'File::Copy::Recursive';
+requires 'File::Spec';
+requires 'File::Basename';
+requires 'File::Path';
+requires 'Carp';
+requires 'Data::Dumper';
+requires 'IO::File';
+requires 'Parse::RecDescent';
+requires 'Thread::Queue';
+requires 'Scalar::Util';
+requires 'Archive::Extract';
+requires 'Storable';
+requires 'YAML';
 
 auto_install;
 
