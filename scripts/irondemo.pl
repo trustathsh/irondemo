@@ -147,7 +147,7 @@ irondemo
 
 =over 8
 
-=item [ update_projects | build_projects | build_scenario [I<targets>] ] |
+=item [ update_projects | build_projects | build_scenarios [I<targets>] ] |
 
 =item [ [run_options] --agenda=I<agenda> run_scenario I<scenario>] ]
 
