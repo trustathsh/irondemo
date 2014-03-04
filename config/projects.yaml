@@ -31,7 +31,7 @@
 #        destination:
 #          path:
 #          rename:
-#  executables_dir:
+#  executable_dir:
 
 irond:
   sources:
@@ -106,6 +106,7 @@ irongui:
         destination:
           path: /
           rename: irongui
+  executable_dir: irongui
 
 irondetect:
   sources:
@@ -124,6 +125,7 @@ irondetect:
         destination:
           path: /
           rename: irondetect
+  executable_dir: irondetect
 
 irondhcp:
   sources:
@@ -142,6 +144,7 @@ irondhcp:
         destination:
           path: /
           rename: irondhcp
+  executable_dir: irondhcp
 
 ironvas:
   sources:
@@ -160,6 +163,7 @@ ironvas:
         destination:
           path: /
           rename: ironvas
+  executable_dir: ironvas
 
 visitmeta:
   sources:
@@ -178,3 +182,4 @@ visitmeta:
         destination:
           path: /
           rename: visitmeta
+  executable_dir: visitmeta
