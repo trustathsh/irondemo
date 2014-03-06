@@ -47,7 +47,8 @@ sub call_ifmap_cli {
 
 	#construct array with command and argument list
 	my @command =  qw (java -jar);
-	push @command, $cli_jar, $mode;
+	push @command, $cli_jar;
+	push @command, $mode if defined $mode;
 	push @command, @{$args_list};
 
 	push @command, '--url';
