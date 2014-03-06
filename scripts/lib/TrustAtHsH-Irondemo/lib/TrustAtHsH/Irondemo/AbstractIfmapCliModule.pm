@@ -26,10 +26,14 @@ my $log = Log::Log4perl->get_logger();
 # Comments    :
 sub call_ifmap_cli {
 	my $self = shift;
+	my $args = shift;
 	my $data = $self->{'data'};
 
-	my ($cli_tool, $mode, $argsList, $connection_args) = @_;
-
+	my $cli_tool        = $args->{cli_tool};
+	my $mode            = $args->{mode};
+	my $args_list       = $args->{args_list};
+	my $connection_args = $args->{connection_args};
+	
 	my $cli_jar       = $cli_tool . '.jar';
 	my $ifmapcli_path = $self->_bin_dir_for( 'ifmapcli' );
 	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
@@ -44,7 +48,7 @@ sub call_ifmap_cli {
 	#construct array with command and argument list
 	my @command =  qw (java -jar);
 	push @command, $cli_jar, $mode;
-	push @command, @{$argsList};
+	push @command, @{$args_list};
 
 	push @command, '--url';
 	push @command, $url;
