@@ -113,7 +113,7 @@ sub update_project {
 	my $clean        = $opts->{clean};
 	my $project_conf = TrustAtHsH::Irondemo::Config->instance->get_project_config( $project_id );
 	croak("Sorry, dont know $project_id") unless defined $project_conf;
-	my $return_val;
+	my $return_val = 0;
 
 	my $scm = $project_conf->{sources}->{scm};
 	my $url = $project_conf->{sources}->{uri};
@@ -212,7 +212,9 @@ sub build_scenario {
 	my $scenario_conf =
 	  $self->_read_yaml_file( File::Spec->catdir( $scenarios_conf_dir, $scenario . '.yaml' ) );
 	my $projects_conf = $self->{projects_conf};
-	my ( $build_dir, $return_val );
+	my $return_val    = 0;
+	my $build_dir;
+	
 
 	#clear scenario directory if called with 'clean'
 	$self->_clear_directory($scenario_dir) if $clean;
@@ -302,38 +304,39 @@ sub build_scenario {
 				copy( $source, $destination );
 			}
 		}
-
-		# copy scenario files
-		if ( $scenario_conf->{files} ) {
-			for my $file ( @{ $scenario_conf->{files} } ) {
-				my $source = File::Spec->catfile( $scenario_resources_dir, $file->{source} );
-				my $destination = File::Spec->catdir( 
-					$scenario_dir, $file->{destination},
-					basename( $file->{source} ),
-				);
-				copy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
-			}
-		}
-
-		# copy scenario dirs
-		if ( $scenario_conf->{directories} ) {
-			for my $dir ( @{ $scenario_conf->{directories} } ) {
-				my $source = File::Spec->catdir( $scenario_resources_dir, $dir->{source} );
-				my $destination = File::Spec->catdir( 
-					$scenario_dir, $dir->{destination},
-					basename( $dir->{source} ) 
-				);
-				dircopy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
-			}
-		}
-
-		# execute scenario scripts
-		if ( $scenario_conf->{execute} ) {
-			for my $executable ( @{ $scenario_conf->{execute} } ) {
-				system( File::Spec->catfile( $scenario_resources_dir, $executable ) );
-			}
+	}
+	# copy scenario files
+	if ( $scenario_conf->{files} ) {
+		for my $file ( @{ $scenario_conf->{files} } ) {
+			my $source = File::Spec->catfile( $scenario_resources_dir, $file->{source} );
+			my $destination = File::Spec->catdir( 
+				$scenario_dir, $file->{destination},
+				basename( $file->{source} ),
+			);
+			copy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
 		}
 	}
+
+	# copy scenario dirs
+	if ( $scenario_conf->{directories} ) {
+		for my $dir ( @{ $scenario_conf->{directories} } ) {
+			my $source = File::Spec->catdir( $scenario_resources_dir, $dir->{source} );
+			my $destination = File::Spec->catdir( 
+				$scenario_dir, $dir->{destination},
+				basename( $dir->{source} ) 
+			);
+			dircopy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
+		}
+	}
+
+	# execute scenario scripts
+	if ( $scenario_conf->{execute} ) {
+		for my $executable ( @{ $scenario_conf->{execute} } ) {
+			system( File::Spec->catfile( $scenario_resources_dir, $executable ) );
+		}
+	}
+
+	return $return_val;
 }
 
 
