@@ -4,9 +4,7 @@ At 1 do InitPdpInfrastructure(
 	iptables => iptables,
 	iptables-ip-address => 10.0.0.11,
 	switch => switch,
-	switch-ip-address => 192.0.2.55,
-	ifmap-user => pdp,
-	ifmap-pass => pdp);
+	switch-ip-address => 192.0.2.55);
 
 At 20 do DeviceConnects(
 	access-request => ar:1,
@@ -18,19 +16,13 @@ At 20 do DeviceConnects(
 	switch-port => 12,
 	switch-device => switch,
 	device => endpoint-device,
-	device-attribute => anti-virus-running,
-	ifmap-user-pdp => pdp,
-	ifmap-pass-pdp => pdp,
-	ifmap-user-dhcp => dhcp,
-	ifmap-pass-dhcp => dhcp);
+	device-attribute => anti-virus-running);
 
 At 21 do UserLogin(
 	name => Max Mustermann,
 	access-request => ar:1,
 	role => finance and employee,
-	capability => access-finance-server-allowed,
-	ifmap-user => pdp,
-	ifmap-pass => pdp);
+	capability => access-finance-server-allowed);
 
 At 26 do InvestigationRequested(
 	device => ar:1,
@@ -38,7 +30,7 @@ At 26 do InvestigationRequested(
 
 At 30 do VulnerabilityDetected(
 	ip-address => 192.0.2.7,
-	event-name => Open port detected (Telnet server),
+	event-name => Open port detected: Telnet server,
 	discoverer-id => ironvas,
 	ifmap-user => ironvas,
 	ifmap-pass => ironvas);
@@ -51,9 +43,7 @@ At 35 do UserLogout(
 	name => Max Mustermann,
 	access-request => ar:1,
 	role => finance and employee,
-	capability => access-finance-server-allowed,
-	ifmap-user => pdp,
-	ifmap-pass => pdp);
+	capability => access-finance-server-allowed);
 
 At 36 do DeviceDisconnects(
 	access-request => ar:1,
@@ -65,8 +55,14 @@ At 36 do DeviceDisconnects(
 	switch-port => 12,
 	switch-device => switch,
 	device => endpoint-device,
-	device-attribute => anti-virus-running,
-	ifmap-user-pdp => pdp,
-	ifmap-pass-pdp => pdp,
-	ifmap-user-dhcp => dhcp,
-	ifmap-pass-dhcp => dhcp);
+	device-attribute => anti-virus-running);
+
+At 40 do PurgeMetadata(
+	ifmap-user => pdp,
+	ifmap-pass => pdp);
+At 40 do PurgeMetadata(
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas);
+At 40 do PurgeMetadata(
+	ifmap-user => test,
+	ifmap-pass => test);
