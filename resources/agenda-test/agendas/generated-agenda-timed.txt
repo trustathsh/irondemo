@@ -304,19 +304,3 @@ At 86 do DeviceDisconnects(
 	ifmap-pass-pdp => pdp,
 	ifmap-user-dhcp => dhcp,
 	ifmap-pass-dhcp => dhcp);
-
-At 3 do DeviceConnects(
-	pdp => freeradius-pdp,
-	access-request => 666,
-	mac => ee:ee:ee:ee:ee:ee,
-	ip-address => 8.8.8.8,
-	ifmap-user-pdp => pdp,
-	ifmap-pass-pdp => pdp,
-	ifmap-user-dhcp => dhcp,
-	ifmap-pass-dhcp => dhcp);
-At 13 do UserLogin(
-	name => Ferdinand Otto Karl Gustav Heinz Dillard,
-	access-request => 666,
-	role => root,
-	ifmap-user => test,
-	ifmap-pass => test);
