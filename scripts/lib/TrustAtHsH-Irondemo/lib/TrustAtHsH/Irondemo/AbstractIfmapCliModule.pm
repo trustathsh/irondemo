@@ -31,7 +31,7 @@ sub call_ifmap_cli {
 
 	my $cli_tool        = $args->{cli_tool};
 	my $mode            = $args->{mode};
-	my $args_list       = $args->{args_list};
+	my $args_list       = $args->{args_list} || [];
 	my $connection_args = $args->{connection_args};
 	
 	my $cli_jar       = $cli_tool . '.jar';
@@ -49,7 +49,8 @@ sub call_ifmap_cli {
 	my @command =  qw (java -jar);
 	push @command, $cli_jar;
 	push @command, $mode if defined $mode;
-	push @command, @{$args_list};
+
+	push @command, @{$args_list} if @{$args_list};
 
 	push @command, '--url';
 	push @command, $url;
