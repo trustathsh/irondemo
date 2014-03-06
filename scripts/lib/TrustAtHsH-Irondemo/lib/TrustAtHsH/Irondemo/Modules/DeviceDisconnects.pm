@@ -37,50 +37,80 @@ sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
 
-	my @argsListAuthBy = ($data->{$ACCESS_REQUEST}, $data->{$PDP});
-	my @argsListLayer2 = ($data->{$ACCESS_REQUEST}, $data->{$SWITCH_DEVICE}, "--vlan-number", $data->{$VLAN_NUMBER}, "--vlan-name", $data->{$VLAN_NAME}, "--port", $data->{$SWITCH_PORT});
-	my @argsListDevAttr = ($data->{$ACCESS_REQUEST}, $data->{$DEVICE}, $data->{$DEVICE_ATTRIBUTE});
-	my @argsListArDev = ($data->{$ACCESS_REQUEST}, $data->{$DEVICE});
-	my @argsListArMac = ($data->{$ACCESS_REQUEST}, $data->{$MAC});
+	my $result = 1;
+
 	my $connectionUserPdp = {
 		"ifmap-user" => $data->{$USER_PDP},
 		"ifmap-pass" => $data->{$PASS_PDP}};
 
-	my @argsListIpMac = ($data->{$IP}, $data->{$MAC});
 	my $connectionUserDhcp = {
 		"ifmap-user" => $data->{$USER_DHCP},
 		"ifmap-pass" => $data->{$PASS_DHCP}};
 
+	# PDP
+	my @argsListAuthBy = ($data->{$ACCESS_REQUEST}, $data->{$PDP});
+	my @argsListArMac = ($data->{$ACCESS_REQUEST}, $data->{$MAC});
+	
 	$self->call_ifmap_cli({
 			'cli_tool' => "auth-by",
 			'mode' => "delete",
 			'args_list' => \@argsListAuthBy,
 			'connection_args' => $connectionUserPdp});
 	$self->call_ifmap_cli({
-			'cli_tool' => "layer2-info",
-			'mode' => "delete",
-			'args_list' => \@argsListLayer2,
-			'connection_args' => $connectionUserPdp});
-	$self->call_ifmap_cli({
-			'cli_tool' => "dev-attr",
-			'mode' => "delete",
-			'args_list' => \@argsListDevAttr,
-			'connection_args' => $connectionUserPdp});
-	$self->call_ifmap_cli({
-			'cli_tool' => "ar-dev",
-			'mode' => "delete",
-			'args_list' => \@argsListArDev,
-			'connection_args' => $connectionUserPdp});
-	$self->call_ifmap_cli({
 			'cli_tool' => "ar-mac",
 			'mode' => "delete",
 			'args_list' => \@argsListArMac,
 			'connection_args' => $connectionUserPdp});
+
+	# optional PDP publishs
+	if (defined $data->{$SWITCH_DEVICE} 
+		&& defined $data->{$VLAN_NUMBER}
+		&& defined $data->{$VLAN_NAME}
+		&& defined $data->{$SWITCH_PORT}) {
+		my @argsListLayer2 = ($data->{$ACCESS_REQUEST},
+				$data->{$SWITCH_DEVICE},
+				"--vlan-number",
+				$data->{$VLAN_NUMBER},
+				"--vlan-name",
+				$data->{$VLAN_NAME},
+				"--port",
+				$data->{$SWITCH_PORT});
+		$self->call_ifmap_cli({
+				'cli_tool' => "layer2-info",
+				'mode' => "delete",
+				'args_list' => \@argsListLayer2,
+				'connection_args' => $connectionUserPdp});
+	}
+
+	if (defined $data->{$DEVICE}
+		&& defined $data->{$DEVICE_ATTRIBUTE}) {
+		my @argsListDevAttr = ($data->{$ACCESS_REQUEST}, $data->{$DEVICE}, $data->{$DEVICE_ATTRIBUTE});
+		$self->call_ifmap_cli({
+				'cli_tool' => "dev-attr",
+				'mode' => "delete",
+				'args_list' => \@argsListDevAttr,
+				'connection_args' => $connectionUserPdp});
+	}
+
+	if (defined $data->{$DEVICE}) {
+		my @argsListArDev = ($data->{$ACCESS_REQUEST}, $data->{$DEVICE});
+		$self->call_ifmap_cli({
+				'cli_tool' => "ar-dev",
+				'mode' => "delete",
+				'args_list' => \@argsListArDev,
+				'connection_args' => $connectionUserPdp});
+	}
+
+	# DHCP server
+	my @argsListIpMac = ($data->{$IP}, $data->{$MAC});
+	
 	$self->call_ifmap_cli({
 			'cli_tool' => "ip-mac",
 			'mode' => "delete",
 			'args_list' => \@argsListIpMac,
 			'connection_args' => $connectionUserDhcp});
+
+	return $result;
 }
 
 

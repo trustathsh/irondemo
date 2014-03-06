@@ -30,30 +30,37 @@ sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
 
+	my $result = 1;
+	
 	my @argsList = ($data->{$ACCESS_REQUEST}, $data->{$NAME});
 	my @argsListRole = ($data->{$ACCESS_REQUEST}, $data->{$NAME}, $data->{$ROLE});
-	my @argsListCapability = ($data->{$ACCESS_REQUEST}, $data->{$CAPABILITY});
 
 	my $connectionArgs = {
 		"ifmap-user" => $data->{$IFMAP_USER},
 		"ifmap-pass" => $data->{$IFMAP_PASS}
 	};
 
-	$self->call_ifmap_cli({
+	$result &= $self->call_ifmap_cli({
 			'cli_tool' => "auth-as",
 			'mode' => "delete",
 			'args_list' => \@argsList,
 			'connection_args' => $connectionArgs});
-	$self->call_ifmap_cli({
+	$result &= $self->call_ifmap_cli({
 			'cli_tool' => "role",
 			'mode' => "delete",
 			'args_list' => \@argsListRole,
 			'connection_args' => $connectionArgs});
-	$self->call_ifmap_cli({
-			'cli_tool' => "cap",
-			'mode' => "delete",
-			'args_list' => \@argsListCapability,
-			'connection_args' => $connectionArgs});
+
+	if (defined $data->{$CAPABILITY}) {
+		my @argsListCapability = ($data->{$ACCESS_REQUEST}, $data->{$CAPABILITY});
+		$result &= $self->call_ifmap_cli({
+				'cli_tool' => "cap",
+				'mode' => "delete",
+				'args_list' => \@argsListCapability,
+				'connection_args' => $connectionArgs});
+	}
+
+	return $result;
 }
 
 

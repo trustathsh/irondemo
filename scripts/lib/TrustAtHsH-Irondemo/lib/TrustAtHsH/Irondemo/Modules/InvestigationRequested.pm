@@ -29,17 +29,21 @@ sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
 
+	my $result = 1;
+
 	my @argsList = ($data->{$DEVICE}, "mac", $data->{$MAC}, "--qualifier", $data->{$QUALIFIER});
 	my $connectionArgs = {
 		"ifmap-user" => $data->{$IFMAP_USER},
 		"ifmap-pass" => $data->{$IFMAP_PASS}
 	};
 
-	$self->call_ifmap_cli({
+	$result &= $self->call_ifmap_cli({
 			'cli_tool' => "req-inv",
 			'mode' => "update",
 			'args_list' => \@argsList,
 			'connection_args' => $connectionArgs});
+
+	return $result;
 }
 
 

@@ -32,6 +32,8 @@ sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
 
+	my $result = 1;
+
 	my @argsList = ($data->{$PDP_DEVICE}, $data->{$PDP_IP_ADDRESS});
 	my $connectionArgs = {
 		"ifmap-user" => $data->{$IFMAP_USER},
@@ -40,22 +42,23 @@ sub execute {
 	my @argsListIpTables = ($data->{$IPTABLES_DEVICE}, $data->{$IPTABLES_IP_ADDRESS});
 	my @argsListSwitch = ($data->{$SWITCH_DEVICE}, $data->{$SWITCH_IP_ADDRESS});
 
-	$self->call_ifmap_cli({
+	$result &= $self->call_ifmap_cli({
 			'cli_tool' => "dev-ip",
 			'mode' => "update",
 			'args_list' => \@argsList,
 			'connection_args' => $connectionArgs});
-	$self->call_ifmap_cli({
+	$result &= $self->call_ifmap_cli({
 			'cli_tool' => "dev-ip",
 			'mode' => "update",
 			'args_list' => \@argsListIpTables,
 			'connection_args' => $connectionArgs});
-	$self->call_ifmap_cli({
+	$result &= $self->call_ifmap_cli({
 			'cli_tool' => "dev-ip",
 			'mode' => "update",
 			'args_list' => \@argsListSwitch,
 			'connection_args' => $connectionArgs});
 
+	return $result;
 }
 
 

@@ -30,17 +30,21 @@ sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
 
+	my $result = 1;
+
 	my @argsList = ($data->{$PEP_DEVICE}, "ipv4", $data->{$IP_ADDRESS}, $data->{$ENFORCEMENT_TYPE});
 	my $connectionArgs = {
 		"ifmap-user" => $data->{$IFMAP_USER},
 		"ifmap-pass" => $data->{$IFMAP_PASS}
 	};
 
-	$self->call_ifmap_cli({
+	$result &= $self->call_ifmap_cli({
 			'cli_tool' => "enf-report",
 			'mode' => "update",
 			'args_list' => \@argsList,
 			'connection_args' => $connectionArgs});
+
+	return $result;
 }
 
 
