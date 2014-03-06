@@ -39,9 +39,21 @@ sub execute {
 		"ifmap-pass" => $data->{$IFMAP_PASS}
 	};
 
-	$self->call_ifmap_cli("auth-as", "delete", \@argsList, $connectionArgs);
-	$self->call_ifmap_cli("role", "delete", \@argsListRole, $connectionArgs);
-	$self->call_ifmap_cli("cap", "delete", \@argsListCapability, $connectionArgs);
+	$self->call_ifmap_cli({
+			'cli_tool' => "auth-as",
+			'mode' => "delete",
+			'args_list' => \@argsList,
+			'connection_args' => $connectionArgs});
+	$self->call_ifmap_cli({
+			'cli_tool' => "role",
+			'mode' => "delete",
+			'args_list' => \@argsListRole,
+			'connection_args' => $connectionArgs});
+	$self->call_ifmap_cli({
+			'cli_tool' => "cap",
+			'mode' => "delete",
+			'args_list' => \@argsListCapability,
+			'connection_args' => $connectionArgs});
 }
 
 

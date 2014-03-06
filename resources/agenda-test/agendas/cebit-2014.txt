@@ -32,6 +32,10 @@ At 21 do UserLogin(
 	ifmap-user => pdp,
 	ifmap-pass => pdp);
 
+At 26 do InvestigationRequested(
+	device => 111:33,
+	mac => 00:11:22:33:44:55);
+
 At 30 do VulnerabilityDetected(
 	ip-address => 192.0.2.7,
 	event-name => P2P in use,

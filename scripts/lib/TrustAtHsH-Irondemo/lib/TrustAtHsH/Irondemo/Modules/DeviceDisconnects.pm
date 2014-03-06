@@ -51,12 +51,36 @@ sub execute {
 		"ifmap-user" => $data->{$USER_DHCP},
 		"ifmap-pass" => $data->{$PASS_DHCP}};
 
-	$self->call_ifmap_cli("auth-by", "delete", \@argsListAuthBy, $connectionUserPdp);
-	$self->call_ifmap_cli("layer2-info", "delete", \@argsListLayer2, $connectionUserPdp);
-	$self->call_ifmap_cli("dev-attr", "delete", \@argsListDevAttr, $connectionUserPdp);
-	$self->call_ifmap_cli("ar-dev", "delete", \@argsListArDev, $connectionUserPdp);
-	$self->call_ifmap_cli("ar-mac", "delete", \@argsListArMac, $connectionUserPdp);
-	$self->call_ifmap_cli("ip-mac", "delete", \@argsListIpMac, $connectionUserDhcp);
+	$self->call_ifmap_cli({
+			'cli_tool' => "auth-by",
+			'mode' => "delete",
+			'args_list' => \@argsListAuthBy,
+			'connection_args' => $connectionUserPdp});
+	$self->call_ifmap_cli({
+			'cli_tool' => "layer2-info",
+			'mode' => "delete",
+			'args_list' => \@argsListLayer2,
+			'connection_args' => $connectionUserPdp});
+	$self->call_ifmap_cli({
+			'cli_tool' => "dev-attr",
+			'mode' => "delete",
+			'args_list' => \@argsListDevAttr,
+			'connection_args' => $connectionUserPdp});
+	$self->call_ifmap_cli({
+			'cli_tool' => "ar-dev",
+			'mode' => "delete",
+			'args_list' => \@argsListArDev,
+			'connection_args' => $connectionUserPdp});
+	$self->call_ifmap_cli({
+			'cli_tool' => "ar-mac",
+			'mode' => "delete",
+			'args_list' => \@argsListArMac,
+			'connection_args' => $connectionUserPdp});
+	$self->call_ifmap_cli({
+			'cli_tool' => "ip-mac",
+			'mode' => "delete",
+			'args_list' => \@argsListIpMac,
+			'connection_args' => $connectionUserDhcp});
 }
 
 

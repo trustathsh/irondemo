@@ -1,4 +1,4 @@
-package TrustAtHsH::Irondemo::Modules::UserLogin;
+package TrustAtHsH::Irondemo::Modules::InvestigationRequested;
 
 use 5.006;
 use strict;
@@ -10,15 +10,14 @@ use lib '../../../';
 use parent 'TrustAtHsH::Irondemo::AbstractIfmapCliModule';
 
 
-my $ACCESS_REQUEST = 'access-request';
-my $ROLE = 'role';
-my $NAME = 'name';
-my $CAPABILITY = 'capability';
+my $DEVICE = "device";
+my $MAC = "mac";
+my $QUALIFIER = "qualifier";
 my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
 
 my @REQUIRED_ARGS = (
-	$ACCESS_REQUEST, $ROLE, $NAME, $IFMAP_USER, $IFMAP_PASS);
+	$DEVICE, $MAC, $IFMAP_USER, $IFMAP_PASS);
 
 
 ### INSTANCE METHOD ###
@@ -30,29 +29,16 @@ sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
 
-	my @argsList = ($data->{$ACCESS_REQUEST}, $data->{$NAME});
-	my @argsListRole = ($data->{$ACCESS_REQUEST}, $data->{$NAME}, $data->{$ROLE});
-	my @argsListCapability = ($data->{$ACCESS_REQUEST}, $data->{$CAPABILITY});
-
+	my @argsList = ($data->{$DEVICE}, "mac", $data->{$MAC}, "--qualifier", $data->{$QUALIFIER});
 	my $connectionArgs = {
 		"ifmap-user" => $data->{$IFMAP_USER},
 		"ifmap-pass" => $data->{$IFMAP_PASS}
 	};
 
 	$self->call_ifmap_cli({
-			'cli_tool' => "auth-as",
+			'cli_tool' => "req-inv",
 			'mode' => "update",
 			'args_list' => \@argsList,
-			'connection_args' => $connectionArgs});
-	$self->call_ifmap_cli({
-			'cli_tool' => "role",
-			'mode' => "update",
-			'args_list' => \@argsListRole,
-			'connection_args' => $connectionArgs});
-	$self->call_ifmap_cli({
-			'cli_tool' => "cap",
-			'mode' => "update",
-			'args_list' => \@argsListCapability,
 			'connection_args' => $connectionArgs});
 }
 
@@ -64,7 +50,7 @@ sub execute {
 # Comments    :
 sub get_required_arguments {
 	my $self = shift;
-	
+
 	return @REQUIRED_ARGS;
 }
 
@@ -78,9 +64,9 @@ sub get_required_arguments {
 #                 ifmap-url           ->(optional)
 #                 ifmap-keystore-path ->(optional)
 #                 ifmap-keystore-pass ->(optional)
-#                 name                 >
-#                 role                ->
-#                 access-request      ->
+#                 device              ->
+#                 mac-address         ->
+#                 qualifier           ->(optional)
 #
 # Comments    : Override, called from parent's constructor
 sub _init {
@@ -90,6 +76,9 @@ sub _init {
 	while ( my ($key, $val) = each %{$args} ) {
 		$self->{'data'}->{$key} = $val;
 	}
+
+	$self->{'data'}->{$QUALIFIER} = "scan" unless defined $self->{'data'}->{$QUALIFIER};
 }
+
 
 1;

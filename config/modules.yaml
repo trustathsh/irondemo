@@ -49,3 +49,9 @@
   config:
     ifmap-user: test
     ifmap-pass: test
+
+"TrustAtHsH::Irondemo::Modules::InvestigationRequested":
+  alias: InvestigationRequested
+  config:
+    ifmap-user: pdp
+    ifmap-pass: pdp
