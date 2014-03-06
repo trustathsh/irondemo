@@ -127,8 +127,8 @@ sub build_scenarios {
 
 sub run_scenario {
 	my $scenario   = shift;
-	my $repeat     = $options{repeat};
-	my $forever    = $options{forever};
+	my $repeat     = $options{repeat} || 0;
+	my $forever    = $options{forever} || 0;
 	my $agenda     = $options{agenda} || 'agenda.txt';
 	my $return_val = 0;
 	
