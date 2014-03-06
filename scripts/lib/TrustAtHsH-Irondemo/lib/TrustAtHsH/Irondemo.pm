@@ -77,8 +77,9 @@ sub new {
 # Comments    :
 sub get_projects {
 	my $self = shift;
+	my $projects_config = TrustAtHsH::Irondemo::Config->instance->get_projects_config();
 
-	return keys TrustAtHsH::Irondemo::Config->instance->get_projects_config;
+	return keys %{$projects_config};
 }
 	
 ### INSTANCE_METHOD ###
