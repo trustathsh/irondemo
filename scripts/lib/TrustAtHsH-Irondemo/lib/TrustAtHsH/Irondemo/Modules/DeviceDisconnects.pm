@@ -14,7 +14,8 @@ my $ACCESS_REQUEST = 'access-request';
 my $PDP = 'pdp';
 my $MAC = 'mac';
 my $IP = 'ip-address';
-my $VLAN = 'vlan';
+my $VLAN_NUMBER = 'vlan-number';
+my $VLAN_NAME = 'vlan-name';
 my $SWITCH_PORT = 'switch-port';
 my $SWITCH_DEVICE = 'switch-device';
 my $DEVICE = 'device';
@@ -37,7 +38,7 @@ sub execute {
 	my $data = $self->{'data'};
 
 	my @argsListAuthBy = ($data->{$ACCESS_REQUEST}, $data->{$PDP});
-	my @argsListLayer2 = ($data->{$ACCESS_REQUEST}, $data->{$SWITCH_DEVICE}, "--vlan-number", $data->{$VLAN}, "--port", $data->{$SWITCH_PORT});
+	my @argsListLayer2 = ($data->{$ACCESS_REQUEST}, $data->{$SWITCH_DEVICE}, "--vlan-number", $data->{$VLAN_NUMBER}, "--vlan-name", $data->{$VLAN_NAME}, "--port", $data->{$SWITCH_PORT});
 	my @argsListDevAttr = ($data->{$ACCESS_REQUEST}, $data->{$DEVICE}, $data->{$DEVICE_ATTRIBUTE});
 	my @argsListArDev = ($data->{$ACCESS_REQUEST}, $data->{$DEVICE});
 	my @argsListArMac = ($data->{$ACCESS_REQUEST}, $data->{$MAC});
