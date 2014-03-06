@@ -66,3 +66,6 @@ At 40 do PurgeMetadata(
 At 40 do PurgeMetadata(
 	ifmap-user => test,
 	ifmap-pass => test);
+At 40 do PurgeMetadata(
+	ifmap-user => iptables,
+	ifmap-pass => iptables);
