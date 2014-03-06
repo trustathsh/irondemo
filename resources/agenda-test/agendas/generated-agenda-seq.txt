@@ -151,7 +151,8 @@ DeviceDisconnects(
 	ip-address => 59.105.124.141);
 UserLogout(
 	name => Gabriel Ortiz, 
-	access-request => 196);
+	access-request => 196,
+	role => User);
 DeviceDisconnects(
 	pdp => freeradius-pdp, 
 	access-request => 196, 
@@ -159,8 +160,8 @@ DeviceDisconnects(
 	ip-address => 0.193.85.141);
 UserLogout(
 	name => Cain Chaney, 
-	access-request => 
-	197, role => Guest);
+	access-request => 197,
+	role => Guest);
 DeviceDisconnects(
 	pdp => freeradius-pdp, 
 	access-request => 197, 
