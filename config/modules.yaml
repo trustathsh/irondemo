@@ -43,3 +43,9 @@
   config:
     ifmap-user: iptables
     ifmap-pass: iptables
+
+"TrustAtHsH::Irondemo::Modules::PurgeMetadata":
+  alias: PurgeMetadata
+  config:
+    ifmap-user: test
+    ifmap-pass: test

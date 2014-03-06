@@ -40,9 +40,21 @@ sub execute {
 	my @argsListIpTables = ($data->{$IPTABLES_DEVICE}, $data->{$IPTABLES_IP_ADDRESS});
 	my @argsListSwitch = ($data->{$SWITCH_DEVICE}, $data->{$SWITCH_IP_ADDRESS});
 
-	$self->call_ifmap_cli("dev-ip", "update", \@argsList, $connectionArgs);
-	$self->call_ifmap_cli("dev-ip", "update", \@argsListIpTables, $connectionArgs);
-	$self->call_ifmap_cli("dev-ip", "update", \@argsListSwitch, $connectionArgs);
+	$self->call_ifmap_cli({
+			'cli_tool' => "dev-ip",
+			'mode' => "update",
+			'args_list' => \@argsList,
+			'connection_args' => $connectionArgs});
+	$self->call_ifmap_cli({
+			'cli_tool' => "dev-ip",
+			'mode' => "update",
+			'args_list' => \@argsListIpTables,
+			'connection_args' => $connectionArgs});
+	$self->call_ifmap_cli({
+			'cli_tool' => "dev-ip",
+			'mode' => "update",
+			'args_list' => \@argsListSwitch,
+			'connection_args' => $connectionArgs});
 
 }
 
