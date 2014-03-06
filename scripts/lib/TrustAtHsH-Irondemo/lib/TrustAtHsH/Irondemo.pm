@@ -118,7 +118,7 @@ sub update_project {
 	my $scm = $project_conf->{sources}->{scm};
 	my $url = $project_conf->{sources}->{uri};
 
-	$self->_clear_directory( $sources_dir ) if $clean;
+	$self->_remove_directory( File::Spec->catdir( $sources_dir, $project_id ) ) if $clean;
 
 	$log->debug("Looking for source directory of: $project_id");
 
@@ -505,7 +505,7 @@ sub _init_logging {
 ### INTERNAL_UTILITY ###
 # Purpose     : Remove all the contents of a directory recursively
 # Returns     : Nothing
-# Parameters  : Path to directory that need wiping
+# Parameters  : Path to directory that needs wiping
 # Comments    : TODO proper error handling
 sub _clear_directory {
 	my $self = shift;
@@ -515,6 +515,22 @@ sub _clear_directory {
 	if ( -d $dir ) {
 		remove_tree( $dir, { keep_root => '0', safe => '0' } );
 		make_path($dir);
+	}
+}
+
+
+### INTERNAL_UTILITY ###
+# Purpose     : Remove a directory recursively
+# Returns     : Nothing
+# Parameters  : Path to directory to
+# Comments    : TODO proper error handling
+sub _remove_directory {
+	my $self = shift;
+	my $dir  = shift;
+	
+	$log->debug("Removing $dir");
+	if ( -d $dir ) {
+		remove_tree( $dir, { keep_root => '0', safe => '0' } );
 	}
 }
 
