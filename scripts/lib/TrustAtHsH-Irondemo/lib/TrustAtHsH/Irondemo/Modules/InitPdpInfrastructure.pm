@@ -14,11 +14,13 @@ my $PDP_DEVICE = "pdp";
 my $PDP_IP_ADDRESS = "pdp-ip-address";
 my $IPTABLES_DEVICE = "iptables";
 my $IPTABLES_IP_ADDRESS = "iptables-ip-address";
+my $SWITCH_DEVICE = 'switch';
+my $SWITCH_IP_ADDRESS = 'switch-ip-address';
 my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
 
 my @REQUIRED_ARGS = (
-	$PDP_DEVICE, $PDP_IP_ADDRESS, $IPTABLES_DEVICE, $IPTABLES_IP_ADDRESS, $IFMAP_USER, $IFMAP_PASS);
+	$PDP_DEVICE, $PDP_IP_ADDRESS, $IPTABLES_DEVICE, $IPTABLES_IP_ADDRESS, $SWITCH_DEVICE, $SWITCH_IP_ADDRESS, $IFMAP_USER, $IFMAP_PASS);
 
 
 ### INSTANCE METHOD ###
@@ -36,9 +38,11 @@ sub execute {
 		"ifmap-pass" => $data->{$IFMAP_PASS}
 	};
 	my @argsListIpTables = ($data->{$IPTABLES_DEVICE}, $data->{$IPTABLES_IP_ADDRESS});
+	my @argsListSwitch = ($data->{$SWITCH_DEVICE}, $data->{$SWITCH_IP_ADDRESS});
 
 	$self->call_ifmap_cli("dev-ip", "update", \@argsList, $connectionArgs);
 	$self->call_ifmap_cli("dev-ip", "update", \@argsListIpTables, $connectionArgs);
+	$self->call_ifmap_cli("dev-ip", "update", \@argsListSwitch, $connectionArgs);
 
 }
 
@@ -68,6 +72,8 @@ sub get_required_arguments {
 #                 pdp-ip-address      ->
 #                 iptables            ->
 #                 iptables-ip-address ->
+#                 switch              ->
+#                 switch-ip-address   ->
 #
 # Comments    : Override, called from parent's constructor
 sub _init {

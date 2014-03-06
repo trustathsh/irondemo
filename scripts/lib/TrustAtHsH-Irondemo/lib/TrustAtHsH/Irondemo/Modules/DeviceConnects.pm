@@ -17,7 +17,6 @@ my $IP = 'ip-address';
 my $VLAN = 'vlan';
 my $SWITCH_PORT = 'switch-port';
 my $SWITCH_DEVICE = 'switch-device';
-my $SWITCH_IP = 'switch-ip';
 my $DEVICE = 'device';
 my $DEVICE_ATTRIBUTE = 'device-attribute';
 my $USER_PDP = 'ifmap-user-pdp';
@@ -39,7 +38,6 @@ sub execute {
 
 	my @argsListAuthBy = ($data->{$ACCESS_REQUEST}, $data->{$PDP});
 	my @argsListLayer2 = ($data->{$ACCESS_REQUEST}, $data->{$SWITCH_DEVICE}, "--vlan-number", $data->{$VLAN}, "--port", $data->{$SWITCH_PORT});
-	my @argsListDevIp = ($data->{$SWITCH_DEVICE}, $data->{$SWITCH_IP});
 	my @argsListDevAttr = ($data->{$ACCESS_REQUEST}, $data->{$DEVICE}, $data->{$DEVICE_ATTRIBUTE});
 	my @argsListArDev = ($data->{$ACCESS_REQUEST}, $data->{$DEVICE});
 	my @argsListArMac = ($data->{$ACCESS_REQUEST}, $data->{$MAC});
@@ -54,7 +52,6 @@ sub execute {
 
 	$self->call_ifmap_cli("auth-by", "update", \@argsListAuthBy, $connectionUserPdp);
 	$self->call_ifmap_cli("layer2-info", "update", \@argsListLayer2, $connectionUserPdp);
-	$self->call_ifmap_cli("dev-ip", "update", \@argsListDevIp, $connectionUserPdp);
 	$self->call_ifmap_cli("dev-attr", "update", \@argsListDevAttr, $connectionUserPdp);
 	$self->call_ifmap_cli("ar-dev", "update", \@argsListArDev, $connectionUserPdp);
 	$self->call_ifmap_cli("ar-mac", "update", \@argsListArMac, $connectionUserPdp);
@@ -96,7 +93,5 @@ sub _init {
 		$self->{'data'}->{$key} = $val;
 	}
 }
-
-
 
 1;

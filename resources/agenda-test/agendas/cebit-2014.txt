@@ -3,6 +3,8 @@ At 1 do InitPdpInfrastructure(
 	pdp-ip-address => 10.0.0.6,
 	iptables => iptables,
 	iptables-ip-address => 10.0.0.11,
+	switch => 111:4,
+	switch-ip-address => 192.0.2.55,
 	ifmap-user => pdp,
 	ifmap-pass => pdp);
 
@@ -14,7 +16,6 @@ At 20 do DeviceConnects(
 	vlan => 1234,
 	switch-port => 12,
 	switch-device => 111:4,
-	switch-ip => 192.0.2.55,
 	device => 111:55,
 	device-attribute => anti-virus-running,
 	ifmap-user-pdp => pdp,
@@ -40,3 +41,26 @@ At 30 do VulnerabilityDetected(
 At 31 do EnforcementAction(
 	pep-device => iptables,
 	ip-address => 192.0.2.7);
+
+At 35 do UserLogout(
+	name => john.smith,
+	access-request => 111:33,
+	role => finance and employee,
+	capability => access-finance-server-allowed,
+	ifmap-user => pdp,
+	ifmap-pass => pdp);
+
+At 36 do DeviceDisconnects(
+	access-request => 111:33,
+	pdp => 111:0,
+	mac => 00:11:22:33:44:55,
+	ip-address => 192.0.2.7,
+	vlan => 1234,
+	switch-port => 12,
+	switch-device => 111:4,
+	device => 111:55,
+	device-attribute => anti-virus-running,
+	ifmap-user-pdp => pdp,
+	ifmap-pass-pdp => pdp,
+	ifmap-user-dhcp => dhcp,
+	ifmap-pass-dhcp => dhcp);
