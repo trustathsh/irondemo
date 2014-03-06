@@ -1,4 +1,4 @@
-package TrustAtHsH::Irondemo::Modules::EnforcementAction;
+package TrustAtHsH::Irondemo::Modules::PurgeMetadata;
 
 use 5.006;
 use strict;
@@ -10,15 +10,11 @@ use lib '../../../';
 use parent 'TrustAtHsH::Irondemo::AbstractIfmapCliModule';
 
 
-my $PEP_DEVICE = "pep-device";
-my $IP_ADDRESS = "ip-address";
 my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
 
-my $ENFORCEMENT_TYPE = "type";
-
 my @REQUIRED_ARGS = (
-	$PEP_DEVICE, $IP_ADDRESS, $IFMAP_USER, $IFMAP_PASS);
+	$IFMAP_USER, $IFMAP_PASS);
 
 
 ### INSTANCE METHOD ###
@@ -30,17 +26,17 @@ sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
 
-	my @argsList = ($data->{$PEP_DEVICE}, "ipv4", $data->{$IP_ADDRESS}, $data->{$ENFORCEMENT_TYPE});
 	my $connectionArgs = {
 		"ifmap-user" => $data->{$IFMAP_USER},
 		"ifmap-pass" => $data->{$IFMAP_PASS}
 	};
+	my @argsList = ();
 
 	$self->call_ifmap_cli({
-			'cli_tool' => "enf-report",
-			'mode' => "update",
+			'cli_tool' =>"purge",
 			'args_list' => \@argsList,
 			'connection_args' => $connectionArgs});
+
 }
 
 
@@ -65,9 +61,6 @@ sub get_required_arguments {
 #                 ifmap-url           ->(optional)
 #                 ifmap-keystore-path ->(optional)
 #                 ifmap-keystore-pass ->(optional)
-#                 pep-device          ->
-#                 ip-address          ->
-#                 type                ->(optional)
 #
 # Comments    : Override, called from parent's constructor
 sub _init {
@@ -77,8 +70,6 @@ sub _init {
 	while ( my ($key, $val) = each %{$args} ) {
 		$self->{'data'}->{$key} = $val;
 	}
-
-	$self->{'data'}->{$ENFORCEMENT_TYPE} = "block" unless defined $self->{'data'}->{$ENFORCEMENT_TYPE};
 }
 
 
