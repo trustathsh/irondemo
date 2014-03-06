@@ -18,7 +18,9 @@ our $VERSION = '0.2';
 #process commandline options
 my %options;
 Getopt::Long::Configure( 'gnu_getopt', 'auto_help', 'auto_version' );
-GetOptions( \%options, 'clean', 'man', 'agenda=s', 'threadpool-size=i', 'timescale=i');
+GetOptions( \%options, 'clean', 'man', 'repeat=i', 'agenda=s', 
+	'threadpool-size=i', 'timescale=i', 'forever',
+);
 
 pod2usage( -exitval => 0, -verbose => 2 ) if $options{'man'};
 
@@ -54,7 +56,7 @@ my $irondemo = TrustAtHsH::Irondemo->new({
 	timescale          => $options{timescale} || 1,
 });
 
-if    ( $command eq 'update_projects' )       {
+if ( $command eq 'update_projects' )       {
 	exit( update_sources( @targets ) );
 }
 elsif ( $command eq 'build_projects' )        {
@@ -125,14 +127,18 @@ sub build_scenarios {
 
 sub run_scenario {
 	my $scenario   = shift;
-	my $return_val = 0;
+	my $repeat     = $options{repeat};
+	my $forever    = $options{forever};
 	my $agenda     = $options{agenda} || 'agenda.txt';
+	my $return_val = 0;
 	
-	print "$agenda \n";
-	$return_val = $irondemo->run_scenario({
-		scenario => $scenario,
-		agenda   => $agenda,
-	});
+	while ( $forever or $repeat >= 0 ) {
+		$return_val = $irondemo->run_scenario({
+			scenario => $scenario,
+			agenda   => $agenda,
+		});
+		$repeat--;
+	}
 	
 	return $return_val;
 }
@@ -171,7 +177,7 @@ Prints this manpage.
 
 =back
 
-=head1 RUN OPTIONS
+=head2 OPTIONS FOR RUN_SCENARIO
 
 =over 18
 
@@ -182,6 +188,14 @@ Number of threads that irondemo spawns for taks execution, defaults to 10.
 =item B<--timescale>
 
 Number of seconds that an agenda tick takes.
+
+=item B<--repeat>
+
+Number of times the agenda should be repeatedly executed - default is a single execution.
+
+=item B<--forever>
+
+Repeat execution of the agenda forever and ever and ever ...
 
 =back
 
@@ -205,7 +219,7 @@ Developed by the Trust@HSH research group (see http://trust.f4.hs-hannover.de/).
 
 =head1 LICENSE
 
-=====================================================
+C<=====================================================>
   _____                _     ____  _   _       _   _
  |_   _|_ __ _   _ ___| |_  / __ \| | | | ___ | | | |
    | | | '__| | | / __| __|/ / _` | |_| |/ __|| |_| |
@@ -213,7 +227,7 @@ Developed by the Trust@HSH research group (see http://trust.f4.hs-hannover.de/).
    |_| |_|   \__,_|___/\__|\ \__,_|_| |_||___/|_| |_|
                             \____/
 
-=====================================================
+C<=====================================================>
 
 Hochschule Hannover
 (University of Applied Sciences and Arts, Hannover)
