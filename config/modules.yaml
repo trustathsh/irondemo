@@ -25,3 +25,15 @@
   config:
     ifmap-user: test
     ifmap-pass: test
+
+"TrustAtHsH::Irondemo::Modules::VulnerabilityDetected":
+  alias: VulnerabilityDetected
+  config:
+    ifmap-user: sensor
+    ifmap-pass: sensor
+
+"TrustAtHsH::Irondemo::Modules::InitPdpInfrastructure":
+  alias: InitPdpInfrastructure
+  config:
+    ifmap-user: test
+    ifmap-pass: test
