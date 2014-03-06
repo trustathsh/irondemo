@@ -13,6 +13,7 @@ use parent 'TrustAtHsH::Irondemo::AbstractIfmapCliModule';
 my $ACCESS_REQUEST = 'access-request';
 my $ROLE = 'role';
 my $NAME = 'name';
+my $CAPABILITY = 'capability';
 my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
 
@@ -30,15 +31,17 @@ sub execute {
 	my $data = $self->{'data'};
 
 	my @argsList = ($data->{$ACCESS_REQUEST}, $data->{$NAME});
+	my @argsListRole = ($data->{$ACCESS_REQUEST}, $data->{$NAME}, $data->{$ROLE});
+	my @argsListCapability = ($data->{$ACCESS_REQUEST}, $data->{$CAPABILITY});
+
 	my $connectionArgs = {
 		"ifmap-user" => $data->{$IFMAP_USER},
 		"ifmap-pass" => $data->{$IFMAP_PASS}
 	};
 
-	my @argsListRole = ($data->{$ACCESS_REQUEST}, $data->{$NAME}, $data->{$ROLE});
-
 	$self->call_ifmap_cli("auth-as", "update", \@argsList, $connectionArgs);
 	$self->call_ifmap_cli("role", "update", \@argsListRole, $connectionArgs);
+	$self->call_ifmap_cli("cap", "update", \@argsListCapability, $connectionArgs);
 }
 
 

@@ -1,9 +1,16 @@
 projects:
-  - id: irond
   - id: ifmapcli
+  - id: irond
+  - id: irongui
 
 files:
+  - source: agendas/cebit-2014.txt
+    destination: /
   - source: agendas/generated-agenda-seq.txt
     destination: /
   - source: agendas/generated-agenda-timed.txt
     destination: /
+  - source: irond/basicauthusers.properties
+    destination: /irond
+  - source: irongui/irongui.properties
+    destination: /irongui
