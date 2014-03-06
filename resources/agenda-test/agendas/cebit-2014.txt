@@ -1,10 +1,12 @@
 At 1 do InitPdpInfrastructure(
 	pdp => 111:0,
 	pdp-ip-address => 10.0.0.6,
+	iptables => iptables,
+	iptables-ip-address => 10.0.0.11,
 	ifmap-user => pdp,
 	ifmap-pass => pdp);
 
-At 2 do DeviceConnects(
+At 20 do DeviceConnects(
 	access-request => 111:33,
 	pdp => 111:0,
 	mac => 00:11:22:33:44:55,
@@ -20,7 +22,7 @@ At 2 do DeviceConnects(
 	ifmap-user-dhcp => dhcp,
 	ifmap-pass-dhcp => dhcp);
 
-At 3 do UserLogin(
+At 21 do UserLogin(
 	name => john.smith,
 	access-request => 111:33,
 	role => finance and employee,
@@ -28,9 +30,13 @@ At 3 do UserLogin(
 	ifmap-user => pdp,
 	ifmap-pass => pdp);
 
-At 5 do VulnerabilityDetected(
+At 30 do VulnerabilityDetected(
 	ip-address => 192.0.2.7,
 	event-name => P2P in use,
 	discoverer-id => ironvas,
 	ifmap-user => ironvas,
 	ifmap-pass => ironvas);
+
+At 31 do EnforcementAction(
+	pep-device => iptables,
+	ip-address => 192.0.2.7);

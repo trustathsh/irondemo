@@ -1,4 +1,4 @@
-package TrustAtHsH::Irondemo::Modules::InitPdpInfrastructure;
+package TrustAtHsH::Irondemo::Modules::EnforcementAction;
 
 use 5.006;
 use strict;
@@ -10,15 +10,15 @@ use lib '../../../';
 use parent 'TrustAtHsH::Irondemo::AbstractIfmapCliModule';
 
 
-my $PDP_DEVICE = "pdp";
-my $PDP_IP_ADDRESS = "pdp-ip-address";
-my $IPTABLES_DEVICE = "iptables";
-my $IPTABLES_IP_ADDRESS = "iptables-ip-address";
+my $PEP_DEVICE = "pep-device";
+my $IP_ADDRESS = "ip-address";
 my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
 
+my $ENFORCEMENT_TYPE = "type";
+
 my @REQUIRED_ARGS = (
-	$PDP_DEVICE, $PDP_IP_ADDRESS, $IPTABLES_DEVICE, $IPTABLES_IP_ADDRESS, $IFMAP_USER, $IFMAP_PASS);
+	$PEP_DEVICE, $IP_ADDRESS, $IFMAP_USER, $IFMAP_PASS);
 
 
 ### INSTANCE METHOD ###
@@ -30,16 +30,13 @@ sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
 
-	my @argsList = ($data->{$PDP_DEVICE}, $data->{$PDP_IP_ADDRESS});
+	my @argsList = ($data->{$PEP_DEVICE}, "ipv4", $data->{$IP_ADDRESS}, $data->{$ENFORCEMENT_TYPE});
 	my $connectionArgs = {
 		"ifmap-user" => $data->{$IFMAP_USER},
 		"ifmap-pass" => $data->{$IFMAP_PASS}
 	};
-	my @argsListIpTables = ($data->{$IPTABLES_DEVICE}, $data->{$IPTABLES_IP_ADDRESS});
 
-	$self->call_ifmap_cli("dev-ip", "update", \@argsList, $connectionArgs);
-	$self->call_ifmap_cli("dev-ip", "update", \@argsListIpTables, $connectionArgs);
-
+	$self->call_ifmap_cli("enf-report", "update", \@argsList, $connectionArgs);
 }
 
 
@@ -64,10 +61,9 @@ sub get_required_arguments {
 #                 ifmap-url           ->(optional)
 #                 ifmap-keystore-path ->(optional)
 #                 ifmap-keystore-pass ->(optional)
-#                 pdp                 ->
-#                 pdp-ip-address      ->
-#                 iptables            ->
-#                 iptables-ip-address ->
+#                 pep-device          ->
+#                 ip-address          ->
+#                 type                ->(optional)
 #
 # Comments    : Override, called from parent's constructor
 sub _init {
@@ -77,6 +73,8 @@ sub _init {
 	while ( my ($key, $val) = each %{$args} ) {
 		$self->{'data'}->{$key} = $val;
 	}
+
+	$self->{'data'}->{$ENFORCEMENT_TYPE} = "block" unless defined $self->{'data'}->{$ENFORCEMENT_TYPE};
 }
 
 

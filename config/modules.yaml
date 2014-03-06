@@ -37,3 +37,9 @@
   config:
     ifmap-user: test
     ifmap-pass: test
+
+"TrustAtHsH::Irondemo::Modules::EnforcementAction":
+  alias: EnforcementAction
+  config:
+    ifmap-user: iptables
+    ifmap-pass: iptables
