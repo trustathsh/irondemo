@@ -1,3 +1,6 @@
+"TrustAtHsH::Irondemo::Modules::Break":
+  alias: Break
+
 "TrustAtHsH::Irondemo::Modules::DeviceConnects":
   alias: DeviceConnects
   config:
