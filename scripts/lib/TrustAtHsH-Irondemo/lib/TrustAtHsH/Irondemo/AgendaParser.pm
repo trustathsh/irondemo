@@ -34,7 +34,7 @@ sub new {
         timedAction : 'At' timestamp 'do' actionDef   { $return = { 'time' => $item[2], 'action' => @item[4] }; }
         seqAction   : actionDef                       { $return = { 'action' => @item[1] };                     }
         actionDef   : moduleName '(' args ')'         { $return = { 'module' => $item[1], 'args' => @item[3] }; }
-        args        : arg(s /,/)                      { $return = @item[1];                                     }
+        args        : arg(s? /,/)                     { $return = @item[1];                                     }
         arg         : key '=>' value                  { $return = { 'key' => $item[1], 'value' => $item[3] };   }
         key         : /[a-z][\w_-]*/
         value       : /\w+[\w:\.-\s]*/
