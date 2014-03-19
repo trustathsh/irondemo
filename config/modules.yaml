@@ -58,3 +58,9 @@
   config:
     ifmap-user: pdp
     ifmap-pass: pdp
+
+"TrustAtHsH::Irondemo::Modules::SmartphoneFeaturesDetected":
+  alias: SmartphoneFeaturesDetected
+  config:
+    ifmap-user: sensor
+    ifmap-pass: sensor
