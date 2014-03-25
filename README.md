@@ -12,11 +12,11 @@ In order to use irondemo, you will need the following software installed on your
 * and [Maven 3][maven]
 * [Perl 5][perl]
 * The following Perl modules:
-	-Module::Install
-	-File::Spec
-	-Getopt::Long
-	-File::Basename
-	-Pod::Usage
+	- Module::Install
+	- File::Spec
+	- Getopt::Long
+	- File::Basename
+	- Pod::Usage
 
 irondemo should work on any unix based system as well as Microsoft Windows. If you experience problems on your platform, please report.
 
@@ -60,18 +60,18 @@ Sourcecode and the compiled binaries of projects reside here.
 Building
 ========
 Download:
-	$ git clone https://github.com/trustatfhh/irondemo.git
+	* $ git clone https://github.com/trustatfhh/irondemo.git
 
 Install dependencies:
-	$ sudo cpan install Module::Install
-	$ cd <irondemo root>/scripts/lib/TrustAtHsH-Irondemo/
-	$ perl Makefile.PL
-	$ make installdeps
+	* $ sudo cpan install Module::Install
+	* $ cd <irondemo root>/scripts/lib/TrustAtHsH-Irondemo/
+	* $ perl Makefile.PL
+	* $ make installdeps
 
 Fetch and build the projects' sources:
-	$ cd <irondemo root>/scripts/
-	$ perl irondemo.pl update_projects
-	$ perl irondemo.pl build_projects
+	* $ cd <irondemo root>/scripts/
+	* $ perl irondemo.pl update_projects
+	* $ perl irondemo.pl build_projects
 
 Using the scenarios
 ===================
@@ -84,7 +84,7 @@ Please note, that you have to start all components needed for your scenario, lik
 
 Updating the sources
 ====================
-Just re-run the last step of the instructions for building irondemo. This will update the sources and build them. You will need to also rebuilt any scenarios using the projects that got updated if you want them to make use of the new versionsn.
+Just re-run the last step of the instructions for building irondemo. This will update the sources and build them. You will need to also rebuilt any scenarios using the projects that got updated if you want them to make use of the new versions.
 
 More Information
 ================
