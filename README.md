@@ -27,15 +27,15 @@ Irondemo's directory structure is organized as follows:
 config/
 -------
 Contains irondemo's project config file **projects.yaml**, that contains instructions how to retrieve and built different tools (called *projects* ) which can be combined to create different *scenarios*. Theoretically any third party tool can be integrated pretty easily. Feel free to get in touch if you want your tool to be included in the default configuration file. Currently the default configuration includes: 
-	* ifmapj
-	* ifmapj-examples
-	* ifmapcli
-	* irond
-	* irongui
-	* irondetect
-	* irondhcp
-	* ironvas
-	* visitmeta
+* ifmapj
+* ifmapj-examples
+* ifmapcli
+* irond
+* irongui
+* irondetect
+* irondhcp
+* ironvas
+* visitmeta
 
 The **modules.yaml** configuration file contains configuration properties for executable *modules* used in irondemo. Modules define vocabulary to be used in *agendas*, i.e. they carry out operations that you can use to put together a demonstration, simulation, test case ... you name it. You can easily build your own modules, just take a look at our modules in the /scripts/lib/ directory for examples or get in touch if you need help.
 
@@ -60,18 +60,18 @@ Sourcecode and the compiled binaries of projects reside here.
 Building
 ========
 Download:
-	* $ git clone https://github.com/trustatfhh/irondemo.git
+* $ git clone https://github.com/trustatfhh/irondemo.git
 
 Install dependencies:
-	* $ sudo cpan install Module::Install
-	* $ cd <irondemo root>/scripts/lib/TrustAtHsH-Irondemo/
-	* $ perl Makefile.PL
-	* $ make installdeps
+* $ sudo cpan install Module::Install
+* $ cd <irondemo root>/scripts/lib/TrustAtHsH-Irondemo/
+* $ perl Makefile.PL
+* $ make installdeps
 
 Fetch and build the projects' sources:
-	* $ cd <irondemo root>/scripts/
-	* $ perl irondemo.pl update_projects
-	* $ perl irondemo.pl build_projects
+* $ cd <irondemo root>/scripts/
+* $ perl irondemo.pl update_projects
+* $ perl irondemo.pl build_projects
 
 Using the scenarios
 ===================
