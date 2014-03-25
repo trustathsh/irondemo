@@ -63,6 +63,7 @@ Download:
 	$ git clone https://github.com/trustatfhh/irondemo.git
 
 Install dependencies:
+	$ sudo cpan install Module::Install
 	$ cd <irondemo root>/scripts/lib/TrustAtHsH-Irondemo/
 	$ perl Makefile.PL
 	$ make installdeps
@@ -75,6 +76,11 @@ Fetch and build the projects' sources:
 Using the scenarios
 ===================
 After downloading and compiling the sources, you can build the scenarios. Call `$ irondemo.pl build_scenarios <scenario>` providing the name of the scenario you would like to built (which is identical to the name of its config file without the file ending). The corresponding scenario will be assembled in the scenarios directory.
+
+Running a scenario
+==================
+After building a scenario, you can run an agenda by calling `$ irondemo.pl run_scenario <scenario> --agenda=<filename-of-agenda>`. So if you build a scenario called 'scenario1' and it contains an agenda file called 'agenda.txt', you would start it by calling `$ irondemo.pl run_scenario scenario1 --agenda=agenda.txt`.
+Please note, that you have to start all components needed for your scenario, like MAP server, visualization client etc., by hand from within the scenario folder.
 
 Updating the sources
 ====================
