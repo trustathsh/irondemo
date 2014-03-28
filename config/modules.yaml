@@ -1,6 +1,12 @@
 "TrustAtHsH::Irondemo::Modules::Break":
   alias: Break
 
+"TrustAtHsH::Irondemo::Modules::PublishUpdateExample":
+  alias: PublishUpdateExample
+  config:
+    ifmap-user: test
+    ifmap-pass: test
+
 "TrustAtHsH::Irondemo::Modules::DeviceConnects":
   alias: DeviceConnects
   config:

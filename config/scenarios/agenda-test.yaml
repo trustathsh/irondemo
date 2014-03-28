@@ -8,6 +8,8 @@ files:
     destination: /
   - source: agendas/generated-agenda-timed.txt
     destination: /
+  - source: agendas/publish-update-example-agenda.txt
+    destination: /
   - source: irond/basicauthusers.properties
     destination: /irond
   - source: irongui/irongui.properties
