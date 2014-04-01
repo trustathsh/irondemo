@@ -12,6 +12,10 @@ requires 'Log::Log4perl';
 requires 'Parse::RecDescent';
 requires 'Try::Tiny';
 requires 'IPC::Run';
+requires 'LWP::UserAgent';
+requires 'HTTP::Request';
+requires 'MIME::Base64';
+requires 'XML::LibXML';
 requires 'File::Copy';
 requires 'File::Copy::Recursive';
 requires 'File::Spec';
@@ -30,4 +34,3 @@ requires 'YAML';
 auto_install;
 
 WriteAll;
-
