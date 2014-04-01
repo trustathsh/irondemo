@@ -9,6 +9,7 @@ use LWP::UserAgent;
 use File::Spec;
 use File::Basename;
 use HTTP::Request;
+use MIME::Base64;
 use Log::Log4perl;
 use IPC::Run qw(run);
 use Try::Tiny;
@@ -51,7 +52,8 @@ sub send_soap_publish_request {
 
 	# create the HTTP request object
 	my $request = HTTP::Request->new(POST => $url);
-	$request->header( 'Authorization' => 'Basic dGVzdDp0ZXN0' ); # TODO base64($user:$pass)
+	my $encodedAuth = encode_base64("$user:$pass");
+	$request->header( 'Authorization' => "Basic $encodedAuth" );
 	$request->content($NEW_SESSION_SOAP);
 
 	# configure the user agent

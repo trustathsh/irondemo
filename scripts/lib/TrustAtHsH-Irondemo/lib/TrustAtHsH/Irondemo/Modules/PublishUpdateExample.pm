@@ -12,6 +12,8 @@ use parent 'TrustAtHsH::Irondemo::AbstractIfmapPublishModule';
 
 my $PDP = 'pdp';
 my $ACCESS_REQUEST = 'access-request';
+my $IFMAP_USER = 'ifmap-user';
+my $IFMAP_PASS = 'ifmap-pass';
 
 my @REQUIRED_ARGS = ($PDP, $ACCESS_REQUEST);
 
@@ -40,9 +42,14 @@ sub execute {
 </update>
 END_MESSAGE
 
+	my $connectionArgs = {
+		"ifmap-user" => $data->{$IFMAP_USER},
+		"ifmap-pass" => $data->{$IFMAP_PASS}
+	};
+
 	my $result = $self->send_soap_publish_request({
 		'update_elements' => $updates,
-		'connection_args' => {}});
+		'connection_args' => $connectionArgs});
 
 	return $result;
 }
