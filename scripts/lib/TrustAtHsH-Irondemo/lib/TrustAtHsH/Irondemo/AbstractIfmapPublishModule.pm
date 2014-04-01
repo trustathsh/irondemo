@@ -86,10 +86,21 @@ END_MESSAGE
 
 		# send the publish request
 		$request->content($publish_template);
-
 		my $publishResponse = $ua->request($request);
 
-		# TODO send endSession request
+		my $endSessionRequest = <<"END_MESSAGE";
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+	<soap:Body>
+		<ifmap:endSession session-id="$session_id" xmlns:ifmap="http://www.trustedcomputinggroup.org/2010/IFMAP/2"/>
+	</soap:Body>
+</soap:Envelope>
+END_MESSAGE
+
+		# send the endSession request
+		$request->content($endSessionRequest);
+		my $endSessionResponse = $ua->request($request);
+
 	} catch {
 		my $error = $_;
 		log->error("Execution of publish failed: $error");
