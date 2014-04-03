@@ -29,7 +29,7 @@ sub new {
     my $grammar = q {
         startrule   : token                           { $return = @item[1];                                     }
         token       : comment(s?) action              { $return = $item[2];                                     }
-        comment     : /^\s*#.*\n/
+        comment     : /^\s*#.*;?\n/
         action      : timedAction | seqAction         { $return = @item[1];                                     }
         timedAction : 'At' timestamp 'do' actionDef   { $return = { 'time' => $item[2], 'action' => @item[4] }; }
         seqAction   : actionDef                       { $return = { 'action' => @item[1] };                     }
