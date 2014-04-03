@@ -104,7 +104,7 @@ sub get_actions {
                 push(@actions, $action);
 
             } else {
-                $log->warn("could not parse '$token'");
+                croak("could not parse '$token'");
             }
         }
         undef $agenda_file;
