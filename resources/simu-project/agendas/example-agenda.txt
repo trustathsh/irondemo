@@ -1,0 +1,9 @@
+# TODO add new module names to config/modules.yaml
+
+#At 1 do InitServerRoomInfrastructure( <<<Parameter>>> );
+#At 5 do DoorOpenEvent( <<<door => door4711, user-token => user42>>> );
+#At 7 do MovementDetected( <<<sensor-id => sensor23>>> );
+
+# ...
+
+Break();
