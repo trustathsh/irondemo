@@ -13,6 +13,7 @@ requires 'Parse::RecDescent';
 requires 'Try::Tiny';
 requires 'IPC::Run';
 requires 'LWP::UserAgent';
+requires 'LWP::Protocol::https';
 requires 'HTTP::Request';
 requires 'MIME::Base64';
 requires 'XML::XPath';
