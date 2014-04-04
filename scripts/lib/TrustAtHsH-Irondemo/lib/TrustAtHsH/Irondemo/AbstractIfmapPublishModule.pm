@@ -13,7 +13,8 @@ use MIME::Base64;
 use Log::Log4perl;
 use IPC::Run qw(run);
 use Try::Tiny;
-use XML::LibXML;
+use XML::XPath;
+use XML::XPath::XMLParser;
 use lib '../../';
 use parent 'TrustAtHsH::Irondemo::AbstractModule';
 
@@ -67,11 +68,10 @@ sub send_soap_publish_request {
 		my $newSessionResponse = $ua->request($request);
 
 		# parse the response and extract the session-id
-		my $responseDoc = XML::LibXML->new->parse_string($newSessionResponse->content);
-		my $xc = XML::LibXML::XPathContext->new( $responseDoc->documentElement() );
-		$xc->registerNs( ifmap => 'http://www.trustedcomputinggroup.org/2010/IFMAP/2' );
-		$xc->registerNs( soap => 'http://www.w3.org/2003/05/soap-envelope' );
-		my $session_id = $xc->findvalue( '/soap:Envelope/soap:Body/ifmap:response/newSessionResult/@session-id' );
+		my $xp = XML::XPath->new( xml => $newSessionResponse->content);
+		$xp->set_namespace("ifmap", 'http://www.trustedcomputinggroup.org/2010/IFMAP/2' );
+		$xp->set_namespace("soap", 'http://www.w3.org/2003/05/soap-envelope' );
+		my $session_id = $xp->findvalue('/soap:Envelope/soap:Body/ifmap:response/newSessionResult/@session-id');
 
 		my $publish_template = <<"END_MESSAGE";
 <?xml version="1.0" encoding="UTF-8"?>
