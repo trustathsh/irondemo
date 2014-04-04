@@ -103,7 +103,7 @@ END_MESSAGE
 
 	} catch {
 		my $error = $_;
-		log->error("Execution of publish failed: $error");
+		$log->error("Execution of publish failed: $error");
 		croak($error);
 	};
 	return $result;

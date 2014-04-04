@@ -75,7 +75,7 @@ sub call_ifmap_cli {
 		$result = run \@command, '>', sub {$log->debug(@_)}, '2>', sub {$log->error(@_)};
 	} catch {
 		my $error = $_;
-		log->error("Execution of $cli_tool failed: $error");
+		$log->error("Execution of $cli_tool failed: $error");
 		croak($error);
 	};
 	return $result;
