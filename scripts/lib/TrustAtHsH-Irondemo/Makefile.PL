@@ -15,7 +15,7 @@ requires 'IPC::Run';
 requires 'LWP::UserAgent';
 requires 'HTTP::Request';
 requires 'MIME::Base64';
-requires 'use XML::XPath';
+requires 'XML::XPath';
 requires 'XML::XPath::XMLParser';
 requires 'File::Copy';
 requires 'File::Copy::Recursive';
