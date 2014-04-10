@@ -26,17 +26,17 @@ sub new {
 	$self->{'agenda_path'} = $args->{'path'};
 
 	my $grammar = q {
-        startrule   : token                           { $return = @item[1];                                     }
+        startrule   : token                           { $return = $item[1];                                     }
         token       : comment(s?) action              { $return = $item[2];                                     }
         comment     : /^\s*#.*;?\n/
-        action      : timedAction | seqAction         { $return = @item[1];                                     }
-        timedAction : 'At' timestamp 'do' actionDef   { $return = { 'time' => $item[2], 'action' => @item[4] }; }
-        seqAction   : actionDef                       { $return = { 'action' => @item[1] };                     }
-        actionDef   : moduleName '(' args ')'         { $return = { 'module' => $item[1], 'args' => @item[3] }; }
-        args        : arg(s? /,/)                     { $return = @item[1];                                     }
+        action      : timedAction | seqAction         { $return = $item[1];                                     }
+        timedAction : 'At' timestamp 'do' actionDef   { $return = { 'time' => $item[2], 'action' => $item[4] }; }
+        seqAction   : actionDef                       { $return = { 'action' => $item[1] };                     }
+        actionDef   : moduleName '(' args ')'         { $return = { 'module' => $item[1], 'args' => $item[3] }; }
+        args        : arg(s? /,/)                     { $return = $item[1];                                     }
         arg         : key '=>' value                  { $return = { 'key' => $item[1], 'value' => $item[3] };   }
-        key         : /[a-z][\w_-]*/
-        value       : /\w+[\w:\.-\s]*/
+        key         : /[a-z][\w_-]*/                  {$return = $item[1]; $return =~ s/\n//;}
+        value       : /\w+[\w:\.-\s]*/                {$return = $item[1]; $return =~ s/\n//;}
         moduleName  : /[A-Z]\w*/
         timestamp   : /\d+/
     };
