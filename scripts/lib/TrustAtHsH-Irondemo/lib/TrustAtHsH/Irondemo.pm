@@ -20,14 +20,14 @@ use File::Path qw/remove_tree make_path/;
 use File::Spec;
 use File::Copy;
 use File::Copy::Recursive qw/dircopy/;
-use Time::HiRes qw( time sleep );
+use Time::HiRes qw/time sleep/;
 
 #for developement only
 use Data::Dumper;
 
 our $VERSION = '0.01';
-my $VERBOSE = 1;
-my $log     = Log::Log4perl->get_logger();
+my $VERBOSE  = 1;
+my $log      = Log::Log4perl->get_logger();
 
 
 ### CONSTRUCTOR ###
@@ -196,9 +196,7 @@ sub build_project {
 #               specified in the scenario's config
 # Returns     : True value on success, false value on failure
 # Parameters  :
-# Comments    : TODO: Check if target directories/files exist before copying
-#               TODO: Extended logging
-#               TODO: Check return vals of copy and move operations and build meaningful return val
+# Comments    : TODO: Extended logging
 sub build_scenario {
 	my $self                   = shift;
 	my $opts                   = shift;
@@ -213,7 +211,7 @@ sub build_scenario {
 	my $scenario_conf =
 	  $self->_read_yaml_file( File::Spec->catdir( $scenarios_conf_dir, $scenario . '.yaml' ) );
 	my $projects_conf = $self->{projects_conf};
-	my $return_val    = 0;
+	my $return_val    = 1;
 	my $build_dir;
 	
 
@@ -259,7 +257,7 @@ sub build_scenario {
 						basename( $directory->{source}->{path} )
 					);
 				}
-				dircopy( $source, $destination );
+				$return_val &= dircopy( $source, $destination );
 			}
 		}
 
@@ -284,7 +282,7 @@ sub build_scenario {
 						$scenario_dir,
 						$archive->{destination}->{rename}
 					);
-					move( $ae->extract_path, $rename_to );
+					$return_val &= move( $ae->extract_path, $rename_to );
 				}
 			}
 		}
@@ -307,7 +305,7 @@ sub build_scenario {
 					$destination =
 					  File::Spec->catdir( $destination, $file->{destination}->{rename} );
 				}
-				copy( $source, $destination );
+				$return_val &= copy( $source, $destination );
 			}
 		}
 	}
@@ -319,7 +317,7 @@ sub build_scenario {
 				$scenario_dir, $file->{destination},
 				basename( $file->{source} ),
 			);
-			copy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
+			$return_val &= copy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
 		}
 	}
 
@@ -331,14 +329,18 @@ sub build_scenario {
 				$scenario_dir, $dir->{destination},
 				basename( $dir->{source} ) 
 			);
-			dircopy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
+			$return_val &= dircopy( $source, $destination ) or die "Cannot copy $source to $destination: $!";
 		}
 	}
 
 	# execute scenario scripts
 	if ( $scenario_conf->{execute} ) {
 		for my $executable ( @{ $scenario_conf->{execute} } ) {
-			system( File::Spec->catfile( $scenario_resources_dir, $executable ) );
+			if ( system( File::Spec->catfile( $scenario_resources_dir, $executable ) ) == 0 ) {
+				$return_val &= 1;
+			} else {
+				$return_val = 0;
+			}
 		}
 	}
 
