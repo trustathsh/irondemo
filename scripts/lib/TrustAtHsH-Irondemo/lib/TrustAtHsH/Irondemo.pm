@@ -346,7 +346,7 @@ sub build_scenario {
 # Returns     : True value on success, false value on failure
 # Parameters  : agenda  -> relative (to scenario base dir) path to agenda file
 #               scenario-> the scenario to work with
-# Comments    : TODO proper error handling
+# Comments    :
 sub run_scenario {
 	my $self           = shift;
 	my $opts           = shift;
@@ -357,6 +357,7 @@ sub run_scenario {
 	my $timescale      = $opts->{timescale} || $self->{timescale};
 	my $return_val     = 1;
 	my %modules_aliases;
+	my @data;
 	
 	TrustAtHsH::Irondemo::Config->instance->set_current_scenario_dir(
 		File::Spec->catfile( $self->{scenarios_dir}, $scenario )
@@ -368,7 +369,13 @@ sub run_scenario {
 	}
 
 	$log->debug("Calling AgendaParser ...");
-	my @data = TrustAtHsH::Irondemo::AgendaParser->new( { path => $agenda_path, } )->get_actions();
+	try {
+		@data =
+			TrustAtHsH::Irondemo::AgendaParser->new( { path => $agenda_path, } )->get_actions();
+	} catch {
+		$log->error("Parsing of $agenda_path failed ... aborting");
+		croak("Parsing of $agenda_path failed ... aborting");
+	};
 
 	# group the actions by time
 	my %groupedActions;
@@ -405,7 +412,7 @@ sub run_scenario {
 				} else {
 					$action_name = $action->{action};
 				}
-				if (   defined $modules_config->{$action_name}
+				if ( defined $modules_config->{$action_name}
 					&& defined $modules_config->{$action_name}->{config} )
 				{
 					$action_args = dclone( $modules_config->{$action_name}->{config} );
@@ -417,17 +424,15 @@ sub run_scenario {
 					$module_object =
 					  TrustAtHsH::Irondemo::ModuleFactory->loadModule( $action_name, $action_args );
 					push @jobs, $module_object;
-				}
-				catch {
-					$log->info("Module $action_name failed to load");
+				} catch {
+					$log->warn("Module $action_name failed to load");
 				};
 			}
 			delete $groupedActions{$currentTime};
 			try {
 				$executor->run_concurrent(@jobs);
-			}
-			catch {
-				$log->info("Some modules failed to execute");
+			} catch {
+				$log->warn("Some modules failed to execute");
 				$return_val = 0;
 			};
 			my $elements  = @jobs;
@@ -440,7 +445,7 @@ sub run_scenario {
 						" reports SUCCESS executing " . $result->{module}
 					);
 				} else {
-					$log->info(
+					$log->warn(
 						"Thread " . $result->{tid} .
 						" reports FAILURE executing " .
 						$result->{module}
