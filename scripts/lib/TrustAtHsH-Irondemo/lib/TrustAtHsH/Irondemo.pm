@@ -218,10 +218,15 @@ sub build_scenario {
 	
 
 	#clear scenario directory if called with 'clean'
-	$self->_clear_directory($scenario_dir) if $clean;
+	$self->_remove_directory($scenario_dir) if $clean;
 
 	#make sure scenario dir exists
-	mkdir($scenario_dir) unless ( -d $scenario_dir );
+	if ( -d $scenario_dir ) {
+		$log->info("Scenario dir $scenario_dir exists. Doing nothing.");
+		return 0;
+	} else {
+		mkdir($scenario_dir);
+	}
 
 	#iterate over each project that is part of the scenario
 	for my $project ( @{ $scenario_conf->{projects} } ) {
