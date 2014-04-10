@@ -1,0 +1,80 @@
+At 1 do InitPdpInfrastructure(
+	pdp => 111:0,
+	pdp-ip-address => 10.0.0.6,
+	iptables => iptables,
+	iptables-ip-address => 10.0.0.11,
+	switch => 111:4,
+	switch-ip-address => 192.0.2.55,
+	ifmap-user => pdp,
+	ifmap-pass => pdp
+);
+
+At 20 do DeviceConnects(
+	access-request => 111:33,
+	pdp => 111:0,
+	mac => 00:11:22:33:44:55,
+	ip-address => 192.0.2.7,
+	vlan-number => 1234,
+	vlan-name => productive,
+	switch-port => 12,
+	switch-device => 111:4,
+	device => 111:55,
+	device-attribute => anti-virus-running,
+	ifmap-user-pdp => pdp,
+	ifmap-pass-pdp => pdp,
+	ifmap-user-dhcp => dhcp,
+	ifmap-pass-dhcp => dhcp
+);
+
+At 21 do UserLogin(
+	name => john.smith,
+	access-request => 111:33,
+	role => finance and employee,
+	capability => access-finance-server-allowed,
+	ifmap-user => pdp,
+	ifmap-pass => pdp
+);
+
+At 26 do InvestigationRequested(
+	device => 111:33,
+	mac => 00:11:22:33:44:55
+);
+
+At 30 do VulnerabilityDetected(
+	ip-address => 192.0.2.7,
+	event-name => P2P in use,
+	discoverer-id => ironvas,
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas
+);
+
+At 31 do EnforcementAction(
+	pep-device => iptables,
+	ip-address => 192.0.2.7
+);
+
+At 35 do UserLogout(
+	name => john.smith,
+	access-request => 111:33,
+	role => finance and employee,
+	capability => access-finance-server-allowed,
+	ifmap-user => pdp,
+	ifmap-pass => pdp
+);
+
+At 36 do DeviceDisconnects(
+	access-request => 111:33,
+	pdp => 111:0,
+	mac => 00:11:22:33:44:55,
+	ip-address => 192.0.2.7,
+	vlan-number => 1234,
+	vlan-name => productive,
+	switch-port => 12,
+	switch-device => 111:4,
+	device => 111:55,
+	device-attribute => anti-virus-running,
+	ifmap-user-pdp => pdp,
+	ifmap-pass-pdp => pdp,
+	ifmap-user-dhcp => dhcp,
+	ifmap-pass-dhcp => dhcp
+);
