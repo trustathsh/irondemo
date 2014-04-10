@@ -32,6 +32,7 @@ requires 'Scalar::Util';
 requires 'Archive::Extract';
 requires 'Storable';
 requires 'YAML';
+requires 'Time::HiRes';
 
 auto_install;
 

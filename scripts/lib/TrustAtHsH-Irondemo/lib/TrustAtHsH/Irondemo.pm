@@ -20,6 +20,7 @@ use File::Path qw/remove_tree make_path/;
 use File::Spec;
 use File::Copy;
 use File::Copy::Recursive qw/dircopy/;
+use Time::HiRes qw( time sleep );
 
 #for developement only
 use Data::Dumper;
@@ -347,8 +348,6 @@ sub build_scenario {
 #               scenario-> the scenario to work with
 # Comments    : TODO proper error handling
 #               TODO calculate and return proper value for success/failure
-#               TODO calculate time to sleep properly
-#               TODO issue warnings if execution of tasks takes longer than 1 tick
 sub run_scenario {
 	my $self           = shift;
 	my $opts           = shift;
@@ -387,15 +386,16 @@ sub run_scenario {
 		TrustAtHsH::Irondemo::Executor->new( { threadpool_size => $opts->{threadpool_size} } );
 
 	my $currentTime = 0;
-	while (%groupedActions) {
+	while ( %groupedActions ) {
 		my @jobs;
 		if ( defined $groupedActions{$currentTime} ) {
-			my @currentActions = @{ $groupedActions{$currentTime} };
-			my $actionCount    = @currentActions;
-			$log->info( "Executing " . $actionCount . " actions at $currentTime" );
+			my $execution_start = time;
+			my @current_actions = @{ $groupedActions{$currentTime} };
+			my $action_count    = @current_actions;
+			$log->info( "Executing " . $action_count . " actions at $currentTime" );
 
 			# execute actions for this timestamp
-			for my $action (@currentActions) {
+			for my $action (@current_actions) {
 				my $action_name;
 				my $action_args;
 				my $module_object;
@@ -448,10 +448,17 @@ sub run_scenario {
 				$processed++;
 			}
 			$log->info("All done for $currentTime");
+			my $execution_elapsed = time - $execution_start;
+			if ( $execution_elapsed <= 1 ) {
+				sleep($timescale - $execution_elapsed);
+			} else {
+				$log->warn("Last execution took $execution_elapsed seconds," .
+				" timescale is $timescale seconds.");
+			}
 		} else {
 			$log->info("Nothing to do at $currentTime ...sleeping...");
+			sleep($timescale);
 		}
-		sleep($timescale);
 		$currentTime++;
 	}
 }
