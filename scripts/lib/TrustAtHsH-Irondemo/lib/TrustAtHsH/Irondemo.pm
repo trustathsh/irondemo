@@ -347,7 +347,6 @@ sub build_scenario {
 # Parameters  : agenda  -> relative (to scenario base dir) path to agenda file
 #               scenario-> the scenario to work with
 # Comments    : TODO proper error handling
-#               TODO calculate and return proper value for success/failure
 sub run_scenario {
 	my $self           = shift;
 	my $opts           = shift;
@@ -356,6 +355,7 @@ sub run_scenario {
 	my $agenda_path    = File::Spec->catfile( $self->{scenarios_dir}, $scenario, $agenda );
 	my $modules_config = TrustAtHsH::Irondemo::Config->instance->get_modules_config;
 	my $timescale      = $opts->{timescale} || $self->{timescale};
+	my $return_val     = 1;
 	my %modules_aliases;
 	
 	TrustAtHsH::Irondemo::Config->instance->set_current_scenario_dir(
@@ -428,6 +428,7 @@ sub run_scenario {
 			}
 			catch {
 				$log->info("Some modules failed to execute");
+				$return_val = 0;
 			};
 			my $elements  = @jobs;
 			my $processed = 0;
@@ -445,6 +446,7 @@ sub run_scenario {
 						$result->{module}
 					);
 				}
+				$return_val &= $result;
 				$processed++;
 			}
 			$log->info("All done for $currentTime");
@@ -461,6 +463,7 @@ sub run_scenario {
 		}
 		$currentTime++;
 	}
+	return $return_val;
 }
 
 
