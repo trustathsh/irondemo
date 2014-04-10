@@ -13,7 +13,7 @@ use TrustAtHsH::Irondemo;
 
 use Data::Dumper;
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 
 #process commandline options
 my %options;
