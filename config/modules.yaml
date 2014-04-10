@@ -1,6 +1,9 @@
 "TrustAtHsH::Irondemo::Modules::Break":
   alias: Break
 
+"TrustAtHsH::Irondemo::Modules::Nothing":
+  alias: Nothing
+
 "TrustAtHsH::Irondemo::Modules::PublishUpdateExample":
   alias: PublishUpdateExample
   config:
