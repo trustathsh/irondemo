@@ -10,6 +10,8 @@ files:
     destination: /
   - source: agendas/publish-update-example-agenda.txt
     destination: /
+  - source: agendas/sme-user-logins.txt
+    destination: /
   - source: irond/basicauthusers.properties
     destination: /irond
   - source: irongui/irongui.properties

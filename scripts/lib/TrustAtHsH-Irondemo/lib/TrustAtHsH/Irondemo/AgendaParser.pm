@@ -62,7 +62,7 @@ sub get_actions {
         my $agenda_type = undef;
         while (my $token = $agenda_file->getline()) {
             # skip comments at file end?
-            last if eof($agenda_file) && $token =~ /^\s*#.*$/;
+            last if eof($agenda_file) && ($token =~ /^\s*#.*$/ || $token =~ /\s*/);
 
             my $actionParsed = $self->{'parser'}->startrule($token);
             if ($actionParsed) {
