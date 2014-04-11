@@ -463,7 +463,7 @@ sub run_scenario {
 			}
 			$log->info("All done for $currentTime");
 			my $execution_elapsed = time - $execution_start;
-			if ( $execution_elapsed <= 1 ) {
+			if ( $timescale - $execution_elapsed > 0 ) {
 				sleep($timescale - $execution_elapsed);
 			} else {
 				$log->warn("Last execution took $execution_elapsed seconds," .
