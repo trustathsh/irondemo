@@ -1,0 +1,9 @@
+projects:
+  - id: irond
+  - id: ifmapcli
+  - id: irongui
+  - id: irondetect
+  - id: irondhcp
+  - id: ironvas
+  - id: visitmeta
+  - id: ironflow
