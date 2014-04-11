@@ -183,3 +183,22 @@ visitmeta:
           path: /
           rename: visitmeta
   executable_dir: visitmeta
+
+ironflow:
+  sources:
+    scm: git
+    uri: http://github.com/trustathsh/ironflow.git
+  build:
+    tool: mvn
+    commands:
+     - mvn package
+  binaries: 
+    archives:
+      - archive:
+        source:
+          path: target
+          match: ironflow-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+        destination:
+          path: /
+          rename: ironflow
+  executable_dir: ironflow
