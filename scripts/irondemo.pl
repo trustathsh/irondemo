@@ -18,8 +18,8 @@ our $VERSION = '0.43';
 #process commandline options
 my %options;
 Getopt::Long::Configure( 'gnu_getopt', 'auto_help', 'auto_version' );
-GetOptions( \%options, 'clean', 'man', 'repeat=i', 'agenda=s', 
-	'threadpool-size=i', 'timescale=i', 'forever',
+GetOptions( \%options, 'clean', 'man', 'repeat=i', 'agenda=s',
+	'threadpool-size=i', 'timescale=i', 'forever', 'force_seq',
 );
 
 pod2usage( -exitval => 0, -verbose => 2 ) if $options{'man'};
@@ -129,6 +129,7 @@ sub run_scenario {
 	my $scenario   = shift;
 	my $repeat     = $options{repeat} || 0;
 	my $forever    = $options{forever} || 0;
+	my $force_seq  = $options{force_seq} || 0;
 	my $agenda     = $options{agenda} || 'agenda.txt';
 	my $return_val = 0;
 	
@@ -136,6 +137,7 @@ sub run_scenario {
 		$return_val = $irondemo->run_scenario({
 			scenario => $scenario,
 			agenda   => $agenda,
+			force_seq => $force_seq,
 		});
 		$repeat--;
 	}
@@ -196,6 +198,10 @@ Number of times the agenda should be repeatedly executed - default is a single e
 =item B<--forever>
 
 Repeat execution of the agenda forever and ever and ever ...
+
+=item B<--force_seq>
+
+Ignore timestamps in the agenda and treat it as a sequential agenda.
 
 =back
 

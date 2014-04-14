@@ -362,6 +362,7 @@ sub run_scenario {
 	my $agenda_path    = File::Spec->catfile( $self->{scenarios_dir}, $scenario, $agenda );
 	my $modules_config = TrustAtHsH::Irondemo::Config->instance->get_modules_config;
 	my $timescale      = $opts->{timescale} || $self->{timescale};
+	my $force_seq      = $opts->{force_seq};
 	my $return_val     = 1;
 	my %modules_aliases;
 	my @data;
@@ -383,6 +384,11 @@ sub run_scenario {
 		$log->error("Parsing of $agenda_path failed ... aborting");
 		croak("Parsing of $agenda_path failed ... aborting");
 	};
+
+	if ($force_seq) {
+		$log->debug("forcing sequential agenda");
+		$self->_override_timestamps_with_seq(\@data);
+	}
 
 	# group the actions by time
 	my %groupedActions;
@@ -476,6 +482,23 @@ sub run_scenario {
 		$currentTime++;
 	}
 	return $return_val;
+}
+
+
+### INTERNAL_UTILITY ###
+# Purpose     : Override all timestamps in the given action list with sequential values
+# Returns     :
+# Parameters  : reference to the list of actions
+# Comments    :
+sub _override_timestamps_with_seq {
+	my $self = shift;
+	my $data = shift;
+
+	my $current_tick = 0;
+	for my $action ( @{$data} ) {
+		$action->{"time"} = $current_tick;
+		$current_tick += 1;
+	}
 }
 
 
