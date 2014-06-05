@@ -1,0 +1,14 @@
+At 1 do DeviceIp(
+	mode => update,
+	device => pdp,
+	ip-address => 127.0.0.1);
+	
+At 2 do AccessRequestIp(
+	mode => update,
+	ar => binky,
+	ip-address => 127.0.0.1);
+	
+At 32 do AccessRequestIp(
+	mode => delete,
+	ar => binky,
+	ip-address => 127.0.0.1);

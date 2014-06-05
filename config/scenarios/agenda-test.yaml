@@ -6,6 +6,8 @@ projects:
 files:
   - source: agendas/generated-agenda-seq.txt
     destination: /
+  - source: agendas/ifmapcli-test.txt
+    destination: /
   - source: agendas/generated-agenda-timed.txt
     destination: /
   - source: agendas/publish-update-example-agenda.txt

@@ -10,6 +10,18 @@
     ifmap-user: test
     ifmap-pass: test
 
+"TrustAtHsH::Irondemo::Modules::DeviceIp":
+  alias: DeviceIp
+  config:
+    ifmap-user: test
+    ifmap-pass: test
+
+"TrustAtHsH::Irondemo::Modules::AccessRequestIp":
+  alias: AccessRequestIp
+  config:
+    ifmap-user: test
+    ifmap-pass: test
+
 "TrustAtHsH::Irondemo::Modules::DeviceConnects":
   alias: DeviceConnects
   config:
