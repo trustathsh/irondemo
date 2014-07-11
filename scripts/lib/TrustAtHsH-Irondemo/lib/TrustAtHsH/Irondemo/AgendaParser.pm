@@ -15,7 +15,7 @@ my $log = Log::Log4perl->get_logger();
 
 my $AGENDA_TYPE_SEQ   = "seq_agenda";
 my $AGENDA_TYPE_TIMED = "timed_agenda";
-
+$::RD_HINT = 1;
 sub new {
 	my $class = shift;
 	my $args  = shift;
@@ -27,7 +27,7 @@ sub new {
 
 	my $grammar = q {
         startrule   : token                           { $return = $item[1];                                     }
-        token       : comment(s?) action              { $return = $item[2];                                     }
+        token       : action              	      { $return = $item[1];                                     }
         comment     : /^\s*#.*;?\n/
         action      : timedAction | seqAction         { $return = $item[1];                                     }
         timedAction : 'At' timestamp 'do' actionDef   { $return = { 'time' => $item[2], 'action' => $item[4] }; }
@@ -35,8 +35,8 @@ sub new {
         actionDef   : moduleName '(' args ')'         { $return = { 'module' => $item[1], 'args' => $item[3] }; }
         args        : arg(s? /,/)                     { $return = $item[1];                                     }
         arg         : key '=>' value                  { $return = { 'key' => $item[1], 'value' => $item[3] };   }
-        key         : /[a-z][\w_-]*/                  {$return = $item[1]; $return =~ s/^\s*|\s*$//g;           }
-        value       : /\w+[\w:\.-\s]*/                {$return = $item[1]; $return =~ s/^\s*|\s*$//g;           }
+        key         : /[a-z][\w_-]*/                  { $return = $item[1]; $return =~ s/^\s*|\s*$//g;          }
+        value       : /\w+[\w:\.-\s]*/                { $return = $item[1]; $return =~ s/^\s*|\s*$//g;          }
         moduleName  : /[A-Z]\w*/
         timestamp   : /\d+/
     };
@@ -59,7 +59,10 @@ sub get_actions {
 		my $current_tick = 0;
 		my $agenda_type  = undef;
 		while ( my $token = $agenda_file->getline() ) {
-
+			
+			# Remove comments before going into grammar parsing
+			$token =~ s/\s*#.*//g;
+			
 			# skip comments at file end?
 			last if eof($agenda_file) && ( $token =~ /^\s*#.*$/ || $token =~ /\s*/ );
 
