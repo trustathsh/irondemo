@@ -35,8 +35,8 @@ sub new {
         actionDef   : moduleName '(' args ')'         { $return = { 'module' => $item[1], 'args' => $item[3] }; }
         args        : arg(s? /,/)                     { $return = $item[1];                                     }
         arg         : key '=>' value                  { $return = { 'key' => $item[1], 'value' => $item[3] };   }
-        key         : /[a-z][\w_-]*/                  {$return = $item[1]; $return =~ s/\n//;}
-        value       : /\w+[\w:\.-\s]*/                {$return = $item[1]; $return =~ s/\n//;}
+        key         : /[a-z][\w_-]*/                  {$return = $item[1]; $return =~ s/^\s*|\s*$//g;           }
+        value       : /\w+[\w:\.-\s]*/                {$return = $item[1]; $return =~ s/^\s*|\s*$//g;           }
         moduleName  : /[A-Z]\w*/
         timestamp   : /\d+/
     };
