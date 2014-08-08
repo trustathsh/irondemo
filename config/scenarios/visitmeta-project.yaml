@@ -1,0 +1,16 @@
+projects:
+  - id: ifmapcli
+  - id: irond
+  - id: visitmeta
+
+files:
+  - source: agendas/visitmeta-project.txt
+    destination: /
+  - source: irond/basicauthusers.properties
+    destination: /irond
+  - source: visitmeta/config/color.properties
+    destination: /visitmeta/config
+  - source: visitmeta/config/dataservice_connections.yml
+    destination: /visitmeta/config
+  - source: visitmeta/config/visualizationConfig.properties
+    destination: /visitmeta/config

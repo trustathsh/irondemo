@@ -1,0 +1,12 @@
+---
+default: !Connection
+  connectionName: default
+  userName: visitmeta
+  userPass: visitmeta
+  startupConnect: true
+  subscribeList:
+  - identifier: freeradius-pdp
+    identifierType: device
+    subscribeName: default
+    startupSubscribe: true
+  url: https://localhost:8443

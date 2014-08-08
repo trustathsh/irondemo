@@ -1,0 +1,73 @@
+# cebit-2014 demo
+
+At 1 do InitPdpInfrastructure(
+	pdp => freeradius-pdp,
+	pdp-ip-address => 10.0.0.6,
+	iptables => iptables,
+	iptables-ip-address => 10.0.0.11,
+	switch => switch,
+	switch-ip-address => 192.0.2.55);
+
+At 20 do DeviceConnects(
+	access-request => ar:1,
+	pdp => freeradius-pdp,
+	mac => 00:11:22:33:44:55,
+	ip-address => 192.0.2.7,
+	vlan-number => 1234,
+	vlan-name => productive,
+	switch-port => 12,
+	switch-device => switch,
+	device => endpoint-device,
+	device-attribute => anti-virus-running);
+
+At 21 do UserLogin(
+	name => Max Mustermann,
+	access-request => ar:1,
+	role => finance and employee,
+	capability => access-finance-server-allowed);
+
+At 26 do InvestigationRequested(
+	device => ar:1,
+	mac => 00:11:22:33:44:55);
+
+At 30 do VulnerabilityDetected(
+	ip-address => 192.0.2.7,
+	event-name => Open port detected: Telnet server,
+	discoverer-id => ironvas,
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas);
+
+At 31 do EnforcementAction(
+	pep-device => iptables,
+	ip-address => 192.0.2.7);
+
+At 35 do UserLogout(
+	name => Max Mustermann,
+	access-request => ar:1,
+	role => finance and employee,
+	capability => access-finance-server-allowed);
+
+At 36 do DeviceDisconnects(
+	access-request => ar:1,
+	pdp => freeradius-pdp,
+	mac => 00:11:22:33:44:55,
+	ip-address => 192.0.2.7,
+	vlan-number => 1234,
+	vlan-name => productive,
+	switch-port => 12,
+	switch-device => switch,
+	device => endpoint-device,
+	device-attribute => anti-virus-running);
+
+At 40 do PurgeMetadata(
+	ifmap-user => pdp,
+	ifmap-pass => pdp);
+At 40 do PurgeMetadata(
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas);
+At 40 do PurgeMetadata(
+	ifmap-user => test,
+	ifmap-pass => test);
+At 40 do PurgeMetadata(
+	ifmap-user => iptables,
+	ifmap-pass => iptables);
