@@ -8,6 +8,8 @@ files:
     destination: /
   - source: irond/basicauthusers.properties
     destination: /irond
+  - source: irond/publisher.properties
+    destination: /irond
   - source: visitmeta/config/color.properties
     destination: /visitmeta/config
   - source: visitmeta/config/dataservice_connections.yml
