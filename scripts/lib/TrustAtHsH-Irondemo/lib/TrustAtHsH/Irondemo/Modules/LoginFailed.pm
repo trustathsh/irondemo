@@ -51,13 +51,13 @@ sub execute {
 	my $result = 1;
 	
 	open (FILE, ">$service_file");
-	print FILE "<service name=\"$data->{$SERVICE}\" host-name=\"$data->{HOST}\" administrative-domain=\"\" xmlns=\"http://simu-project.de/XMLSchema/1\" />";
+	print FILE "<simu:service name=\"$data->{$SERVICE}\" host-name=\"$data->{HOST}\" administrative-domain=\"\" xmlns:simu=\"http://simu-project.de/XMLSchema/1\" />";
 	close(FILE);
 	open (FILE, ">$login_failed_file");
-	print FILE "<login-failed user=\"$data->{$USER_LOGIN}\" ip=\"$data->{$USER_IP}\" service=\"$data->{$SERVICE}\" service-host=\"$data->{$HOST}\" administrative-domain=\"\" xmlns=\"http://simu-project.de/XMLSchema/1\" />";
+	print FILE "<simu:login-failed user=\"$data->{$USER_LOGIN}\" ip=\"$data->{$USER_IP}\" service=\"$data->{$SERVICE}\" service-host=\"$data->{$HOST}\" administrative-domain=\"\" xmlns:simu=\"http://simu-project.de/XMLSchema/1\" />";
 	close(FILE);
 	open (FILE, ">$login_failed_info_file");
-	print FILE "<login-failed-info count=\"$count\" xmlns=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
+	print FILE "<simu:login-failed-info count=\"$count\" xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
 	close(FILE);
 
 
