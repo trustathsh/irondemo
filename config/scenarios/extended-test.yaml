@@ -1,0 +1,22 @@
+projects:
+  - id: ifmapcli
+  - id: irond
+  - id: visitmeta
+
+files:
+  - source: agendas/ext-ifmapcli.txt
+    destination: /
+  - source: irond/basicauthusers.properties
+    destination: /irond
+  - source: irond/ifmap.properties
+    destination: /irond
+  - source: irond/schema/simu.xsd
+    destination: /irond/schema
+  - source: xml/login-failed-id.xml
+    destination: /
+  - source: xml/login-failed-ip.xml
+    destination: /
+  - source: xml/login-failed-user.xml
+    destination: /
+  - source: xml/service-ip.xml
+    destination: /

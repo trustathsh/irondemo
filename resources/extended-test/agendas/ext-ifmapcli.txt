@@ -1,0 +1,24 @@
+LoginFailed(
+	user-login => faker,
+	user-name => attacker,
+	user-ip => 192.168.0.22,
+	service => ssh,
+	service-ip => 192.168.0.3,
+	host => server);
+LoginFailed(
+	user-login => carpcarp,
+	user-name => attacker,
+	user-ip => 192.168.0.22,
+	service => ssh,
+	service-ip => 192.168.0.3,
+	host => server);
+LoginFailed(
+	user-login => regular,
+	user-name => regular,
+	user-ip => 192.168.0.33,
+	service => ssh,
+	service-ip => 192.168.0.3,
+	host => server,
+	access-request => ar:2,
+	count => 3);
+	

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:ifmap="http://www.trustedcomputinggroup.org/2010/IFMAP/2"
+	xmlns:base-id="http://www.trustedcomputinggroup.org/2012/IFMAP-IDENTIFIER/1"
+	xmlns="http://simu-project.de/XMLSchema/1"
+	targetNamespace="http://simu-project.de/XMLSchema/1">
+	<xsd:import namespace="http://www.trustedcomputinggroup.org/2012/IFMAP-IDENTIFIER/1" schemaLocation="ifmap-identifier-2.1v1.xsd"/>
+	<xsd:import namespace="http://www.trustedcomputinggroup.org/2010/IFMAP/2" schemaLocation="ifmap-base-2.0v17.xsd"/>
+	<!-- elementFormDefault="qualified" -->
+
+
+	<!-- 
+		NMAP
+	-->
+
+	<xsd:element name="latency">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:double">
+					<xsd:attribute name="unit" type="xsd:string"/>
+					<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:latency unit="ms">42.42</simu:latency>
+	-->
+
+	<xsd:element name="hop-count">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:integer">
+					<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:hop-count>5</simu:hop-count>
+	-->
+
+	<xsd:element name="service-ip">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:service-ip />
+	-->
+
+	<xsd:element name="service-dns">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:service-dns />
+	-->
+
+	<xsd:element name="service-information">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="name" type="xsd:string" />
+				<xsd:element name="port" type="xsd:integer" /> <!-- TCP vs. UDP -->
+				<xsd:element name="discoverer" type="xsd:string" />
+				<xsd:element name="info" type="xsd:string" />
+				<xsd:element name="next-update" type="xsd:dateTime" />
+			</xsd:sequence>
+			<xsd:attributeGroup ref="ifmap:multiValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:service-information>
+			<name>Apache2</name>
+			<port>42</port>
+			<discoverer>simu-nmap-collector_v42</discoverer>
+			<info>{ ... }</info>
+			<next-update>2014-05-30T09:30:10Z</next-update>
+		</simu:service-information>
+	-->
+
+
+	<!-- 
+		Syslog
+	-->
+	
+	<!-- service identifier -->
+	<xsd:element name="service">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="base-id:IdentifierType">
+					<xsd:attribute name="name" type="xsd:string" use="required"/>
+					<xsd:attribute name="host-name" type="xsd:string" use="required"/> <!-- DNS name is needed for uniqueness of identifier -->
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<service name="Apache2" host-name="web.foo.bar" />
+	-->
+	
+	<!-- login-failed identifier -->
+	<xsd:element name="login-failed">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="base-id:IdentifierType">
+					<xsd:attribute name="user" type="xsd:string" use="required"/>
+					<xsd:attribute name="ip" type="xsd:string" use="required"/>
+					<xsd:attribute name="service" type="xsd:string" use="required"/>
+					<xsd:attribute name="service-host" type="xsd:string" use="required"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<login-failed user="john-doe" ip="192.168.0.42" service="sshd" service-host="web.foo.bar"/>
+	-->
+	
+	<xsd:element name="login-failed-id">
+		<xsd:complexType>
+			<xsd:attribute name="valid-user" type="xsd:boolean" />
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:login-failed-id valid-user="true">
+		</simu:login-failed-id>
+	-->
+
+	<xsd:element name="login-failed-ip">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:login-failed-ip>
+		</simu:login-failed-ip>
+	-->
+	
+	<xsd:element name="login-failed-user">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:login-failed-user>
+		</simu:login-failed-user>
+	-->
+
+	<xsd:element name="login-failed-info">
+		<xsd:complexType>
+			<xsd:attribute name="count" type="xsd:integer" />
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:login-failed-info count=3>
+		</simu:login-failed-info>
+	-->
+
+</xsd:schema>
