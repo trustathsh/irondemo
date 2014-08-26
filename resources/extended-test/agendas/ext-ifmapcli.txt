@@ -21,4 +21,3 @@ LoginFailed(
 	host => server,
 	access-request => ar:2,
 	count => 3);
-	
