@@ -25,7 +25,7 @@ use Time::HiRes qw/time sleep/;
 #for developement only
 use Data::Dumper;
 
-our $VERSION = '0.45';
+our $VERSION = '0.46';
 my $VERBOSE  = 1;
 my $log      = Log::Log4perl->get_logger();
 
