@@ -202,3 +202,41 @@ ironflow:
           path: /
           rename: ironflow
   executable_dir: ironflow
+
+ironsyslog:
+  sources:
+    scm: git
+    uri: http://github.com/trustathsh/ironsyslog.git
+  build:
+    tool: mvn
+    commands:
+     - mvn package
+  binaries: 
+    archives:
+      - archive:
+        source:
+          path: target
+          match: ironsyslog-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+        destination:
+          path: /
+          rename: ironsyslog
+  executable_dir: ironsyslog
+
+irontemplate:
+  sources:
+    scm: git
+    uri: http://github.com/trustathsh/irontemplate.git
+  build:
+    tool: mvn
+    commands:
+     - mvn package
+  binaries: 
+    archives:
+      - archive:
+        source:
+          path: target
+          match: irontemplate-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+        destination:
+          path: /
+          rename: irontemplate
+  executable_dir: irontemplate
