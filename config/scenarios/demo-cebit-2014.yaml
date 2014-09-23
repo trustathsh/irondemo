@@ -2,6 +2,7 @@ projects:
   - id: ifmapcli
   - id: irond
   - id: irongui
+  - id: visitmeta
 
 files:
   - source: agendas/cebit-2014.txt
@@ -10,3 +11,6 @@ files:
     destination: /irond
   - source: irongui/irongui.properties
     destination: /irongui
+  - source: visitmeta/dataservice_connections.yml
+    destination: visitmeta/config/
+
