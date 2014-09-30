@@ -6,6 +6,8 @@ projects:
 files:
   - source: agendas/example-agenda.txt
     destination: /
+  - source: agendas/ncpvpn.txt
+    destination: /
   - source: irond/basicauthusers.properties
     destination: /irond
   - source: irongui/irongui.properties

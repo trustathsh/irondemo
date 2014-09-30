@@ -22,6 +22,18 @@
     ifmap-user: test
     ifmap-pass: test
 
+"TrustAtHsH::Irondemo::Modules::AccessrequestNCP":
+  alias: AccessrequestNCP
+  config:
+    ifmap-user: test
+    ifmap-pass: test
+
+"TrustAtHsH::Irondemo::Modules::AccessrequestDel":
+  alias: AccessrequestDel
+  config:
+    ifmap-user: test
+    ifmap-pass: test
+
 "TrustAtHsH::Irondemo::Modules::DeviceConnects":
   alias: DeviceConnects
   config:
