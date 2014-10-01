@@ -4,13 +4,13 @@
 	xmlns:ifmap="http://www.trustedcomputinggroup.org/2010/IFMAP/2"
 	xmlns:base-id="http://www.trustedcomputinggroup.org/2012/IFMAP-IDENTIFIER/1"
 	xmlns="http://simu-project.de/XMLSchema/1"
+	elementFormDefault="qualified"
 	targetNamespace="http://simu-project.de/XMLSchema/1">
 	<xsd:import namespace="http://www.trustedcomputinggroup.org/2012/IFMAP-IDENTIFIER/1" schemaLocation="ifmap-identifier-2.1v1.xsd"/>
 	<xsd:import namespace="http://www.trustedcomputinggroup.org/2010/IFMAP/2" schemaLocation="ifmap-base-2.0v17.xsd"/>
 	<!-- elementFormDefault="qualified" -->
 
-
-	<!-- 
+	<!--
 		NMAP
 	-->
 
@@ -18,7 +18,7 @@
 		<xsd:complexType>
 			<xsd:simpleContent>
 				<xsd:extension base="xsd:double">
-					<xsd:attribute name="unit" type="xsd:string"/>
+					<xsd:attribute name="unit" type="xsd:duration"/>
 					<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
 				</xsd:extension>
 			</xsd:simpleContent>
@@ -83,7 +83,7 @@
 
 
 	<!-- 
-		Syslog
+		service
 	-->
 	
 	<!-- service identifier -->
@@ -91,8 +91,9 @@
 		<xsd:complexType>
 			<xsd:complexContent>
 				<xsd:extension base="base-id:IdentifierType">
+					<xsd:attribute name="type" type="xsd:string" use="required"/>
 					<xsd:attribute name="name" type="xsd:string" use="required"/>
-					<xsd:attribute name="host-name" type="xsd:string" use="required"/> <!-- DNS name is needed for uniqueness of identifier -->
+					<xsd:attribute name="port" type="xsd:integer" use="required"/>
 				</xsd:extension>
 			</xsd:complexContent>
 		</xsd:complexType>
@@ -101,63 +102,150 @@
 		<service name="Apache2" host-name="web.foo.bar" />
 	-->
 	
-	<!-- login-failed identifier -->
-	<xsd:element name="login-failed">
+	<!-- implementation identifier -->
+	<xsd:element name="implementation">
 		<xsd:complexType>
 			<xsd:complexContent>
 				<xsd:extension base="base-id:IdentifierType">
-					<xsd:attribute name="user" type="xsd:string" use="required"/>
-					<xsd:attribute name="ip" type="xsd:string" use="required"/>
-					<xsd:attribute name="service" type="xsd:string" use="required"/>
-					<xsd:attribute name="service-host" type="xsd:string" use="required"/>
+					<xsd:attribute name="name" type="xsd:string" use="required"/>
+					<xsd:attribute name="version" type="xsd:string" use="required"/>
+					<xsd:attribute name="local-version" type="xsd:string" use="optional"/>
+					<xsd:attribute name="platform" type="xsd:string" use="optional"/>
 				</xsd:extension>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
 	<!-- example:
-		<login-failed user="john-doe" ip="192.168.0.42" service="sshd" service-host="web.foo.bar"/>
+		<implementation name="openssh" version="1.2.0" />
 	-->
 	
-	<xsd:element name="login-failed-id">
-		<xsd:complexType>
-			<xsd:attribute name="valid-user" type="xsd:boolean" />
-			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
-		</xsd:complexType>
-	</xsd:element>
-	<!-- example:
-		<simu:login-failed-id valid-user="true">
-		</simu:login-failed-id>
-	-->
-
-	<xsd:element name="login-failed-ip">
+	<xsd:element name="service-implementation">
 		<xsd:complexType>
 			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
 		</xsd:complexType>
 	</xsd:element>
 	<!-- example:
-		<simu:login-failed-ip>
-		</simu:login-failed-ip>
+		<simu:service-implementation />
 	-->
 	
-	<xsd:element name="login-failed-user">
+	<!-- vulnerability identifier -->
+	<xsd:element name="vulnerability">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="base-id:IdentifierType">
+					<xsd:attribute name="type" type="xsd:string" use="required"/>
+					<xsd:attribute name="id" type="xsd:string" use="required"/>
+					<xsd:attribute name="severity" type="xsd:float" use="optional"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<vulnerability type="cve" id="CVE-2006-5051" />
+	-->
+	
+	<xsd:element name="implementation-vulnerability">
 		<xsd:complexType>
 			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
 		</xsd:complexType>
 	</xsd:element>
 	<!-- example:
-		<simu:login-failed-user>
-		</simu:login-failed-user>
+		<simu:service-implementation />
+	-->
+	
+	
+	<!--
+		login attempts
+	-->
+	
+	<xsd:element name="identifies-as">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:identifies-as />
 	-->
 
-	<xsd:element name="login-failed-info">
+	<xsd:simpleType name="credentialType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Password"/>
+			<xsd:enumeration value="Public Key"/>
+			<xsd:enumeration value="Biometric"/>
+			<xsd:enumeration value="Token"/>
+			<xsd:enumeration value="Other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="login-failure">
 		<xsd:complexType>
-			<xsd:attribute name="count" type="xsd:integer" />
+			<xsd:all>
+				<xsd:element name="credential-type" type="credentialType" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="reason" minOccurs="1" maxOccurs="1">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="Invalid Account"/>
+							<xsd:enumeration value="Invalid Credentials"/>
+							<xsd:enumeration value="Expired Credentials"/>
+							<xsd:enumeration value="Communication Failure"/>
+							<xsd:enumeration value="Unknown"/>
+							<xsd:enumeration value="Other"/>	
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="other-credential-type-definition" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="other-reason-type-definition" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			</xsd:all>
 			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
 		</xsd:complexType>
 	</xsd:element>
 	<!-- example:
-		<simu:login-failed-info count=3>
-		</simu:login-failed-info>
+		<simu:login-failure>
+			<credential-type>Password</credential-type>
+			<reason>invalid credentials</reason>
+		</simu:login-failure>
 	-->
+
+	<xsd:element name="login-success">
+		<xsd:complexType>
+			<xsd:all>
+				<xsd:element name="credential-type"  type="credentialType" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="other-credential-type-definition" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			</xsd:all>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:login-success>
+			<credential-type>password</ceredential-type>
+		</simu:login-success>
+	-->
+	
+	<!--
+	discovery
+	-->
+	<xsd:element name="service-discovered-by">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:service-discovered-by />
+	-->
+	
+	<xsd:element name="device-discovered-by">
+		<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="discoverer" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:device-discovered-by>
+			<discoverer>IO-Tool</discoverer>
+		<simu:discovered-by />
+	-->
+
 
 </xsd:schema>

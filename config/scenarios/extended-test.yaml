@@ -12,11 +12,7 @@ files:
     destination: /irond
   - source: irond/schema/simu.xsd
     destination: /irond/schema
-  - source: xml/login-failed-id.xml
-    destination: /
-  - source: xml/login-failed-ip.xml
-    destination: /
-  - source: xml/login-failed-user.xml
+  - source: xml/identifies-as.xml
     destination: /
   - source: xml/service-ip.xml
     destination: /

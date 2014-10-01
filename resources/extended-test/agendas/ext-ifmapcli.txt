@@ -1,23 +1,70 @@
-LoginFailed(
-	user-login => faker,
-	user-name => attacker,
-	user-ip => 192.168.0.22,
-	service => ssh,
-	service-ip => 192.168.0.3,
-	host => server);
-LoginFailed(
-	user-login => carpcarp,
-	user-name => attacker,
-	user-ip => 192.168.0.22,
-	service => ssh,
-	service-ip => 192.168.0.3,
-	host => server);
-LoginFailed(
-	user-login => regular,
-	user-name => regular,
-	user-ip => 192.168.0.33,
-	service => ssh,
-	service-ip => 192.168.0.3,
-	host => server,
+InitPdpInfrastructure(
+	pdp => pdp,
+	pdp-ip-address => 192.168.0.6,
+	iptables => iptables,
+	iptables-ip-address => 192.168.0.11,
+	switch => switch,
+	switch-ip-address => 192.168.0.55);
+	
+DeviceConnects(
+	access-request => ar:1,
+	pdp => pdp,
+	mac => 00:11:22:33:44:55,
+	ip-address => 192.168.0.33,
+	vlan-number => 1234,
+	vlan-name => productive,
+	switch-port => 12,
+	switch-device => switch,
+	device => pc01,
+	device-attribute => anti-virus-running);
+UserLogin(
+	name => Max Mustermann,
+	access-request => ar:1,
+	role => finance and employee,
+	capability => access-finance-server-allowed);
+	
+DeviceConnects(
 	access-request => ar:2,
-	count => 3);
+	pdp => pdp,
+	mac => aa:bb:cc:dd:ee:ff,
+	ip-address => 192.168.0.22,
+	vlan-number => 1234,
+	vlan-name => productive,
+	switch-port => 12,
+	switch-device => switch,
+	device => pc02,
+	device-attribute => anti-virus-running);
+UserLogin(
+	name => Arnold Attacker,
+	access-request => ar:2,
+	role => employee);
+LoginFailed(
+	user-login => bruteforce,
+	user-ip => 192.168.0.22,
+	cred => Password,
+	reason => Invalid Account,
+	service => ssh,
+	ssh-ar => ssh-ar:2,
+	port => 22,
+	service-ip => 192.168.0.3,
+	host => server01);
+LoginFailed(
+	user-login => normaluser,
+	user-ip => 192.168.0.33,
+	cred => Password,
+	reason => Invalid Credentials,
+	service => ssh,
+	port => 22,
+	ssh-ar => ssh-ar:3,
+	service-ip => 192.168.0.3,
+	host => server01);
+LoginSuccess(
+	user-login => normaluser,
+	user-ip => 192.168.0.33,
+	cred => Password,
+	service => ssh,
+	port => 22,
+	ssh-ar => ssh-ar:4,
+	service-ip => 192.168.0.3,
+	host => server01);
+	
