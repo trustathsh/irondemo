@@ -17,7 +17,7 @@ At 2 do EnforcementAction(
 
 At 5 do AccessrequestDel(
 	identity => tf_ipsec,
-	access-request => ncp-ncp:03,
+	access-request => ncp-vpn:03,
 	device => NCP_SES,
 	vip => 172.16.119.200,
 	ip => 172.16.15.32);
