@@ -11,6 +11,7 @@ use parent 'TrustAtHsH::Irondemo::AbstractIfmapCliModule';
 
 
 my $PEP_DEVICE = "pep-device";
+my $MODE       = "mode";
 my $IP_ADDRESS = "ip-address";
 my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
@@ -38,9 +39,11 @@ sub execute {
 		"ifmap-pass" => $data->{$IFMAP_PASS}
 	};
 
+	my $mode = $data->{$MODE} ? $data->{$MODE} : 'update';
+
 	$result &= $self->call_ifmap_cli({
 			'cli_tool' => "enf-report",
-			'mode' => "update",
+			'mode'     => $mode,
 			'args_list' => \@argsList,
 			'connection_args' => $connectionArgs});
 
