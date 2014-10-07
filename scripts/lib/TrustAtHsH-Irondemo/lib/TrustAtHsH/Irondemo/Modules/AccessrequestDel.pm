@@ -15,6 +15,7 @@ my $NAME = 'identity';
 my $CAPABILITY = 'device';
 my $IP = 'ip';
 my $VIP = 'vip';
+my $HOST = 'hostname';
 my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
 my $ROLE = 'role';
@@ -68,7 +69,16 @@ sub execute {
 				'args_list' => \@argsListCapability2,
 				'connection_args' => $connectionArgs});
 	}
-	
+
+	if (defined $data->{$HOST}) {
+		my @argsList2 = ($data->{$ACCESS_REQUEST}, $data->{$HOST});
+		$result &= $self->call_ifmap_cli({
+				'cli_tool' => "ar-dev",
+				'mode' => "delete",
+				'args_list' => \@argsList2,
+				'connection_args' => $connectionArgs});
+	}
+
 	if (defined $data->{$ROLE}) {
 		my @argsListCapability2 = ($data->{$ACCESS_REQUEST}, $data->{$NAME}, $data->{$ROLE});
 		$result &= $self->call_ifmap_cli({
