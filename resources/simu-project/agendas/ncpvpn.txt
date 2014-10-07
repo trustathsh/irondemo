@@ -6,18 +6,23 @@ At 1 do AccessrequestNCP(
 	identity => tf_ipsec,
 	vip => 172.16.119.200,
 	hostname => myHost,
-	ncpcap => 33
-	);
+	ncpcap => 33);
 
 At 2 do EnforcementAction(
 	pep-device => myHost,
 	ip-address => 172.16.119.200,
-	type => block
-	);
+	type => block);
 
 At 5 do AccessrequestDel(
 	identity => tf_ipsec,
 	access-request => ncp-vpn:03,
 	device => NCP_SES,
 	vip => 172.16.119.200,
+	hostname => myHost,
 	ip => 172.16.15.32);
+
+At 7 do EnforcementAction(
+	pep-device => myHost,
+	ip-address => 172.16.119.200,
+	type => block,
+        mode => delete);
