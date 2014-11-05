@@ -112,7 +112,7 @@ sub get_actions {
 
 			}
 			else {
-				croak("could not parse '$token'");
+				print("could not parse '$token'\n");
 			}
 		}
 		undef $agenda_file;
