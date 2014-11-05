@@ -109,3 +109,88 @@
   config:
     ifmap-user: sensor
     ifmap-pass: sensor
+
+"SIMU::SIT::Irondemo::Modules::CreateServerRoom":
+  alias: CreateServerRoom
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+
+"SIMU::SIT::Irondemo::Modules::CreateServerRoomDoor":
+  alias: CreateServerRoomDoor
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+
+"SIMU::SIT::Irondemo::Modules::CreateMotionSensor":
+  alias: CreateMotionSensor
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+
+"SIMU::SIT::Irondemo::Modules::CreateServerRack":
+  alias: CreateServerRack
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+
+"SIMU::SIT::Irondemo::Modules::CreateServer":
+  alias: CreateServer
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+
+"SIMU::SIT::Irondemo::Modules::FailedDoorAccessRequest":
+  alias: FailedDoorAccessRequest
+  config:
+    ifmap-user: acs
+    ifmap-pass: acs
+
+"SIMU::SIT::Irondemo::Modules::SuccessfulDoorAccessRequest":
+  alias: SuccessfulDoorAccessRequest
+  config:
+    ifmap-user: acs
+    ifmap-pass: acs
+
+"SIMU::SIT::Irondemo::Modules::DoorOpenedEvent":
+  alias: DoorOpenedEvent
+  config:
+    ifmap-user: door
+    ifmap-pass: door
+
+"SIMU::SIT::Irondemo::Modules::DoorClosedEvent":
+  alias: DoorClosedEvent
+  config:
+    ifmap-user: door
+    ifmap-pass: door
+
+"SIMU::SIT::Irondemo::Modules::MotionDetectedEvent":
+  alias: MotionDetectedEvent
+  config:
+    ifmap-user: motion
+    ifmap-pass: motion
+
+"SIMU::SIT::Irondemo::Modules::FailedRackAccessRequest":
+  alias: FailedRackAccessRequest
+  config:
+    ifmap-user: acs
+    ifmap-pass: acs
+
+"SIMU::SIT::Irondemo::Modules::SuccessfulRackAccessRequest":
+  alias: SuccessfulRackAccessRequest
+  config:
+    ifmap-user: acs
+    ifmap-pass: acs
+
+"SIMU::SIT::Irondemo::Modules::ServerConnectedEvent":
+  alias: ServerConnectedEvent
+  config:
+    ifmap-user: kvm
+    ifmap-pass: kvm
+
+"SIMU::SIT::Irondemo::Modules::ServerDisconnectedEvent":
+  alias: ServerDisconnectedEvent
+  config:
+    ifmap-user: kvm
+    ifmap-pass: kvm
+

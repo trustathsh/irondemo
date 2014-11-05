@@ -4,10 +4,26 @@ projects:
   - id: irongui
 
 files:
+  - source: agendas/leuchtturm00.txt
+    destination: /
+  - source: agendas/leuchtturm01.txt
+    destination: /
+  - source: agendas/leuchtturm02.txt
+    destination: /
+  - source: agendas/leuchtturm03.txt
+    destination: /
+  - source: agendas/leuchtturm04.txt
+    destination: /
+  - source: agendas/leuchtturm05.txt
+    destination: /
   - source: agendas/example-agenda.txt
     destination: /
   - source: agendas/ncpvpn.txt
     destination: /
+  - source: irond/ifmap-metadata-2.0v8.xsd
+    destination: /irond/schema
+  - source: irond/ifmap-base-2.0v17.xsd
+    destination: /irond/schema
   - source: irond/basicauthusers.properties
     destination: /irond
   - source: irongui/irongui.properties
