@@ -15,11 +15,12 @@
 
   <xsd:element name="devices-connected">
     <xsd:complexType>
+      <xsd:attribute name="discovered-by" type="xsd:string" use="required" /> 
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="interfaces-connected-via-link">
+  <xsd:element name="interfaces-connected">
     <xsd:complexType>
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
     </xsd:complexType>
@@ -32,6 +33,18 @@
   </xsd:element>
 
   <xsd:element name="device-address">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="interface-address">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="interface-mac">
     <xsd:complexType>
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
     </xsd:complexType>
