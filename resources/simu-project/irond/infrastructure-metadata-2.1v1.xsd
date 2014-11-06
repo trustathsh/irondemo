@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ifmap="http://www.trustedcomputinggroup.org/2010/IFMAP/2" xmlns="http://sit.fraunhofer.de/2014/INFRASTRUCTURE-METADATA/1" targetNamespace="http://sit.fraunhofer.de/2014/INFRASTRUCTURE-METADATA/1">
-	<xsd:import namespace="http://www.trustedcomputinggroup.org/2010/IFMAP/2" schemaLocation="ifmap-base-2.0v17.xsd"/>
-	<!-- Example XSD for vendor-specific metadata which represents a part-of relation
-             between devices located on the same subnet as shown in ifmapj-examples -->
+  <xsd:import namespace="http://www.trustedcomputinggroup.org/2010/IFMAP/2" schemaLocation="ifmap-base-2.0v17.xsd"/>
   <xsd:element name="device-interface">
     <xsd:complexType>
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
