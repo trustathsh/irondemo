@@ -20,9 +20,9 @@ files:
     destination: /
   - source: agendas/ncpvpn.txt
     destination: /
-  - source: irond/ifmap-metadata-2.0v8.xsd
+  - source: irond/infrastructure-metadata-2.1v1.xsd
     destination: /irond/schema
-  - source: irond/ifmap-base-2.0v17.xsd
+  - source: irond/infrastructure-identifier-2.1v1.xsd
     destination: /irond/schema
   - source: irond/basicauthusers.properties
     destination: /irond

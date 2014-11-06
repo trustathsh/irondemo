@@ -116,6 +116,12 @@
     ifmap-user: io
     ifmap-pass: io
 
+"SIMU::SIT::Irondemo::Modules::CreateServerRoomA":
+  alias: CreateServerRoomA
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+
 "SIMU::SIT::Irondemo::Modules::CreateServerRoomDoor":
   alias: CreateServerRoomDoor
   config:

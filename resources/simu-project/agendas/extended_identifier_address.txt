@@ -1,0 +1,1 @@
+At   1 do CreateServerRoomA( room => SR1, acs => SR1.ACS, acsaddress => ASDF );

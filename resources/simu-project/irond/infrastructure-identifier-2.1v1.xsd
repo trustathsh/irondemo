@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ifmap="http://www.trustedcomputinggroup.org/2010/IFMAP/2" xmlns="http://sit.fraunhofer.de/2014/INFRASTRUCTURE-IDENTIFIER/1" targetNamespace="http://sit.fraunhofer.de/2014/INFRASTRUCTURE-IDENTIFIER/1">
+  <xsd:import namespace="http://www.trustedcomputinggroup.org/2012/IFMAP-IDENTIFIER/1" schemaLocation="ifmap-identifier-2.1v1.xsd"/>
+  <xsd:element name="address">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="base-id:IdentifierType">
+          <xsd:attribute name="administrative-domain" type="xsd:string"/>
+          <xsd:attribute name="value" type="xsd:string" use="required"/>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="IPv4"/>
+                <xsd:enumeration value="IPv6"/>
+                <xsd:enumeration value="MAC"/>
+                <xsd:enumeration value="other"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute name="othertype" type="xsd:string" use="optional"/>
+          <xsd:attribute name="layer" use="optional">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="2"/>
+                <xsd:enumeration value="3"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="interfaces">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="base-id:IdentifierType">
+          <xsd:attribute name="administrative-domain" type="xsd:string"/>
+          <xsd:attribute name="name" type="xsd:string" use="required"/>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="physical"/>
+                <xsd:enumeration value="virtual"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute name="layer" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="2"/>
+                <xsd:enumeration value="3"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute name="virtualInterfaceType" use="optional">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="802.1q"/>
+                <xsd:enumeration value="802.1d"/>
+                <xsd:enumeration value="tunnel-endpoint"/>
+                <xsd:enumeration value="dummy"/>
+                <xsd:enumeration value="other"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute name="otherVirtualInterfaceType" type="xsd:string" use="optional"/>
+          <xsd:attribute name="physicalInterfaceType" type="xsd:string" use="optional"/>
+          <xsd:attribute name="additionalPortIdentifier" type="xsd:string" use="optional"/>
+          <xsd:attribute name="mtu" type="xsd:integer" use="optional"/>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
