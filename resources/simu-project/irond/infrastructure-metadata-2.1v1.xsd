@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ifmap="http://www.trustedcomputinggroup.org/2010/IFMAP/2" xmlns="http://sit.fraunhofer.de/2014/INFRASTRUCTURE-METADATA/1" targetNamespace="http://sit.fraunhofer.de/2014/INFRASTRUCTURE-METADATA/1">
   <xsd:import namespace="http://www.trustedcomputinggroup.org/2010/IFMAP/2" schemaLocation="ifmap-base-2.0v17.xsd"/>
-  <xsd:element name="device-interface">
+  <xsd:element name="associated-with">
     <xsd:complexType>
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="interface-ip">
+  <xsd:element name="device-interface">
     <xsd:complexType>
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
     </xsd:complexType>
@@ -26,25 +26,19 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="associated-with">
-    <xsd:complexType>
-      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="device-address">
-    <xsd:complexType>
-      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
-    </xsd:complexType>
-  </xsd:element>
-
   <xsd:element name="interface-address">
     <xsd:complexType>
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="interface-vlan">
+  <xsd:element name="interface-mac">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="interface-ip">
     <xsd:complexType>
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
     </xsd:complexType>
@@ -56,13 +50,19 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="interface-vlan">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="interface-ipnet">
     <xsd:complexType>
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="interface-mac">
+  <xsd:element name="device-address">
     <xsd:complexType>
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
     </xsd:complexType>
