@@ -44,7 +44,43 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="interface-vlan">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="interface-network">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="interface-ipnet">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="interface-mac">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="address-network">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="mac-vlan">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="ip-ipnet">
     <xsd:complexType>
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
     </xsd:complexType>

@@ -31,6 +31,68 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="network">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="base-id:IdentifierType">
+          <xsd:attribute name="administrative-domain" type="xsd:string"/>
+          <xsd:attribute name="value" type="xsd:string" use="required"/>
+          <xsd:attribute name="size" type="xsd:string" use="optional"/>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="IPv4"/>
+                <xsd:enumeration value="IPv6"/>
+                <xsd:enumeration value="Ethernet"/>
+                <xsd:enumeration value="other"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+          <xsd:attribute name="othertype" type="xsd:string" use="optional"/>
+          <xsd:attribute name="layer" use="optional">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="2"/>
+                <xsd:enumeration value="3"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="ipnetwork">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="base-id:IdentifierType">
+          <xsd:attribute name="administrative-domain" type="xsd:string"/>
+          <xsd:attribute name="value" type="xsd:string" use="required"/>
+          <xsd:attribute name="prefix" type="xsd:string" use="required"/>
+          <xsd:attribute name="type" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="IPv4"/>
+                <xsd:enumeration value="IPv6"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="vlan">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="base-id:IdentifierType">
+          <xsd:attribute name="administrative-domain" type="xsd:string"/>
+          <xsd:attribute name="id" type="xsd:string" use="required"/>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="interfaces">
     <xsd:complexType>
       <xsd:complexContent>
