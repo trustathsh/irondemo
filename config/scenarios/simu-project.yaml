@@ -16,6 +16,8 @@ files:
     destination: /
   - source: agendas/leuchtturm05.txt
     destination: /
+  - source: agendas/infrastructure_example.txt
+    destination: /
   - source: agendas/example-agenda.txt
     destination: /
   - source: agendas/ncpvpn.txt
