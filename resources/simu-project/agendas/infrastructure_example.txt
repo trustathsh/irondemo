@@ -1,0 +1,16 @@
+At   0 do DeviceDetected( io => Its_me, device => core00.lan );
+At   1 do DeviceDetected( io => Its_me, device => building00.lan );
+At   2 do AddInterfaceToDevice( device => core00.lan, interface => core00.lan___Gi0_0 );
+At   3 do AddInterfaceToDevice( device => core00.lan, interface => core00.lan___Gi0_1 );
+At   4 do AddInterfaceToDevice( device => building00.lan, interface => building00.lan___Gi0_0 );
+At   5 do AddInterfaceToDevice( device => building00.lan, interface => building00.lan___Gi0_1 );
+At   6 do DeviceConnectionDetected ( device01 => core00.lan, interface01 => core00.lan___Gi0_0, device02 => building00.lan, interface02 => building00.lan___Gi0_0 );
+At   7 do AddAddressToInterface ( device => core00.lan, interface => core00.lan___Gi0_0, type => MAC, address => aa:bb:cc:dd:ee:ff );
+At   8 do AddAddressToInterface ( device => core00.lan, interface => core00.lan___Gi0_0, type => IPv4, address => 127.0.0.1 );
+At   9 do AddAddressToInterface ( device => core00.lan, interface => core00.lan___Gi0_0, type => IPv6, address => 1234:5678:90ab:cdef:1234:5678:90ab:cdef );
+At   10 do AddNetworkToAddress ( interface => core00.lan___Gi0_0, type => MAC, address => aa:bb:cc:dd:ee:ff, network => 415, scope => none );
+At   11 do AddNetworkToAddress ( interface => core00.lan___Gi0_0, type => IPv4, address => 127.0.0.1, network => 127.0.0.0, scope => 8 );
+At   12 do AddNetworkToAddress ( interface => core00.lan___Gi0_0, type => IPv6, address => 1234:5678:90ab:cdef:1234:5678:90ab:cdef, network => 1234:5678:90ab:cdef:0:0:0:0, scope => 64 );
+At   13 do LinkAddresses ( l2address => aa:bb:cc:dd:ee:ff, l3type => IPv4, l3address => 127.0.0.1 );
+At   14 do LinkAddresses ( l2address => aa:bb:cc:dd:ee:ff, l3type => IPv6, l3address => 1234:5678:90ab:cdef:1234:5678:90ab:cdef );
+
