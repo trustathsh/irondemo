@@ -37,7 +37,7 @@
         <xsd:extension base="base-id:IdentifierType">
           <xsd:attribute name="administrative-domain" type="xsd:string"/>
           <xsd:attribute name="value" type="xsd:string" use="required"/>
-          <xsd:attribute name="size" type="xsd:string" use="optional"/>
+          <xsd:attribute name="scope" type="xsd:string" use="optional"/>
           <xsd:attribute name="type" use="required">
             <xsd:simpleType>
               <xsd:restriction base="xsd:string">
@@ -112,6 +112,7 @@
               <xsd:restriction base="xsd:string">
                 <xsd:enumeration value="2"/>
                 <xsd:enumeration value="3"/>
+                <xsd:enumeration value="combined_2_3"/>
               </xsd:restriction>
             </xsd:simpleType>
           </xsd:attribute>

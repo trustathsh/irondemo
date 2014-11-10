@@ -200,3 +200,39 @@
     ifmap-user: kvm
     ifmap-pass: kvm
 
+"SIMU::SIT::Irondemo::Modules::DeviceDetected":
+  alias: DeviceDetected
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+
+"SIMU::SIT::Irondemo::Modules::DeviceConnectionDetected":
+  alias: DeviceConnectionDetected
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+
+"SIMU::SIT::Irondemo::Modules::AddInterfaceToDevice":
+  alias: AddInterfaceToDevice
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+
+"SIMU::SIT::Irondemo::Modules::AddAddressToInterface":
+  alias: AddAddressToInterface
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+
+"SIMU::SIT::Irondemo::Modules::AddNetworkToAddress":
+  alias: AddNetworkToAddress
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+
+"SIMU::SIT::Irondemo::Modules::LinkAddresses":
+  alias: LinkAddresses
+  config:
+    ifmap-user: io
+    ifmap-pass: io
+

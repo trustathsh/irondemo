@@ -15,6 +15,12 @@
 
   <xsd:element name="devices-connected">
     <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="device-discovered-by">
+    <xsd:complexType>
       <xsd:attribute name="discovered-by" type="xsd:string" use="required" /> 
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
     </xsd:complexType>
@@ -65,6 +71,18 @@
   <xsd:element name="device-address">
     <xsd:complexType>
       <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="device-mac">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="layer3address-layer2address">
+    <xsd:complexType>
+      <xsd:attributeGroup ref="ifmap:multiValueMetadataAttributes"/>
     </xsd:complexType>
   </xsd:element>
 
