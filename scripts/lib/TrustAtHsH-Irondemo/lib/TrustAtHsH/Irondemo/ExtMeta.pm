@@ -8,7 +8,7 @@ use File::Temp qw(tempfile);
 use lib '../../';
 use parent 'TrustAtHsH::Irondemo::AbstractIfmapCliModule';
 
-my $IFMAP_USER = '';
+my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
 
 ### INTERNAL UTILITY ###
@@ -33,8 +33,8 @@ sub publish {
 	my ( $href_first_id, $href_meta, $href_second_id ) = @_;
 	
 	my $connectionArgs = {
-		"ifmap-user" => $user,
-		"ifmap-pass" => $pass
+		'ifmap-user' => $user,
+		'ifmap-pass' => $pass
 	};
 	
 	my $result =1;
