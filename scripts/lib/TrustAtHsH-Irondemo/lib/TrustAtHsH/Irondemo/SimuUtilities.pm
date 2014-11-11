@@ -22,8 +22,8 @@ sub create_string_id_implementation {
 	my $href_args = shift;
 	
 	my $string =
-	  "<implementation name=\"" . $href_args->{'name'} . "\"" .
-	  "version=\"" . $href_args->{'version'} . "\"";
+	  "<simu:implementation name=\"" . $href_args->{'name'} . "\"" .
+	  " version=\"" . $href_args->{'version'} . "\"";
 	
 	if ( $href_args->{'local_version'} ) {
 		$string .= " local-version=\"" . $href_args->{'local-version'} . "\"";
@@ -33,7 +33,7 @@ sub create_string_id_implementation {
 		$string .= " platform=\"" . $href_args->{'platform'} . "\"";
 	}
 	
-	$string .= " xmlns:simu=\"http://simu-project.de/XMLSchema/1\" />";
+	$string .= " xmlns:simu=\"http://simu-project.de/XMLSchema/1\" " . "administrative-domain=\"\"" . "/>";
 	
 	return $string;
 }
@@ -43,14 +43,14 @@ sub create_string_id_vulnerability {
 	my $href_args = shift;
 	
 	my $string = 
-	  "<vulnerability type=\"" . $href_args->{'type'} . "\"" .
+	  "<simu:vulnerability type=\"" . $href_args->{'type'} . "\"" .
 	  " id=\"" . $href_args->{'id'} . "\"";
 	
 	if ( $href_args-> {'severity'} ) {
-		$string .= " <severity=\"" . $href_args-> {'severity'} . "\"";
+		$string .= " severity=\"" . $href_args-> {'severity'} . "\"";
 	}
 	
-	$string .= " xmlns:simu=\"http://simu-project.de/XMLSchema/1\" />";
+	$string .= " xmlns:simu=\"http://simu-project.de/XMLSchema/1\" " . "administrative-domain=\"\"" . "/>";
 	
 	return $string;
 }
@@ -85,10 +85,10 @@ sub create_string_meta_attack_detected {
 	}
 	
 	if ( $href_args->{'comment'} ) {
-		$string .= " <simu:comment>" . $href_args->{'comment'};
+		$string .= " <simu:comment>" . $href_args->{'comment'} . "</simu:comment>";
 	}
 	
-	$string .= " </simu:comment></simu:attack-detected>";
+	$string .= "</simu:attack-detected>";
 	return $string;
 }
 	

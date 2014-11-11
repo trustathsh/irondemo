@@ -7,10 +7,10 @@ At 1 do InitPdpInfrastructure(
 	switch-ip-address => 10.0.0.9);
 
 At 3 do ServiceIp(
-	service => webserver, 
+	service => ssh, 
 	service-ip => 10.0.0.10,
 	host => server01,
-	port => 443,
+	port => 22,
 	device => server01);
 	
 At 5 do ImplementationVulnerability(
@@ -44,7 +44,7 @@ At 30 do AttackDetected(
 	rule => 1324:6,
 	ref-type => cve,
 	ref-id => CVE-2001-0572,
-	comment => EXPLOIT ssh CRC32 overflow /bin/sh);
+	comment => EXPLOIT ssh CRC32 overflow );
 
 At 35 do UserLogout(
 	name => Max Mustermann,
@@ -59,29 +59,15 @@ At 36 do DeviceDisconnects(
 	device => laptop01,
 	device-attribute => anti-virus-running);
 
-At 42 LoginFailed(
+At 42 do  LoginFailed(
 	user-login => Max Mustermann,
 	user-ip => 10.0.0.17,
 	cred => Password,
 	reason => Invalid Account,
-	service => ssh,
+	service => nac,
 	ar => ar:2,
-	port => 22,
+	port => 1234,
 	service-ip => 10.0.0.6,
 	device => macmon-nac,
 	host => macmon-nac);
 
-
-
-At 40 do PurgeMetadata(
-	ifmap-user => pdp,
-	ifmap-pass => pdp);
-At 40 do PurgeMetadata(
-	ifmap-user => ironvas,
-	ifmap-pass => ironvas);
-At 40 do PurgeMetadata(
-	ifmap-user => test,
-	ifmap-pass => test);
-At 40 do PurgeMetadata(
-	ifmap-user => iptables,
-	ifmap-pass => iptables);

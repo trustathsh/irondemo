@@ -1,3 +1,21 @@
+"TrustAtHsH::Irondemo::Modules::AttackDetected":
+  alias: AttackDetected
+  config:
+    ifmap-user: test
+    ifmap-pass: test
+
+"TrustAtHsH::Irondemo::Modules::ImplementationVulnerability":
+  alias: ImplementationVulnerability
+  config:
+    ifmap-user: test
+    ifmap-pass: test
+
+"TrustAtHsH::Irondemo::Modules::ServiceIp":
+  alias: ServiceIp
+  config:
+    ifmap-user: test
+    ifmap-pass: test
+
 "TrustAtHsH::Irondemo::Modules::Break":
   alias: Break
 

@@ -41,6 +41,8 @@ sub execute {
 	$ip{'standard'}-> {'type'}  = 'ipv4';
 	$ip{'standard'}-> {'value'} = $data->{$SERVICE_IP};
 	
+	%meta_service_ip = ( extended => TrustAtHsH::Irondemo::SimuUtilities->create_string_meta_service_ip());
+	
 	$result &= $self->publish(
 	  $data->{$IFMAP_USER}, $data->{$IFMAP_PASS}, \%service, \%meta_service_ip, \%ip
 	);

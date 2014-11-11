@@ -14,7 +14,7 @@ default: !Connection
   # IPv4,10.0.0.1
   # or
   # IPv6,...
-    identifier: macmon-macn
+    identifier: macmon-nac
     subscribeName: default
     startupSubscribe: true
   - identifierType: ip-address

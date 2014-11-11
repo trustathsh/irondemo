@@ -5,7 +5,7 @@ projects:
   - id: visitmeta
 
 files:
-  - source: agendas/cebit-2014.txt
+  - source: agendas/bmbf-2014.txt
     destination: /
   - source: irond/basicauthusers.properties
     destination: /irond
@@ -17,3 +17,4 @@ files:
     destination: /irongui
   - source: visitmeta/dataservice_connections.yml
     destination: visitmeta/config/
+

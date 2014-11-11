@@ -1,4 +1,4 @@
-package TrustAtHsH::Irondemo::Modules::LoginFailed;
+package TrustAtHsH::Irondemo::Modules::AttackDetected;
 
 use 5.006;
 use strict;
@@ -54,6 +54,7 @@ sub execute {
 	);
 	
 	$result &= $self->publish($data->{$IFMAP_USER}, $data->{$IFMAP_PASS}, \%ip, \%meta_attack_detected, \%service );
+}
 
 ### INSTANCE METHOD ###
 # Purpose     :
@@ -69,7 +70,7 @@ sub get_required_arguments {
 
 ### INTERNAL UTILITY ###
 # Purpose     :
-# Returns     :
+# Returns     :LoginFailed
 # Parameters  : data ->
 #                 ifmap-user          ->(optional)
 #                 ifmap-pass          ->(op(optional)tional)

@@ -157,7 +157,7 @@
 		<xsd:complexType>
 			<xsd:all>
 				<xsd:element name="rule" type="xsd:string" minOccurs="1" maxOccurs="1"/>
-				<xsd:element name="ref-type" type="xsd:string"minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="ref-type" type="xsd:string" minOccurs="0" maxOccurs="1"/>
 				<xsd:element name="ref-id" type="xsd:string" minOccurs="0" maxOccurs="1"/>
 				<xsd:element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1"/>
 			</xsd:all>
