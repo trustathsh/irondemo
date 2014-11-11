@@ -8,24 +8,25 @@ use File::Spec;
 use File::Basename;
 use Cwd;
 use lib '../../../';
-use parent 'TrustAtHsH::Irondemo::AbstractIfmapCliModule';
+use parent 'TrustAtHsH::Irondemo::ExtMeta';
 
 my $log      = Log::Log4perl->get_logger();
 
 my $USER_LOGIN = 'user-login';
-my $USER_IP = 'user-ip';
-my $CRED = 'cred';
-my $REASON = 'reason';
-my $SERVICE = 'service';
-my $SSHAR = 'ssh-ar';
-my $HOST = 'host';
-my $PORT = 'port';
+my $USER_IP    = 'user-ip';
+my $CRED       = 'cred';
+my $REASON     = 'reason';
+my $SERVICE    = 'service';
+my $AR         = 'ar';
+my $HOST       = 'host';
+my $PORT       = 'port';
 my $SERVICE_IP = 'service-ip';
 my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
+my $DEVICE     = 'device';
 
 my @REQUIRED_ARGS = (
-	$USER_LOGIN, $USER_IP, $CRED, $REASON, $SERVICE, $HOST, $PORT, $SERVICE_IP);
+	$USER_LOGIN, $USER_IP, $CRED, $REASON, $SERVICE, $HOST, $PORT, $SERVICE_IP, $DEVICE);
 
 
 ### INSTANCE METHOD ###
@@ -36,94 +37,44 @@ my @REQUIRED_ARGS = (
 sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
-
-	my $config = TrustAtHsH::Irondemo::Config->instance;
-	my $path = 	$config->get_current_scenario_dir()."/";
-
-	my $service_file = $path."service.xml";
-	my $login_failure_file = $path."login-failure.xml";
-	
-	my $service_ip_file = $path."service-ip.xml";
-	my $identifies_as_file = $path."identifies-as.xml";
-	
 	my $result = 1;
 	
-	my $device = "ssh-server";
+	my ( %service, %ar, %meta_login_failed, %service_ip, %ar_ip, %meta_service_ip, %meta_identifies_as, %user);
 	
-	open (FILE, ">$service_file");
-	print FILE "<simu:service type=\"$data->{$SERVICE}\" name=\"$data->{$HOST}\" port=\"$data->{$PORT}\" administrative-domain=\"\" xmlns:simu=\"http://simu-project.de/XMLSchema/1\" />";
-	close(FILE);
-	open (FILE, ">$login_failure_file");
-	print FILE "<simu:login-failure ifmap-cardinality=\"singleValue\" xmlns:simu=\"http://simu-project.de/XMLSchema/1\"><simu:credential-type>$data->{$CRED}</simu:credential-type><simu:reason>$data->{$REASON}</simu:reason></simu:login-failure>";
-	close(FILE);
+	%service = ( extended => "<simu:service type=\"$data->{$SERVICE}\" name=\"$data->{$HOST}\"" .
+	  " port=\"$data->{$PORT}\" administrative-domain=\"\"" .
+	  " xmlns:simu=\"http://simu-project.de/XMLSchema/1\" />");
+	  
+	%meta_login_failed = ( extended => "<simu:login-failure ifmap-cardinality=\"singleValue\"" .
+	" xmlns:simu=\"http://simu-project.de/XMLSchema/1\"><simu:credential-type>$data->{$CRED}" .
+	"</simu:credential-type><simu:reason>$data->{$REASON}</simu:reason></simu:login-failure>");
+	
+	%meta_service_ip = ( extended => "<simu:service-ip xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />");
+	
+	%meta_identifies_as = ( extended => "<simu:identifies-as xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />" );
+	  
+	$ar{'standard'}->{'type'}  = 'ar';
+	$ar{'standard'}->{'value'} = $data->{$AR};
+	
+	$service_ip{'standard'}-> {'type'}  = 'ipv4';
+	$service_ip{'standard'}-> {'value'} = $data->{$SERVICE_IP};
+	
+	$user{'standard'}->{'type'}  = 'id_user';
+	$user{'standard'}->{'value'} = $data->{$USER_LOGIN};
+	
+	$result &= $self->publish( $data->{$IFMAP_USER}, $data->{$IFMAP_PASS}, \%service, \%meta_service_ip, \%service_ip );
+	$result &= $self->publish( $data->{$IFMAP_USER}, $data->{$IFMAP_PASS}, \%ar, \%meta_identifies_as, \%user);
+	
+	$result &= $self->call_ifmap_cli({
+	  'cli_tool' => "ar-ip",
+	  'mode' => "update",
+	  'args_list' => [$data->{$AR}, $data->{$USER_IP}],
+	  'connection_args' => 	{ "ifmap-user" => $data->{$IFMAP_USER}, "ifmap-pass" => $data->{$IFMAP_PASS} },
+	});
+	
+	$result &= $self->publish( $data->{$IFMAP_USER}, $data->{$IFMAP_PASS}, \%service, \%meta_login_failed, \%ar );
 
-	my @argsListServiceIp = ("--sec-identifier-type",
-	"ipv4",
-	"--sec-identifier",
-	$data->{$SERVICE_IP},
-	"--meta-in",
-	$service_ip_file,
-	$service_file);
-	
-	my @argsListLoginFailure = ("--sec-identifier-type",
-	"ar",
-	"--sec-identifier",
-	$data->{$SSHAR},
-	"--meta-in",
-	$login_failure_file,
-	$service_file);
-	
-	my @argsListSshArIp = ($data->{$SSHAR}, $data->{$USER_IP});
-	
-	my @argsListIdentifiesAs = ("--sec-identifier-type",
-	"id_user",
-	"--sec-identifier",
-	$data->{$USER_LOGIN},
-	"--meta-in",
-	$identifies_as_file,
-	"ar",
-	$data->{$SSHAR});
-	
-	my @argsListDevIp = ( $device, $data->{$SERVICE_IP} );
-	
-	my $connectionArgs = {
-		"ifmap-user" => $data->{$IFMAP_USER},
-		"ifmap-pass" => $data->{$IFMAP_PASS}
-	};
 
-	$result &= $self->call_ifmap_cli(
-		{
-			'cli_tool'        => "dev-ip",
-			'mode'            => "update",
-			'args_list'       => \@argsListDevIp,
-			'connection_args' => $connectionArgs
-		}
-	);
-
-	$result &= $self->call_ifmap_cli({
-			'cli_tool' => "ex-ident",
-			'mode' => "update",
-			'args_list' => \@argsListServiceIp,
-			'connection_args' => $connectionArgs});
-			
-	$result &= $self->call_ifmap_cli({
-			'cli_tool' => "ex-ident",
-			'mode' => "update",
-			'args_list' => \@argsListLoginFailure,
-			'connection_args' => $connectionArgs});
-			
-	$result &= $self->call_ifmap_cli({
-			'cli_tool' => "ar-ip",
-			'mode' => "update",
-			'args_list' => \@argsListSshArIp,
-			'connection_args' => $connectionArgs});
-			
-	$result &= $self->call_ifmap_cli({
-			'cli_tool' => "ex-meta",
-			'mode' => "update",
-			'args_list' => \@argsListIdentifiesAs,
-			'connection_args' => $connectionArgs});
-			
 	return $result;
 }
 
