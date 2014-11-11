@@ -54,9 +54,9 @@ sub execute {
 	  })
 	);
 	
-	%meta_service_ip = ( extended => TrustAtHsH::Irondemo::SimuUtilities->META_SERVICE_IP );
+	%meta_service_ip = ( extended => TrustAtHsH::Irondemo::SimuUtilities->create_string_meta_service_ip() );
 	
-	%meta_identifies_as = ( extended => TrustAtHsH::Irondemo::SimuUtilities->META_IDENTIFIES_AS );
+	%meta_identifies_as = ( extended => TrustAtHsH::Irondemo::SimuUtilities->create_string_meta_identifies_as() );
 	  
 	$ar{'standard'}->{'type'}  = 'ar';
 	$ar{'standard'}->{'value'} = $data->{$AR};

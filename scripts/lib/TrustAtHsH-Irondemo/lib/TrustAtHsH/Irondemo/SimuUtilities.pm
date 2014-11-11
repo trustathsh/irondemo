@@ -4,11 +4,6 @@ use 5.006;
 use strict;
 use warnings;
 
-use constant {
-	META_SERVICE_IP    => "<simu:service-ip xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />",
-	META_IDENTIFIES_AS => "<simu:identifies-as xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />",
-};
-
 sub create_string_id_service {
 	my $class     = shift;
 	my $href_args = shift;
@@ -72,6 +67,14 @@ sub create_string_meta_login_failed {
 	  "</simu:login-failure>";
 
 	return $string;
+}
+
+sub create_string_meta_service_ip {
+	return "<simu:service-ip xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
+}
+
+sub create_string_meta_identifies_as {
+	return "<simu:identifies-as xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
 }
 
 sub create_string_meta_service_implementation {
