@@ -9,6 +9,12 @@
   config:
     ifmap-user: test
     ifmap-pass: test
+    
+"TrustAtHsH::Irondemo::Modules::DiscoveredBy":
+  alias: DiscoveredBy
+  config:
+    ifmap-user: test
+    ifmap-pass: test
 
 "TrustAtHsH::Irondemo::Modules::ServiceIp":
   alias: ServiceIp

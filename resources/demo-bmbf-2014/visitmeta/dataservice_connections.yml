@@ -14,11 +14,7 @@ default: !Connection
   # IPv4,10.0.0.1
   # or
   # IPv6,...
-    identifier: macmon-nac
+    identifier: io-tool
     subscribeName: default
-    startupSubscribe: true
-  - identifierType: ip-address
-    identifier: IPv4,10.0.0.10
-    subscribeName: service-ip
     startupSubscribe: true
   url: https://localhost:8443

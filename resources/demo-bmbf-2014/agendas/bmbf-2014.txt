@@ -1,19 +1,28 @@
-At 1 do InitPdpInfrastructure(
-	pdp => macmon-nac,
-	pdp-ip-address => 10.0.0.6,
-	iptables => ironvas,
-	iptables-ip-address => 10.0.0.8,
-	switch => snort,
-	switch-ip-address => 10.0.0.9);
+At 0 do DiscoveredBy(
+	device => io-tool,
+	id-type => ipv4,
+	identifier => 10.0.0.6);
+	
+At 2 do DiscoveredBy(
+	device => io-tool,
+	id-type => ipv4,
+	identifier => 10.0.0.10);
 
-At 3 do ServiceIp(
+At 5 do ServiceIp(
+	service => nac, 
+	service-ip => 10.0.0.6,
+	host => macmon-nac,
+	device => macmon-nac,
+	port => 1234);
+
+At 7 do ServiceIp(
 	service => ssh, 
 	service-ip => 10.0.0.10,
 	host => server01,
 	port => 22,
 	device => server01);
 	
-At 5 do ImplementationVulnerability(
+At 11 do ImplementationVulnerability(
 	service => ssh,
 	host => server01,
 	port => 22,
@@ -36,7 +45,7 @@ At 21 do UserLogin(
 	access-request => ar:1,
 	role => employee);
 
-At 30 do AttackDetected(
+At 35 do AttackDetected(
 	service => ssh,
 	host => server01,
 	port => 22,
@@ -46,12 +55,12 @@ At 30 do AttackDetected(
 	ref-id => CVE-2001-0572,
 	comment => EXPLOIT ssh CRC32 overflow );
 
-At 35 do UserLogout(
+At 45 do UserLogout(
 	name => Max Mustermann,
 	access-request => ar:1,
 	role => employee);
 
-At 36 do DeviceDisconnects(
+At 46 do DeviceDisconnects(
 	access-request => ar:1,
 	pdp => macmon-nac,
 	mac => 00:11:22:33:44:55,
@@ -59,7 +68,7 @@ At 36 do DeviceDisconnects(
 	device => laptop01,
 	device-attribute => anti-virus-running);
 
-At 42 do  LoginFailed(
+At 56 do  LoginFailed(
 	user-login => Max Mustermann,
 	user-ip => 10.0.0.17,
 	cred => Password,
@@ -71,3 +80,13 @@ At 42 do  LoginFailed(
 	device => macmon-nac,
 	host => macmon-nac);
 
+At 57 do Break();
+
+At 60 do PurgeMetadata(
+	ifmap-user => test,
+	ifmap-pass => test);
+At 60 do PurgeMetadata(
+	ifmap-user => dhcp,
+	ifmap-pass => dhcp);
+
+At 65 do Nothing();
