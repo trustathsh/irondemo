@@ -59,6 +59,17 @@ sub execute {
 	return $result;
 }
 
+### INSTANCE METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub get_required_arguments {
+	my $self = shift;
+	
+	return @REQUIRED_ARGS;
+}
+
 ### INTERNAL UTILITY ###
 # Purpose     :
 # Returns     :
