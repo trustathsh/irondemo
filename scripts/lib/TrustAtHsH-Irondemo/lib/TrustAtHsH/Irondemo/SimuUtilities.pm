@@ -69,11 +69,39 @@ sub create_string_meta_login_failed {
 	return $string;
 }
 
+sub create_string_meta_attack_detected {
+	my $class     = shift;
+	my $href_args = shift;
+	
+	my $string =
+	  "<simu:attack-detected ifmap-cardinality=\"multiValue\"" .
+	  " xmlns:simu=\"http://simu-project.de/XMLSchema/1\">" .
+	  " <simu:rule>" . $href_args->{'rule'} . " </simu:rule>";
+	
+	if ( $href_args->{'ref_type'} && $href_args->{'ref_id'} ) {
+		$string .=
+		  " <simu:ref-type>" . $href_args->{'ref_type'} . "</simu:ref-type>" .
+		  " <simu:ref-id>" . $href_args->{'ref_id'} . "</simu:ref-id>";
+	}
+	
+	if ( $href_args->{'comment'} ) {
+		$string .= " <simu:comment>" . $href_args->{'comment'};
+	}
+	
+	$string .= " </simu:comment></simu:attack-detected>";
+	return $string;
+}
+	
+
 sub create_string_meta_service_ip {
+	my $class = shift;
+	
 	return "<simu:service-ip xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
 }
 
 sub create_string_meta_identifies_as {
+	my $class = shift;
+	
 	return "<simu:identifies-as xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
 }
 
