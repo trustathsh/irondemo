@@ -105,9 +105,6 @@ sub get_required_arguments {
 #                 ifmap-url           ->(optional)
 #                 ifmap-keystore-path ->(optional)
 #                 ifmap-keystore-pass ->(optional)
-#                 name                 >
-#                 role                ->
-#                 access-request      ->
 #
 # Comments    : Override, called from parent's constructor
 sub _init {

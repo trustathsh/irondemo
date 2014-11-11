@@ -4,6 +4,12 @@ use 5.006;
 use strict;
 use warnings;
 
+
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub create_string_id_service {
 	my $class     = shift;
 	my $href_args = shift;
@@ -17,6 +23,11 @@ sub create_string_id_service {
 	return $string;
 }
 
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub create_string_id_implementation {
 	my $class     = shift;
 	my $href_args = shift;
@@ -38,6 +49,11 @@ sub create_string_id_implementation {
 	return $string;
 }
 
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub create_string_id_vulnerability {
 	my $class = shift;
 	my $href_args = shift;
@@ -55,6 +71,11 @@ sub create_string_id_vulnerability {
 	return $string;
 }
 
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub create_string_meta_login_failed {
 	my $class     = shift;
 	my $href_args = shift;
@@ -69,6 +90,11 @@ sub create_string_meta_login_failed {
 	return $string;
 }
 
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub create_string_meta_attack_detected {
 	my $class     = shift;
 	my $href_args = shift;
@@ -92,25 +118,44 @@ sub create_string_meta_attack_detected {
 	return $string;
 }
 	
-
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub create_string_meta_service_ip {
 	my $class = shift;
 	
 	return "<simu:service-ip xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
 }
 
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub create_string_meta_identifies_as {
 	my $class = shift;
 	
 	return "<simu:identifies-as xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
 }
 
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub create_string_meta_service_implementation {
 	my $class = shift;
 	
 	return "<simu:service-implementation xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
 }
 
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub create_string_meta_implementation_vulnerability {
 	my $class = shift;
 	
