@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:ifmap="http://www.trustedcomputinggroup.org/2010/IFMAP/2"
+	xmlns:base-id="http://www.trustedcomputinggroup.org/2012/IFMAP-IDENTIFIER/1"
+	xmlns="http://simu-project.de/XMLSchema/1"
+	elementFormDefault="qualified"
+	targetNamespace="http://simu-project.de/XMLSchema/1">
+	<xsd:import namespace="http://www.trustedcomputinggroup.org/2012/IFMAP-IDENTIFIER/1" schemaLocation="ifmap-identifier-2.1v1.xsd"/>
+	<xsd:import namespace="http://www.trustedcomputinggroup.org/2010/IFMAP/2" schemaLocation="ifmap-base-2.0v17.xsd"/>
+	<!-- elementFormDefault="qualified" -->
+
+	<!--
+		NMAP
+	-->
+
+	<xsd:element name="latency">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:double">
+					<xsd:attribute name="unit" type="xsd:duration"/>
+					<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:latency unit="ms">42.42</simu:latency>
+	-->
+
+	<xsd:element name="hop-count">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:integer">
+					<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:hop-count>5</simu:hop-count>
+	-->
+
+	<xsd:element name="service-ip">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:service-ip />
+	-->
+
+	<xsd:element name="service-dns">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:service-dns />
+	-->
+
+	<xsd:element name="service-information">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="name" type="xsd:string" />
+				<xsd:element name="port" type="xsd:integer" /> <!-- TCP vs. UDP -->
+				<xsd:element name="discoverer" type="xsd:string" />
+				<xsd:element name="info" type="xsd:string" />
+				<xsd:element name="next-update" type="xsd:dateTime" />
+			</xsd:sequence>
+			<xsd:attributeGroup ref="ifmap:multiValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:service-information>
+			<name>Apache2</name>
+			<port>42</port>
+			<discoverer>simu-nmap-collector_v42</discoverer>
+			<info>{ ... }</info>
+			<next-update>2014-05-30T09:30:10Z</next-update>
+		</simu:service-information>
+	-->
+
+
+	<!-- 
+		service
+	-->
+	
+	<!-- service identifier -->
+	<xsd:element name="service">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="base-id:IdentifierType">
+					<xsd:attribute name="type" type="xsd:string" use="required"/>
+					<xsd:attribute name="name" type="xsd:string" use="required"/>
+					<xsd:attribute name="port" type="xsd:integer" use="required"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<service name="Apache2" host-name="web.foo.bar" />
+	-->
+	
+	<!-- implementation identifier -->
+	<xsd:element name="implementation">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="base-id:IdentifierType">
+					<xsd:attribute name="name" type="xsd:string" use="required"/>
+					<xsd:attribute name="version" type="xsd:string" use="required"/>
+					<xsd:attribute name="local-version" type="xsd:string" use="optional"/>
+					<xsd:attribute name="platform" type="xsd:string" use="optional"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<implementation name="openssh" version="1.2.0" />
+	-->
+	
+	<xsd:element name="service-implementation">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:service-implementation />
+	-->
+	
+	<!-- vulnerability identifier -->
+	<xsd:element name="vulnerability">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="base-id:IdentifierType">
+					<xsd:attribute name="type" type="xsd:string" use="required"/>
+					<xsd:attribute name="id" type="xsd:string" use="required"/>
+					<xsd:attribute name="severity" type="xsd:float" use="optional"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<vulnerability type="cve" id="CVE-2006-5051" />
+	-->
+	
+	<xsd:element name="implementation-vulnerability">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:service-implementation />
+	-->
+	
+	<xsd:element name="attack-detected">
+		<xsd:complexType>
+			<xsd:all>
+				<xsd:element name="rule" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="ref-type" type="xsd:string"minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="ref-id" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			</xsd:all>
+			<xsd:attributeGroup ref="ifmap:multiValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:attack-detected>
+			<rule>1324:6</rule>
+			<ref-type>cve</ref-type>
+			<ref-id>CVE-2001-0572</ref-id>
+			<comment>EXPLOIT ssh CRC32 overflow /bin/sh</comment>
+		</simu:attack-detected>
+	-->
+	
+	<!--
+		login attempts
+	-->
+	
+	<xsd:element name="identifies-as">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:identifies-as />
+	-->
+
+	<xsd:simpleType name="credentialType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Password"/>
+			<xsd:enumeration value="Public Key"/>
+			<xsd:enumeration value="Biometric"/>
+			<xsd:enumeration value="Token"/>
+			<xsd:enumeration value="Other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="login-failure">
+		<xsd:complexType>
+			<xsd:all>
+				<xsd:element name="credential-type" type="credentialType" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="reason" minOccurs="1" maxOccurs="1">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="Invalid Account"/>
+							<xsd:enumeration value="Invalid Credentials"/>
+							<xsd:enumeration value="Expired Credentials"/>
+							<xsd:enumeration value="Communication Failure"/>
+							<xsd:enumeration value="Unknown"/>
+							<xsd:enumeration value="Other"/>	
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="other-credential-type-definition" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="other-reason-type-definition" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			</xsd:all>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:login-failure>
+			<credential-type>Password</credential-type>
+			<reason>invalid credentials</reason>
+		</simu:login-failure>
+	-->
+
+	<xsd:element name="login-success">
+		<xsd:complexType>
+			<xsd:all>
+				<xsd:element name="credential-type"  type="credentialType" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="other-credential-type-definition" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			</xsd:all>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:login-success>
+			<credential-type>password</ceredential-type>
+		</simu:login-success>
+	-->
+	
+	<!--
+	discovery
+	-->
+	<xsd:element name="service-discovered-by">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:service-discovered-by />
+	-->
+	
+	<xsd:element name="device-discovered-by">
+		<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="discoverer" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="ifmap:singleValueMetadataAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- example:
+		<simu:device-discovered-by>
+			<discoverer>IO-Tool</discoverer>
+		<simu:discovered-by />
+	-->
+
+
+</xsd:schema>

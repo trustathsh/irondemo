@@ -1,0 +1,19 @@
+projects:
+  - id: ifmapcli
+  - id: irond
+  - id: irongui
+  - id: visitmeta
+
+files:
+  - source: agendas/cebit-2014.txt
+    destination: /
+  - source: irond/basicauthusers.properties
+    destination: /irond
+  - source: irond/ifmap.properties
+    destination: /irond
+  - source: irond/schema/simu.xsd
+    destination: /irond/schema
+  - source: irongui/irongui.properties
+    destination: /irongui
+  - source: visitmeta/dataservice_connections.yml
+    destination: visitmeta/config/
