@@ -4,10 +4,8 @@ use 5.006;
 use strict;
 use warnings;
 use Carp qw(croak);
-use File::Spec;
-use File::Basename;
-use Cwd;
 use lib '../../../';
+use TrustAtHsH::Irondemo::SimuUtilities;
 use parent 'TrustAtHsH::Irondemo::ExtMeta';
 
 my $log      = Log::Log4perl->get_logger();
@@ -41,17 +39,24 @@ sub execute {
 	
 	my ( %service, %ar, %meta_login_failed, %service_ip, %ar_ip, %meta_service_ip, %meta_identifies_as, %user);
 	
-	%service = ( extended => "<simu:service type=\"$data->{$SERVICE}\" name=\"$data->{$HOST}\"" .
-	  " port=\"$data->{$PORT}\" administrative-domain=\"\"" .
-	  " xmlns:simu=\"http://simu-project.de/XMLSchema/1\" />");
-	  
-	%meta_login_failed = ( extended => "<simu:login-failure ifmap-cardinality=\"singleValue\"" .
-	" xmlns:simu=\"http://simu-project.de/XMLSchema/1\"><simu:credential-type>$data->{$CRED}" .
-	"</simu:credential-type><simu:reason>$data->{$REASON}</simu:reason></simu:login-failure>");
+	%service = ( extended =>
+	  TrustAtHsH::Irondemo::SimuUtilities->create_string_id_service({
+	    type     => $data->{$SERVICE},
+	    name     => $data->{$HOST},
+	    port     => $data->{$PORT},
+	  })
+	);
+
+	%meta_login_failed = ( extended => 
+	  TrustAtHsH::Irondemo::SimuUtilities->create_string_meta_login_failed ({
+	    reason          => $data->{$REASON},
+	    credential_type => $data->{$CRED},
+	  })
+	);
 	
-	%meta_service_ip = ( extended => "<simu:service-ip xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />");
+	%meta_service_ip = ( extended => TrustAtHsH::Irondemo::SimuUtilities->META_SERVICE_IP );
 	
-	%meta_identifies_as = ( extended => "<simu:identifies-as xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />" );
+	%meta_identifies_as = ( extended => TrustAtHsH::Irondemo::SimuUtilities->META_IDENTIFIES_AS );
 	  
 	$ar{'standard'}->{'type'}  = 'ar';
 	$ar{'standard'}->{'value'} = $data->{$AR};
@@ -96,7 +101,7 @@ sub get_required_arguments {
 # Returns     :
 # Parameters  : data ->
 #                 ifmap-user          ->(optional)
-#                 ifmap-pass          ->(optional)
+#                 ifmap-pass          ->(op(optional)tional)
 #                 ifmap-url           ->(optional)
 #                 ifmap-keystore-path ->(optional)
 #                 ifmap-keystore-pass ->(optional)
