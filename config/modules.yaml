@@ -260,3 +260,33 @@
     ifmap-user: io
     ifmap-pass: io
 
+"SIMU::Macmon::Irondemo::Modules::InitPdp":
+  alias: MacmonInitPdp
+  config:
+    ifmap-user: macmon
+    ifmap-pass: macmon
+    pep-device: macmon:83vk-934v-2134
+    pep-ip: 192.168.100.1
+    administrative-domain: simu.de
+    macmon-service-name: macmon
+    macmon-service-type: nac
+    macmon-service-port: 4443
+    macmon-implementation-value: macmon
+    macmon-implementation-version: 4.2.0
+
+"SIMU::Macmon::Irondemo::Modules::EndpointOnline":
+  alias: MacmonEndpointOnline
+  config:
+    ifmap-user: macmon
+    ifmap-pass: macmon
+    pep-device: macmon:83vk-934v-2134
+    discovery-method: NMAP
+
+"SIMU::Macmon::Irondemo::Modules::EndpointService":
+  alias: MacmonEndpointService
+  config:
+    ifmap-user: macmon
+    ifmap-pass: macmon
+    pep-device: macmon:83vk-934v-2134
+    administrative-domain: simu.de
+

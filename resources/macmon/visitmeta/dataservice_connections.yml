@@ -1,0 +1,20 @@
+---
+default: !Connection
+  connectionName: default
+  userName: visitmeta
+  userPass: visitmeta
+  startupConnect: true
+  subscribeList:
+  # identifierType is one of the following:
+  # access-request, device, ip-address, mac-address
+  # identity as well as extended identifier not supported at the moment
+  - identifierType: device
+  # identifier is the value of the specific identifier
+  # when using ip-address as type, the syntax is:
+  # IPv4,10.0.0.1
+  # or
+  # IPv6,...
+    identifier: macmon:83vk-934v-2134
+    subscribeName: default
+    startupSubscribe: true
+  url: https://localhost:8443

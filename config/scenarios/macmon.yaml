@@ -1,0 +1,18 @@
+projects:
+  - id: ifmapcli
+  - id: irond
+  - id: visitmeta
+
+files:
+  - source: agendas/szenario-a.txt
+    destination: /
+  - source: irond/basicauthusers.properties
+    destination: /irond
+  - source: visitmeta/dataservice_connections.yml
+    destination: /visitmeta/config
+  - source: xml/service-discovered-by.xml
+    destination: /
+  - source: xml/service-implementation.xml
+    destination: /
+  - source: xml/service-ip.xml
+    destination: /

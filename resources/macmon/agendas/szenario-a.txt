@@ -1,0 +1,29 @@
+At 0 do MacmonInitPdp();
+
+At 2 do MacmonEndpointOnline(
+	mac-address => 11:22:33:44:55:66,
+	ip-address => 192.168.100.100,
+	manufacturer => HP,
+	model => Eclipse 4394,
+	os => Windows 2015,
+	os-version => 2015 RC23,
+	device-type => PC
+);
+
+At 10 do MacmonEndpointService(
+	ip-address => 192.168.100.100,
+	service-name => webserver,
+    service-type => http,
+    service-port => 80,
+    implementation-value => apache2,
+    implementation-version => 2.2.22
+);
+
+At 11 do MacmonEndpointService(
+	ip-address => 192.168.100.100,
+	service-name => webserver,
+    service-type => https,
+    service-port => 443,
+    implementation-value => apache2,
+    implementation-version => 2.2.22
+);

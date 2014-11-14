@@ -10,6 +10,7 @@ use Pod::Usage;
 use FindBin;
 use lib "$FindBin::Bin/lib/TrustAtHsH-Irondemo/lib";
 use lib "$FindBin::Bin/lib/SIMU-SIT-Irondemo/lib";
+use lib "$FindBin::Bin/lib/SIMU-Macmon-Irondemo/lib";
 use TrustAtHsH::Irondemo;
 
 use Data::Dumper;
