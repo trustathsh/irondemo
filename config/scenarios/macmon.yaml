@@ -6,6 +6,10 @@ projects:
 files:
   - source: agendas/szenario-a.txt
     destination: /
+  - source: agendas/szenario-b.txt
+    destination: /
+  - source: agendas/szenario-c.txt
+    destination: /
   - source: irond/basicauthusers.properties
     destination: /irond
   - source: visitmeta/dataservice_connections.yml
