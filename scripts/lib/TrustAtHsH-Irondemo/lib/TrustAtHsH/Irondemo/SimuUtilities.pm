@@ -162,4 +162,15 @@ sub create_string_meta_implementation_vulnerability {
 	return "<simu:implementation-vulnerability xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
 }
 
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub create_string_meta_login_success {
+	my $class = shift;
+	
+	return "<simu:login-success ifmap-cardinality=\"singleValue\" xmlns:simu=\"http://simu-project.de/XMLSchema/1\"><simu:credential-type>Password</simu:credential-type></simu:login-success>";
+}
+
 1;
