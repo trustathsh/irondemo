@@ -4,24 +4,22 @@ use 5.006;
 use strict;
 use warnings;
 use Carp qw(croak);
-use File::Spec;
-use File::Basename;
-use Cwd;
 use lib '../../../';
-use parent 'TrustAtHsH::Irondemo::AbstractIfmapCliModule';
-
-my $log      = Log::Log4perl->get_logger();
+use TrustAtHsH::Irondemo::SimuUtilities;
+use parent 'TrustAtHsH::Irondemo::ExtMeta';
 
 my $USER_LOGIN = 'user-login';
-my $USER_IP = 'user-ip';
-my $CRED = 'cred';
-my $SERVICE = 'service';
-my $SSHAR = 'ssh-ar';
-my $HOST = 'host';
-my $PORT = 'port';
+my $USER_IP    = 'user-ip';
+my $CRED       = 'cred';
+my $REASON     = 'reason';
+my $SERVICE    = 'service';
+my $AR         = 'ar';
+my $HOST       = 'host';
+my $PORT       = 'port';
 my $SERVICE_IP = 'service-ip';
 my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
+my $DEVICE     = 'device';
 
 my @REQUIRED_ARGS = (
 	$USER_LOGIN, $USER_IP, $CRED, $SERVICE, $HOST, $PORT, $SERVICE_IP);
@@ -35,113 +33,70 @@ my @REQUIRED_ARGS = (
 sub execute {
 	my $self = shift;
 	my $data = $self->{'data'};
-
-	my $config = TrustAtHsH::Irondemo::Config->instance;
-	my $path = 	$config->get_current_scenario_dir()."/";
-
-	my $service_file = $path."service.xml";
-	my $login_success_file = $path."login-success.xml";
-	
-	my $service_ip_file = $path."service-ip.xml";
-	my $identifies_as_file = $path."identifies-as.xml";
-	
 	my $result = 1;
 	
-	my $device = "ssh-server";
 	
-	open (FILE, ">$service_file");
-	print FILE "<simu:service type=\"$data->{$SERVICE}\" name=\"$data->{$HOST}\" port=\"$data->{$PORT}\" administrative-domain=\"\" xmlns:simu=\"http://simu-project.de/XMLSchema/1\" />";
-	close(FILE);
-	open (FILE, ">$login_success_file");
-	print FILE "<simu:login-success ifmap-cardinality=\"singleValue\" xmlns:simu=\"http://simu-project.de/XMLSchema/1\"><simu:credential-type>$data->{$CRED}</simu:credential-type></simu:login-success>";
-	close(FILE);
-
-	my @argsListServiceIp = ("--sec-identifier-type",
-	"ipv4",
-	"--sec-identifier",
-	$data->{$SERVICE_IP},
-	"--meta-in",
-	$service_ip_file,
-	$service_file);
+	my ( %service, %meta_service_ip, %service_ip, %ar, %meta_login_success, %user, %meta_identifies_as );
 	
-	my @argsListLoginSuccess = ("--sec-identifier-type",
-	"ar",
-	"--sec-identifier",
-	$data->{$SSHAR},
-	"--meta-in",
-	$login_success_file,
-	$service_file);
-	
-	my @argsListAuthAs = ($data->{$SSHAR}, $data->{$USER_LOGIN});
-	
-	my @argsListSshArIp = ($data->{$SSHAR}, $data->{$USER_IP});
-	
-	my @argsListIdentifiesAs = ("--sec-identifier-type",
-	"id_user",
-	"--sec-identifier",
-	$data->{$USER_LOGIN},
-	"--meta-in",
-	$identifies_as_file,
-	"ar",
-	$data->{$SSHAR});
-	
-	my @argsListDevIp = ( $device, $data->{$SERVICE_IP} );
-	my @argsListAuthBy = ( $data->{$SSHAR}, $device );
-	
-	my $connectionArgs = {
-		"ifmap-user" => $data->{$IFMAP_USER},
-		"ifmap-pass" => $data->{$IFMAP_PASS}
-	};
-
-	$result &= $self->call_ifmap_cli(
-		{
-			'cli_tool'        => "dev-ip",
-			'mode'            => "update",
-			'args_list'       => \@argsListDevIp,
-			'connection_args' => $connectionArgs
-		}
+	%service = ( extended =>
+	  TrustAtHsH::Irondemo::SimuUtilities->create_string_id_service({
+	    type     => $data->{$SERVICE},
+	    name     => $data->{$HOST},
+	    port     => $data->{$PORT},
+	  })
 	);
-
-	$result &= $self->call_ifmap_cli({
-			'cli_tool' => "ex-ident",
-			'mode' => "update",
-			'args_list' => \@argsListServiceIp,
-			'connection_args' => $connectionArgs});
-			
-	$result &= $self->call_ifmap_cli({
-			'cli_tool' => "ex-ident",
-			'mode' => "update",
-			'args_list' => \@argsListLoginSuccess,
-			'connection_args' => $connectionArgs});
 	
-	$result &= $self->call_ifmap_cli(
-		{
-			'cli_tool'        => "auth-as",
-			'mode'            => "update",
-			'args_list'       => \@argsListAuthAs,
-			'connection_args' => $connectionArgs
-		}
-	);
-	$result &= $self->call_ifmap_cli(
-		{
-			'cli_tool'        => "auth-by",
-			'mode'            => "update",
-			'args_list'       => \@argsListAuthBy,
-			'connection_args' => $connectionArgs
-		}
-	);
-			
+	%meta_service_ip    = ( extended => TrustAtHsH::Irondemo::SimuUtilities->create_string_meta_service_ip() );
+	%meta_identifies_as = ( extended => TrustAtHsH::Irondemo::SimuUtilities->create_string_meta_identifies_as() );
+	%meta_login_success = ( extended => TrustAtHsH::Irondemo::SimuUtilities->create_string_meta_login_success() );
+	
+	$service_ip{'standard'}-> {'type'}  = 'ipv4';
+	$service_ip{'standard'}-> {'value'} = $data->{$SERVICE_IP};
+	$ar{'standard'}->{'type'}  = 'ar';
+	$ar{'standard'}->{'value'} = $data->{$AR};
+	$user{'standard'}->{'type'}  = 'id_user';
+	$user{'standard'}->{'value'} = $data->{$USER_LOGIN};
+	
+	#Service-IP
+	$result &= $self->publish( $data->{$IFMAP_USER}, $data->{$IFMAP_PASS}, \%service, \%meta_service_ip, \%service_ip );
+	
+	#Login-Success
+	$result &= $self->publish( $data->{$IFMAP_USER}, $data->{$IFMAP_PASS}, \%service, \%meta_login_success, \%ar );
+	
+	#Auth-As
 	$result &= $self->call_ifmap_cli({
-			'cli_tool' => "ar-ip",
-			'mode' => "update",
-			'args_list' => \@argsListSshArIp,
-			'connection_args' => $connectionArgs});
-			
+	  'cli_tool' => "auth-as",
+	  'mode' => "update",
+	  'args_list' => [$data->{$AR}, $data->{$USER_LOGIN}],
+	  'connection_args' => 	{ "ifmap-user" => $data->{$IFMAP_USER}, "ifmap-pass" => $data->{$IFMAP_PASS} },
+	});
+	
+	#AR-IP
 	$result &= $self->call_ifmap_cli({
-			'cli_tool' => "ex-meta",
-			'mode' => "update",
-			'args_list' => \@argsListIdentifiesAs,
-			'connection_args' => $connectionArgs});
+	  'cli_tool' => "ar-ip",
+	  'mode' => "update",
+	  'args_list' => [$data->{$AR}, $data->{$USER_IP}],
+	  'connection_args' => 	{ "ifmap-user" => $data->{$IFMAP_USER}, "ifmap-pass" => $data->{$IFMAP_PASS} },
+	});
+	
+	#Identifies-As
+	$result &= $self->publish( $data->{$IFMAP_USER}, $data->{$IFMAP_PASS}, \%ar, \%meta_identifies_as, \%user);
+	
+	#Device-IP
+	$result &= $self->call_ifmap_cli({
+	  'cli_tool' => "dev-ip",
+	  'mode' => "update",
+	  'args_list' => [$data->{$DEVICE}, $data->{$USER_IP}],
+	  'connection_args' => 	{ "ifmap-user" => $data->{$IFMAP_USER}, "ifmap-pass" => $data->{$IFMAP_PASS} },
+	});
+	
+	#Auth-By
+	$result &= $self->call_ifmap_cli({
+	  'cli_tool' => "auth-by",
+	  'mode' => "update",
+	  'args_list' => [$data->{$AR}, $data->{$DEVICE}],
+	  'connection_args' => 	{ "ifmap-user" => $data->{$IFMAP_USER}, "ifmap-pass" => $data->{$IFMAP_PASS} },
+	});
 			
 	return $result;
 }
@@ -168,9 +123,6 @@ sub get_required_arguments {
 #                 ifmap-url           ->(optional)
 #                 ifmap-keystore-path ->(optional)
 #                 ifmap-keystore-pass ->(optional)
-#                 name                 >
-#                 role                ->
-#                 access-request      ->
 #
 # Comments    : Override, called from parent's constructor
 sub _init {
