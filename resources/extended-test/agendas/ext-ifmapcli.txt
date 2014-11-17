@@ -39,23 +39,25 @@ UserLogin(
 	access-request => ar:2,
 	role => employee);
 LoginFailed(
+	device => ssh-server,
 	user-login => bruteforce,
 	user-ip => 192.168.0.22,
 	cred => Password,
 	reason => Invalid Account,
 	service => ssh,
-	ssh-ar => ssh-ar:2,
+	ar => ssh-ar:2,
 	port => 22,
 	service-ip => 192.168.0.3,
 	host => server01);
 LoginFailed(
 	user-login => normaluser,
+	device => ssh-server,
 	user-ip => 192.168.0.33,
 	cred => Password,
 	reason => Invalid Credentials,
 	service => ssh,
 	port => 22,
-	ssh-ar => ssh-ar:3,
+	ar => ssh-ar:3,
 	service-ip => 192.168.0.3,
 	host => server01);
 LoginSuccess(
@@ -64,7 +66,8 @@ LoginSuccess(
 	cred => Password,
 	service => ssh,
 	port => 22,
-	ssh-ar => ssh-ar:4,
+	ar => ssh-ar:4,
 	service-ip => 192.168.0.3,
+	device => ssh-server,
 	host => server01);
 	
