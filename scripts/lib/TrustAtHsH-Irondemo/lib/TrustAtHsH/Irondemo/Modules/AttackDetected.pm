@@ -73,7 +73,7 @@ sub get_required_arguments {
 # Returns     :LoginFailed
 # Parameters  : data ->
 #                 ifmap-user          ->(optional)
-#                 ifmap-pass          ->(op(optional)tional)
+#                 ifmap-pass          ->(optional)
 #                 ifmap-url           ->(optional)
 #                 ifmap-keystore-path ->(optional)
 #                 ifmap-keystore-pass ->(optional)

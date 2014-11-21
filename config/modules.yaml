@@ -1,3 +1,12 @@
+"TrustAtHsH::Irondemo::Modules::StartVisitmetaDataservice":
+  alias: StartVisitmetaDataservice
+
+"TrustAtHsH::Irondemo::Modules::StartVisitmetaGUI":
+  alias: StartVisitmetaGUI
+
+"TrustAtHsH::Irondemo::Modules::StartIrond":
+  alias: StartIrond
+
 "TrustAtHsH::Irondemo::Modules::AttackDetected":
   alias: AttackDetected
   config:

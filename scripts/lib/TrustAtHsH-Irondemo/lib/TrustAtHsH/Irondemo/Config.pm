@@ -2,8 +2,10 @@ package TrustAtHsH::Irondemo::Config;
 
 use strict;
 use warnings;
+use File::Temp qw/tempdir/;
 
 my $instance;
+my $dir_pidfile;
 
 ### CONSTRUCTOR ###
 # Purpose     :
@@ -14,6 +16,7 @@ sub _new {
 	my $class = shift;
 	
 	my $self = {};
+	$dir_pidfile = tempdir();
 	bless $self, $class;
 }
 
@@ -98,7 +101,7 @@ sub get_projects_config {
 sub get_project_config {
 	my $self    = shift;
 	my $project = shift;
-	
+	perl launch daemon process
 	return $self->get_projects_config->{$project};
 }
 
@@ -124,6 +127,17 @@ sub get_current_scenario_dir {
 	my $self = shift;
 	
 	return $self->{current_scenario_dir};
+}
+
+### INSTANCE_METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub get_pid_dir {
+	my $self=shift;
+	
+	return $dir_pidfile;
 }
 
 1;

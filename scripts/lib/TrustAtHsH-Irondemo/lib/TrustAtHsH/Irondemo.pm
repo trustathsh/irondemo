@@ -13,17 +13,16 @@ use File::Basename;
 use Archive::Extract;
 use Try::Tiny;
 use Carp;
-use Log::Log4perl qw(:easy);
-use Storable qw(dclone);
+use Log::Log4perl qw/:easy/;
+use Storable qw/dclone/;
 use YAML qw/LoadFile/;
 use File::Path qw/remove_tree make_path/;
 use File::Spec;
 use File::Copy;
 use File::Copy::Recursive qw/dircopy/;
 use Time::HiRes qw/time sleep/;
+use File::Slurp qw/read_file/;
 
-#for developement only
-use Data::Dumper;
 
 our $VERSION = '0.46';
 my $VERBOSE  = 1;
@@ -35,7 +34,7 @@ my $log      = Log::Log4perl->get_logger();
 # Returns     : Instance
 # Parameters  : timescale          -> Number of seconds that an agenda tick takes
 #               config_dir         -> Path to config directory
-#               resources_dir      -> Path to resources directory
+#               resources_dir      -> Pcatfath to resources directory
 #               scenarios_dir      -> Path to scenarios (target) directory
 #               scenarios_conf_dir -> Path to scenarios config directory 
 #               sources_dir        -> Path to sources (target) directory
@@ -481,6 +480,7 @@ sub run_scenario {
 		}
 		$currentTime++;
 	}
+	_kill_children();
 	return $return_val;
 }
 
@@ -577,6 +577,39 @@ sub _remove_directory {
 	if ( -d $dir ) {
 		remove_tree( $dir, { keep_root => '0', safe => '0' } );
 	}
+}
+
+### INTERNAL_UTILITY ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub _kill_children {
+	my $self = shift;
+	my $num_processes_killed = 0;
+	
+	my $dir_pidfiles = TrustAtHsH::Irondemo::Config->instance->get_pid_dir();
+	opendir( DIR_PIDFILES, $dir_pidfiles ) or carp( " Could not read tempdir: $!" );
+	my @pid_files = grep(/.pid/, readdir( DIR_PIDFILES ));
+	$log->info( "Found " . @pid_files . " child processes, going to kill them now ...");
+	
+	for my $pidfile ( @pid_files ) {
+		my $abs_path = File::Spec->rel2abs( $pidfile, $dir_pidfiles );
+		my $pid = read_file( $abs_path, err_mode => 'carp' );
+		if ( $pid =~ /\d+/ ) {
+			$log->debug( "Trying to kill " . $pid . " ... " );
+			if ( kill 'TERM', $pid ) {
+				$log->debug( "... he is dead, Jim.");
+				$num_processes_killed++;
+			} else {
+				$log->debug( "Could not kill PID " . $pid )
+			}
+		} else {
+			$log->warn( "PID file " . $abs_path . " seems not to contain a PID, skipping." );
+			next;
+		}
+	}
+	$log->info( "Terminated " . $num_processes_killed . " of " . @pid_files . " child processes." );
 }
 
 =head1 NAME

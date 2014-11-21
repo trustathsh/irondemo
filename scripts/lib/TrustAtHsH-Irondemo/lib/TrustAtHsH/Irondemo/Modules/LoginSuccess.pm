@@ -86,7 +86,7 @@ sub execute {
 	$result &= $self->call_ifmap_cli({
 	  'cli_tool' => "dev-ip",
 	  'mode' => "update",
-	  'args_list' => [$data->{$DEVICE}, $data->{$USER_IP}],
+	  'args_list' => [$data->{$DEVICE}, $data->{$SERVICE_IP}],
 	  'connection_args' => 	{ "ifmap-user" => $data->{$IFMAP_USER}, "ifmap-pass" => $data->{$IFMAP_PASS} },
 	});
 	
