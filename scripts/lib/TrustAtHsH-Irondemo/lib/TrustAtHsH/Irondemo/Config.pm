@@ -101,7 +101,7 @@ sub get_projects_config {
 sub get_project_config {
 	my $self    = shift;
 	my $project = shift;
-	perl launch daemon process
+
 	return $self->get_projects_config->{$project};
 }
 
