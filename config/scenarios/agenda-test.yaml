@@ -2,6 +2,7 @@ projects:
   - id: ifmapcli
   - id: irond
   - id: irongui
+  - id: visitmeta
 
 files:
   - source: agendas/generated-agenda-seq.txt
@@ -13,6 +14,8 @@ files:
   - source: agendas/publish-update-example-agenda.txt
     destination: /
   - source: agendas/sme-user-logins.txt
+    destination: /
+  - source: agendas/module-starter-test.txt
     destination: /
   - source: irond/basicauthusers.properties
     destination: /irond

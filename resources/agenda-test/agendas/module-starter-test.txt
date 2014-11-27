@@ -1,0 +1,26 @@
+At 0 do StartIrond();
+
+At 3 do StartVisitmetaDataservice();
+
+At 3 do StartIrongui();
+
+At 6 do StartVisitmetaGUI();
+
+At 7 do Break();
+
+At 10 do DeviceIp(
+	mode => update,
+	device => pdp,
+	ip-address => 127.0.0.1);
+	
+At 12 do AccessRequestIp(
+	mode => update,
+	ar => binky,
+	ip-address => 127.0.0.1);
+	
+At 14 do AccessRequestIp(
+	mode => delete,
+	ar => binky,
+	ip-address => 127.0.0.1);
+
+At 15 do Break();
