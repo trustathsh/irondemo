@@ -15,6 +15,7 @@ my $MACMON_DEV = "pep-device";
 
 my $MAC_ADDRESS = "mac-address";
 my $IP_ADDRESS  = "ip-address";
+my $USERNAME	= "username";
 
 my $DC_MANUFAC    = "manufacturer";
 my $DC_MODEL      = "model";
@@ -27,7 +28,7 @@ my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
 
 my @REQUIRED_ARGS = (
-	$MACMON_DEV, $MAC_ADDRESS, $IP_ADDRESS,    $DC_MANUFAC,
+	$MACMON_DEV, $MAC_ADDRESS, $IP_ADDRESS,    $USERNAME,    $DC_MANUFAC,
 	$DC_MODEL,   $DC_OS,       $DC_OS_VERSION, $DC_DEV_TYPE,
 	$DC_METHOD,  $IFMAP_USER,  $IFMAP_PASS
 );
@@ -58,6 +59,17 @@ sub execute {
 			'cli_tool'        => "auth-by",
 			'mode'            => "update",
 			'args_list'       => \@argsListAuthBy,
+			'connection_args' => $connectionArgs
+		}
+	);
+	
+	# Publish auth-as
+	my @argsListAuthAs = ( $accessRequest, $data->{$USERNAME} );
+	$result &= $self->call_ifmap_cli(
+		{
+			'cli_tool'        => "auth-as",
+			'mode'            => "update",
+			'args_list'       => \@argsListAuthAs,
 			'connection_args' => $connectionArgs
 		}
 	);
@@ -132,6 +144,7 @@ sub get_required_arguments {
 #                 discovery-method    ->(optional)
 #                 mac-address         ->
 #                 ip-address          ->
+#                 username            ->
 #                 manufacturer        ->
 #                 model               ->
 #                 os                  ->

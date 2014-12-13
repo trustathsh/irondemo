@@ -3,6 +3,7 @@ At 0 do MacmonInitPdp();
 At 2 do MacmonEndpointOnline(
 	mac-address => 11:22:33:44:55:66,
 	ip-address => 192.168.100.100,
+	username => john.doe,
 	manufacturer => HP,
 	model => Eclipse 4394,
 	os => Windows 2015,
