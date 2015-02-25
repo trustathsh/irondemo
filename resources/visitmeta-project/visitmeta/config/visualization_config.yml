@@ -1,0 +1,123 @@
+visualization:
+  connection:
+    default:
+      name: localhost
+      url: http://localhost:8000
+      rawxml: true
+  network:
+    # The time interval (milliseconds) to request the dataservice for new changes.
+    interval: 1000
+  calculation:
+    # The time interval (milliseconds) to recalculate the position of the nodes.
+    interval: 1000
+    # Count of Iterations for the position calculation of the nodes.
+    iterations: 100
+  highlights:
+    # Timeout (milliseconds) to show the highlights for new and deleted nodes.
+    timeout: 5000
+  node:
+    translation:
+      # The animation time for the translation of a node to the new position.
+      duration: 500
+  identifier:
+    text:
+      # Sets the text style for identifier nodes; possible values are:
+      # SINGLE_LINE: a minimized style with all information in a single line
+      # MULTI_LINE:  a more detailed style with possibly more information,
+      #              using multiple lines
+      style: SINGLE_LINE
+  metadata:
+    text:
+      # Sets the text style for metadata nodes; possible values are:
+      # SINGLE_LINE:    just the typename of the metadata is used
+      # WITH_TIMESTAMP: adds a line with the publisher timestamp to the typename
+      style: SINGLE_LINE
+  history:
+    navigation:
+      # Sets the control mechanism for history navigation; possible values are:
+      # TAB_BASED_NAVIGATION:          uses multiple tabs to switch between
+      #                                live view, history view and delta view
+      # RANGE_SLIDER_BASED_NAVIGATION: uses a slider with two knobs that
+      #                                includes all possible modes
+      style: TAB_BASED_NAVIGATION
+  searchandfilter:
+    # Sets the search and filtering mechanism; possible values are:
+    # SIMPLE_SEARCH_AND_NO_FILTER: a simple search functionality, using a single textfield
+    #                              and matches every node containing the given 
+    #                              input string
+    style: SIMPLE_SEARCH_AND_NO_FILTER
+      
+dataservice:
+  connectiontype: rest
+  
+guicontroller:
+  zfactor: 0.03
+  xyfactor: 20.0
+
+window:
+  width: 1280
+  height: 720
+  divider: 170
+  position:
+    x: 0
+    y: 0
+
+color:
+  background: '0xFFFFFF'
+  edge: '0x000000'
+  metadata:
+    text: '0x000000'
+    inside: '0xFF9966'
+    outside: '0xFF9966'
+    border: '0x000000'
+  dhcp-4d02574f-888a-4a09-8b6b-a87ae38ce69b:
+     inside: '0x99ccff'
+    outside: '0x99ccff'
+  iptables-d6bd8aff-0036-4fe1-9a22-f8e5984af112:
+    inside: '0xffffcc'
+    outside: '0xffffcc'
+  ironvas-83e0dcd7-4607-46c3-b6e0-8a1ab138b2b9:
+    inside: '0x99ff99'
+    outside: '0x99ff99'
+  pdp-4f00a270-dd47-480c-bd02-e1574dad7e12:
+    inside: '0xcc99ff'
+    outside: '0xcc99ff'
+  test-0eb4f123-605f-4eae-9f35-83c3dea2cdf9:
+    inside: '0xff9999'
+    outside: '0xff9999'
+  node:
+    new: '0x228B22'
+    delete: '0x82150F'
+    selected: '0xFFF02E'
+    search: '0x228B22'
+  identifier:
+    access-request:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    device:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    identity:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    ip-address:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    mac-address:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    extended:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
