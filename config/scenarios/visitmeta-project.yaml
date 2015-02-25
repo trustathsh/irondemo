@@ -10,9 +10,7 @@ files:
     destination: /irond
   - source: irond/publisher.properties
     destination: /irond
-  - source: visitmeta/config/color.properties
-    destination: /visitmeta/config
   - source: visitmeta/config/dataservice_connections.yml
     destination: /visitmeta/config
-  - source: visitmeta/config/visualizationConfig.properties
+  - source: visitmeta/config/visualization_config.yml
     destination: /visitmeta/config

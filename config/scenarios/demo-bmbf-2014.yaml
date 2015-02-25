@@ -17,5 +17,3 @@ files:
     destination: /irongui
   - source: visitmeta/dataservice_connections.yml
     destination: visitmeta/config/
-  - source: visitmeta/dataservice_config.properties
-    destination: visitmeta/config/
