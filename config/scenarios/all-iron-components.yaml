@@ -8,3 +8,4 @@ projects:
   - id: ironflow
   - id: ironsyslog
   - id: irontemplate
+  - id: irondetect
