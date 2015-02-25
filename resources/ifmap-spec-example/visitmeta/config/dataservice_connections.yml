@@ -39,6 +39,6 @@ default:
       # IPv4,10.0.0.1
       # or
       # IPv6,...
-      startIdentifier: macmon:83vk-934v-2134
+      startIdentifier: pdp
       #  send this subscription when the data service is started
       useSubscriptionAsStartup: true

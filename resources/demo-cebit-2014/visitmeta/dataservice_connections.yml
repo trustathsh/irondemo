@@ -1,20 +1,44 @@
----
-default: !Connection
-  connectionName: default
+# !EXAMPLE! for all possible values
+# If a value doesn't exist, the default is used. See dataservice_config.yml for more information
+# [connectionName]
+#   [userName]
+#   [userPassword]
+#   [useConnectionAsStartup]
+#   [ifmapServerUrl]
+#   [truststorePath]
+#   [truststorePassword]
+#   [maxPollResultSize]
+#   [subscriptions]
+#     [subscriptionName]
+#       [identifierType]
+#       [startIdentifier]
+#       [matchLinksFilter]
+#       [resultFilter]
+#       [terminalIdentifierTypes]
+#       [useSubscriptionAsStartup]
+#       [maxDepth]
+#       [maxSize]
+
+# the connection name
+default:
   userName: visitmeta
-  userPass: visitmeta
-  startupConnect: true
-  subscribeList:
-  # identifierType is one of the following:
-  # access-request, device, ip-address, mac-address
-  # identity as well as extended identifier not supported at the moment
-  - identifierType: device
-  # identifier is the value of the specific identifier
-  # when using ip-address as type, the syntax is:
-  # IPv4,10.0.0.1
-  # or
-  # IPv6,...
-    identifier: freeradius-pdp
-    subscribeName: default
-    startupSubscribe: true
-  url: https://localhost:8443
+  userPassword: visitmeta
+  # try to connect when the data service is started
+  useConnectionAsStartup: true
+  # url to the ifmap-server for this default connection
+  ifmapServerUrl: https://localhost:8443
+  subscriptions:
+    # the subscription name
+    default:
+      # identifierType is one of the following:
+      # access-request, device, ip-address, mac-address
+      # identity as well as extended identifier not supported at the moment
+      identifierType: device
+      # startIdentifier is the value of the specific identifier
+      # when using ip-address as type, the syntax is:
+      # IPv4,10.0.0.1
+      # or
+      # IPv6,...
+      startIdentifier: freeradius-pdp
+      #  send this subscription when the data service is started
+      useSubscriptionAsStartup: true
