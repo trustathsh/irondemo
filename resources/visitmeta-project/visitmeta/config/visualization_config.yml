@@ -71,7 +71,7 @@ color:
     outside: '0xFF9966'
     border: '0x000000'
   dhcp-4d02574f-888a-4a09-8b6b-a87ae38ce69b:
-     inside: '0x99ccff'
+    inside: '0x99ccff'
     outside: '0x99ccff'
   iptables-d6bd8aff-0036-4fe1-9a22-f8e5984af112:
     inside: '0xffffcc'
