@@ -14,8 +14,7 @@ sub create_string_id_service {
 	my $class     = shift;
 	my $href_args = shift;
 	
-	my $string = 
-	  "<simu:service type=\"" . $href_args->{'type'} .
+	my $string = "<simu:service type=\"" . $href_args->{'type'} .
 	  "\" name=\"" . $href_args->{'name'} . "\"" . " port=\"" . $href_args->{'port'} .
 	  "\" administrative-domain=\"" . $href_args->{'administrative_domain'} . "\"" . 
 	  " xmlns:simu=\"http://simu-project.de/XMLSchema/1\" />";
@@ -159,7 +158,7 @@ sub create_string_meta_service_implementation {
 sub create_string_meta_implementation_vulnerability {
 	my $class = shift;
 	
-	return "<simu:implementation-vulnerability xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
+	return "<simu:implementation-vulnerability xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"multiValue\" />";
 }
 
 ### CLASS METHOD ###
@@ -171,6 +170,17 @@ sub create_string_meta_login_success {
 	my $class = shift;
 	
 	return "<simu:login-success ifmap-cardinality=\"singleValue\" xmlns:simu=\"http://simu-project.de/XMLSchema/1\"><simu:credential-type>Password</simu:credential-type></simu:login-success>";
+}
+
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub create_string_meta_service_discovered {
+       my $class = shift;
+       
+       return "<simu:service-discovered-by xmlns:simu=\"http://simu-project.de/XMLSchema/1\" ifmap-cardinality=\"singleValue\" />";
 }
 
 1;

@@ -1,0 +1,94 @@
+At 0 do StartIrond();
+
+At 4 do StartVisitmetaDataservice();
+
+At 5 do Break();
+
+At 6 do StartVisitmetaGUI();
+
+
+At 7 do InitVulnerableInfrastructure(
+	discoverer => nmap,
+	service-type => ssh,
+	service-name => ssh-server01,
+	service-ip => 10.10.10.5,
+	service-port => 22,
+	impl-name => openssh,
+	impl-version => 6.6,
+	vulnerability-type => CVE,
+	vulnerability-value => CVE-ID-392474,
+	vulnerability-severity => 100);
+
+At 8 do Break();
+
+At 10 do DeviceConnects(
+	access-request => ar:1,
+	pdp => radius,
+	mac => aa:bb:cc:dd:ee:ff,
+	ip-address => 10.10.10.234,
+	ifmap-user-pdp => radius,
+	ifmap-pass-pdp => radius,
+	ifmap-user-dhcp => radius,
+	ifmap-pass-dhcp => radius);
+	
+At 12 do UserLogin(
+	name => John Doe,
+	access-request => ar:1,
+	role => employee,
+	ifmap-user => radius,
+	ifmap-pass => radius);
+
+At 15 do Break();
+
+At 18 do AttackDetected(
+	service => ssh,
+	host => ssh-server01,
+	port => 22,
+	source-ip => 10.10.10.234,
+	rule => 1324:6,
+	ref-type => CVE,
+	ref-id => CVE-ID-392474,
+	severity => 100,
+	ifmap-user => snort,
+	ifmap-pass => snort);
+
+At 20 do Break();
+
+At 22 do UnexpectedBehavior(
+	id-type => ipv4,
+	identifier => 10.10.10.234,
+	mode => update,
+	disc-time => 2015-04-20T11:11:11-08:00,
+	disc-id => simu-engine,
+	ifmap-user => gpm,
+	ifmap-pass => gpm);
+	
+At 25 do Break();
+
+At 27 do EnforcementAction(
+	pep-device => radius,
+	ip-address => 10.10.10.234,
+	type => quarantine);
+
+At 30 do Break();
+
+At 31 do PurgeMetadata(
+	ifmap-user => radius,
+	ifmap-pass => radius);
+At 31 do PurgeMetadata(
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+At 31 do PurgeMetadata(
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas);
+At 31 do PurgeMetadata(
+	ifmap-user => snort,
+	ifmap-pass => snort);
+At 31 do PurgeMetadata(
+	ifmap-user => gpm,
+	ifmap-pass => gpm);
+At 31 do PurgeMetadata(
+	ifmap-user => test,
+	ifmap-pass => test);
+
+At 32 do Break();

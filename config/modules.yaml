@@ -110,6 +110,14 @@
     ifmap-user: test
     ifmap-pass: test
     
+"TrustAtHsH::Irondemo::Modules::InitVulnerableInfrastructure":
+  alias: InitVulnerableInfrastructure
+  config:
+    ifmap-user-nmap: nmap
+    ifmap-pass-nmap: nmap
+    ifmap-user-vas: ironvas
+    ifmap-pass-vas: ironvas
+    
 "TrustAtHsH::Irondemo::Modules::VulnerabilityDetected":
   alias: VulnerabilityDetected
   config:
@@ -127,6 +135,12 @@
   config:
     ifmap-user: iptables
     ifmap-pass: iptables
+    
+"TrustAtHsH::Irondemo::Modules::UnexpectedBehavior":
+  alias: UnexpectedBehavior
+  config:
+    ifmap-user: simu-engine
+    ifmap-pass: simu-engine
 
 "TrustAtHsH::Irondemo::Modules::PurgeMetadata":
   alias: PurgeMetadata
