@@ -241,21 +241,21 @@ irontemplate:
           rename: irontemplate
   executable_dir: irontemplate
 
-irongenlog:
-  sources:
-    scm: git
-    uri: http://github.com/trustathsh/irongenlog.git
-  build:
-    tool: mvn
-    commands:
-     - mvn package
-  binaries: 
-    archives:
-      - archive:
-        source:
-          path: target
-          match: irongenlog-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
-        destination:
-          path: /
-          rename: irongenlog
-  executable_dir: irongenlog
+#irongenlog:
+#  sources:
+#    scm: git
+#    uri: http://github.com/trustathsh/irongenlog.git
+#  build:
+#    tool: mvn
+#    commands:
+#     - mvn package
+#  binaries: 
+#    archives:
+#      - archive:
+#        source:
+#          path: target
+#          match: irongenlog-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+#        destination:
+#          path: /
+#          rename: irongenlog
+#  executable_dir: irongenlog
