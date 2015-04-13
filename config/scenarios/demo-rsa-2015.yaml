@@ -6,6 +6,7 @@ projects:
 files:
   - source: agendas/rsa-2015.txt
   - source: agendas/rsa-2015-fallback.txt
+  - source: agendas/rsa-2015-gpm.txt
     destination: /
   - source: irond/basicauthusers.properties
     destination: /irond

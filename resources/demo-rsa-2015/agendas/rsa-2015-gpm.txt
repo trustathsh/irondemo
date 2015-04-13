@@ -70,15 +70,6 @@ At 18 do AttackDetected(
 
 At 20 do Break();
 
-At 22 do VulnerabilityDetected(
-	ip-address => 192.168.1.165,
-	event-name => attack-detected on vulnerable server,
-	discoverer-id => gpm,
-	ifmap-user => gpm,
-	ifmap-pass => gpm);
-	
-At 25 do Break();
-
 At 26 do IpTablesBlock(
 	ip-address => 192.168.1.165
 );
