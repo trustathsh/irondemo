@@ -5,7 +5,7 @@ visualization:
       url: http://localhost:8000
       rawxml: true
   network:
-    interval: 10000
+    interval: 2000
   calculation:
     interval: 5000
     iterations: 100
