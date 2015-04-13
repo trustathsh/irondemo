@@ -9,6 +9,12 @@
 
 "TrustAtHsH::Irondemo::Modules::StartIrond":
   alias: StartIrond
+  
+"TrustAtHsH::Irondemo::Modules::IpTablesBlock":
+  alias: IpTablesBlock
+  
+"TrustAtHsH::Irondemo::Modules::IpTablesClearRules":
+  alias: IpTablesClearRules
 
 "TrustAtHsH::Irondemo::Modules::AttackDetected":
   alias: AttackDetected
