@@ -16,3 +16,5 @@ files:
     destination: visitmeta/config/
   - source: visitmeta/visualization_config.yml
     destination: visitmeta/config/
+  - source: visitmeta/dataservice_config.yml
+    destination: visitmeta/config/

@@ -41,7 +41,7 @@ At 11 do DeviceConnects(
 	access-request => ar:1,
 	pdp => radius,
 	mac => aa:bb:cc:dd:ee:ff,
-	ip-address => 192.168.1.165,
+	ip-address => 10.10.10.234,
 	ifmap-user-pdp => radius,
 	ifmap-pass-pdp => radius,
 	ifmap-user-dhcp => radius,
@@ -60,7 +60,7 @@ At 18 do AttackDetected(
 	service => ssh,
 	host => ssh-server01,
 	port => 22,
-	source-ip => 192.168.1.165,
+	source-ip => 10.10.10.234,
 	rule => 1324:6,
 	ref-type => CVE,
 	ref-id => CVE-ID-392474,
@@ -71,12 +71,12 @@ At 18 do AttackDetected(
 At 20 do Break();
 
 At 26 do IpTablesBlock(
-	ip-address => 192.168.1.165
+	ip-address => 10.10.10.234
 );
 
 At 27 do EnforcementAction(
 	pep-device => radius,
-	ip-address => 192.168.1.165,
+	ip-address => 10.10.10.234,
 	type => quarantine);
 
 At 30 do Break();

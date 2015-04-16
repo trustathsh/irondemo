@@ -2,10 +2,10 @@ visualization:
   connection:
     default:
       name: localhost
-      url: http://localhost:8000
+      url: http://10.10.10.5:8000
       rawxml: true
   network:
-    interval: 2000
+    interval: 5000
   calculation:
     interval: 5000
     iterations: 100
@@ -96,3 +96,6 @@ color:
   snort-fce9a8e2-8e99-4530-ada7-ad89dd485a9a:
     inside: '0xffff33'
     outside: '0xffff33'
+  iptables-2d3ae3f8-ce8f-4a10-974d-bc5fa178a37e:
+    inside: '0x33ffff'
+    outside: '0x33ffff'

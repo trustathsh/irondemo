@@ -69,9 +69,9 @@ At 18 do AttackDetected(
 
 At 20 do Break();
 
-At 31 do VulnerabilityDetected(
+At 25 do VulnerabilityDetected(
 	ip-address => 10.10.10.234,
-	event-name => attack-resolved (for cleanup)
+	event-name => attack-resolved ... for cleanup,
 	discoverer-id => gpm,
 	ifmap-user => gpm,
 	ifmap-pass => gpm);
