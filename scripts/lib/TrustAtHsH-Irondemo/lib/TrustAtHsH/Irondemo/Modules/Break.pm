@@ -17,8 +17,14 @@ use parent 'TrustAtHsH::Irondemo::AbstractIfmapCliModule';
 # Comments    :
 sub execute {
 	my $self = shift;
-
+	my $data = $self->{'data'};
 	my $result = 1;
+	
+	my $MESSAGE = 'message';
+
+	if ( $data->{$MESSAGE} ) {
+		print "<<<<< " . $data->{$MESSAGE} . " ";
+	}
 
 	print ">>>> waiting, press ctrl+D to proceed\n";
 	my $userinput = <STDIN>;
@@ -48,6 +54,10 @@ sub get_required_arguments {
 sub _init {
 	my $self = shift;
 	my $args = shift;
+	
+	while ( my ($key, $val) = each %{$args} ) {
+		$self->{'data'}->{$key} = $val;
+	}
 }
 
 
