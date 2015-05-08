@@ -1,0 +1,20 @@
+projects:
+  - id: ifmapcli
+  - id: irond
+  - id: irondetect
+  - id: visitmeta
+
+files:
+  - source: agendas/policy-01-only-simple-signature.txt
+  - source: agendas/policy-02-signature-with-context.txt
+    destination: /
+  - source: irond/basicauthusers.properties
+    destination: /irond
+  - source: irond/publisher.properties
+    destination: /irond
+  - source: visitmeta/dataservice_connections.yml
+    destination: visitmeta/config/
+  - source: visitmeta/visualization_config.yml
+    destination: visitmeta/config/
+  - source: visitmeta/dataservice_config.yml
+    destination: visitmeta/config/

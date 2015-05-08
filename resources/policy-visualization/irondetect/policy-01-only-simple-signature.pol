@@ -1,0 +1,27 @@
+context {
+
+}
+
+hint {
+
+}
+ 
+anomaly {
+
+}
+
+signature {
+    sigInofficialApp := "smartphone.android.app.installer" != "com.android.vending" and "smartphone.android.app.isrunning" = "true";
+}
+
+condition {
+    conInofficialApp := sigInofficialApp;
+}
+
+action {
+    appAlert := "alert.name" "Inofficial App Detected";
+}
+
+rule {
+    inofficalApp := if conInofficialApp do appAlert;
+}

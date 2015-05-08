@@ -1,0 +1,120 @@
+At 0 do StartIrond();
+
+At 3 do StartVisitmetaDataservice();
+
+At 4 do Break(
+	message => irond and VisITMeta dataservice started);
+
+At 5 do StartVisitmetaGUI();
+
+At 6 do Break(
+	message => VisITMeta GUI started);
+
+At 7 do InitPdpInfrastructure(
+	pdp => freeradius-pdp,
+	pdp-ip-address => 10.0.0.2,
+	iptables => iptables,
+	iptables-ip-address => 10.0.0.3,
+	switch => switch,
+	switch-ip-address => 10.0.0.1,
+	ifmap-user => radius,
+	ifmap-pass => radius);
+	
+At 7 do DeviceIp(
+	mode => update,
+	device => dhcp-server,
+	ip-address => 10.0.0.5,
+	ifmap-user => dhcp,
+	ifmap-pass => dhcp);
+
+At 8 do DiscoveredBy(
+	device => dhcp-server,
+	id-type => ipv4,
+	identifier => 10.0.0.2,
+	ifmap-user => dhcp,
+	ifmap-pass => dhcp);
+
+At 9 do DiscoveredBy(
+	device => dhcp-server,
+	id-type => ipv4,
+	identifier => 10.0.0.3,
+	ifmap-user => dhcp,
+	ifmap-pass => dhcp);
+
+At 10 do DiscoveredBy(
+	device => dhcp-server,
+	id-type => ipv4,
+	identifier => 10.0.0.1,
+	ifmap-user => dhcp,
+	ifmap-pass => dhcp);
+
+At 11 do DiscoveredBy(
+	device => dhcp-server,
+	id-type => ipv4,
+	identifier => 10.0.0.4,
+	ifmap-user => dhcp,
+	ifmap-pass => dhcp);
+
+At 12 do Break(
+	message => Initial infrastructure published);
+
+At 13 do PolicyRule(
+	device => irondetect,
+	rule => inofficalApp,
+	ip => 10.0.0.4,
+	action => appAlert,
+	action-value => alert.name set to Inofficial App Detected,
+	condition => conInofficialApp,
+	ifmap-user => irondetect,
+	ifmap-pass => irondetect);
+
+At 14 do Break(
+	message => Policy of irondetect published);
+
+At 15 do DeviceConnects(
+	access-request => ar:1,
+	pdp => freeradius-pdp,
+	mac => aa:bb:cc:dd:ee:ff,
+	ip-address => 10.0.0.50,
+	ifmap-user-pdp => radius,
+	ifmap-pass-pdp => radius,
+	ifmap-user-dhcp => dhcp,
+	ifmap-pass-dhcp => dhcp);
+
+At 16 do DeviceIp(
+	mode => update,
+	device => smartphone,
+	ip-address => 10.0.0.50,
+	ifmap-user => dhcp,
+	ifmap-pass => dhcp);
+
+At 17 do Break(
+	message => Smartphone connected);
+
+At 18 do SingleSmartphoneFeatureDetected(
+	access-request => ar:1,
+	device => smartphone,
+	feature-id => smartphone.android.app.installer,
+	feature-value => foo.bar.something,
+	feature-type => qualified,
+	ifmap-user => android,
+	ifmap-pass => android);
+
+At 19 do Break(
+	message => will now purge all data);
+
+At 20 do PurgeMetadata(
+	ifmap-user => irondetect,
+	ifmap-pass => irondetect);
+At 20 do PurgeMetadata(
+	ifmap-user => dhcp,
+	ifmap-pass => dhcp);
+At 20 do PurgeMetadata(
+	ifmap-user => android,
+	ifmap-pass => android);
+At 20 do PurgeMetadata(
+	ifmap-user => radius,
+	ifmap-pass => radius);
+
+At 21 do Break(
+	message => Agenda finished);

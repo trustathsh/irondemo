@@ -1,3 +1,6 @@
+"TrustAtHsH::Irondemo::Modules::PolicyRule":
+  alias: PolicyRule
+
 "TrustAtHsH::Irondemo::Modules::SingleSmartphoneFeatureDetected":
   alias: SingleSmartphoneFeatureDetected
 

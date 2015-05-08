@@ -1,0 +1,30 @@
+context {
+    ctxWorkingHours := DATETIME > "06:00" and DATETIME < "22:00";
+}
+
+hint {
+
+}
+ 
+anomaly {
+
+}
+
+signature {
+    sigInofficialApp := "smartphone.android.app.installer" != "com.android.vending" and "smartphone.android.app.isrunning" = "true";
+    sigCamera := "smartphone.sensor.cameraisused" = "true" ctxWorkingHours;
+    sigSuspiciousApp := "smartphone.android.app.permission.granted" = "android.permission.RECEIVE_BOOT_COMPLETED" and "smartphone.android.app.permission.granted" = "android.permission.CAMERA"
+                        and "smartphone.android.app.permission.granted" = "android.permission.INTERNET" ctxWorkingHours;
+}
+
+condition {
+    conInofficialApp := sigInofficialApp;
+}
+
+action {
+    appAlert := "alert.name" "Inofficial App Detected";
+}
+
+rule {
+    inofficalApp := if conInofficialApp do appAlert;
+}
