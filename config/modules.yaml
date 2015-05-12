@@ -1,3 +1,12 @@
+"TrustAtHsH::Irondemo::Modules::PolicyConnectRuleInstanceToCategory":
+  alias: PolicyConnectRuleInstanceToCategory
+
+"TrustAtHsH::Irondemo::Modules::PolicyCreateRuleInstance":
+  alias: PolicyCreateRuleInstance
+
+"TrustAtHsH::Irondemo::Modules::PolicySignature":
+  alias: PolicySignature
+
 "TrustAtHsH::Irondemo::Modules::PolicyRule":
   alias: PolicyRule
 

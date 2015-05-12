@@ -26,6 +26,22 @@ sub create_string_id_rule {
 # Returns     :
 # Parameters  :
 # Comments    :
+sub create_string_id_rule_instance {
+	my $class     = shift;
+	my $href_args = shift;
+	
+	my $string = "<pol:rule-instance name=\"" . $href_args->{'name'} .
+	  "\" administrative-domain=\"" . $href_args->{'administrative_domain'} . "\"" .
+	  " xmlns:pol=\"http://trust.f4.hs-hannover.de/projects/visitmeta/XMLSchema/1\" />";
+	
+	return $string;
+}
+
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
 sub create_string_id_action {
 	my $class     = shift;
 	my $href_args = shift;
@@ -48,6 +64,23 @@ sub create_string_id_condition {
 	my $href_args = shift;
 	
 	my $string = "<pol:condition name=\"" . $href_args->{'name'} .
+	  "\" administrative-domain=\"" . $href_args->{'administrative_domain'} . "\"" .
+	  " xmlns:pol=\"http://trust.f4.hs-hannover.de/projects/visitmeta/XMLSchema/1\" />";
+	
+	return $string;
+}
+
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub create_string_id_signature {
+	my $class     = shift;
+	my $href_args = shift;
+	
+	my $string = "<pol:signature name=\"" . $href_args->{'name'} .
+	  "\" value=\"" . $href_args->{'value'} .
 	  "\" administrative-domain=\"" . $href_args->{'administrative_domain'} . "\"" .
 	  " xmlns:pol=\"http://trust.f4.hs-hannover.de/projects/visitmeta/XMLSchema/1\" />";
 	
@@ -95,6 +128,66 @@ sub create_string_meta_rule_device {
 	
 	my $string =
 	  "<pol:rule-device ifmap-cardinality=\"singleValue\" xmlns:pol=\"http://trust.f4.hs-hannover.de/projects/visitmeta/XMLSchema/1\" />";
+
+	return $string;
+}
+
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub create_string_meta_rule_instance_to_rule {
+	my $class     = shift;
+	my $href_args = shift;
+	
+	my $string =
+	  "<pol:rule-instance-to-rule ifmap-cardinality=\"singleValue\" xmlns:pol=\"http://trust.f4.hs-hannover.de/projects/visitmeta/XMLSchema/1\" />";
+
+	return $string;
+}
+
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub create_string_meta_rule_instance_to_signature {
+	my $class     = shift;
+	my $href_args = shift;
+	
+	my $string =
+	  "<pol:rule-instance-to-signature ifmap-cardinality=\"singleValue\" xmlns:pol=\"http://trust.f4.hs-hannover.de/projects/visitmeta/XMLSchema/1\" />";
+
+	return $string;
+}
+
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub create_string_meta_rule_instance_to_category {
+	my $class     = shift;
+	my $href_args = shift;
+	
+	my $string =
+	  "<pol:rule-instance-to-category ifmap-cardinality=\"singleValue\" xmlns:pol=\"http://trust.f4.hs-hannover.de/projects/visitmeta/XMLSchema/1\" />";
+
+	return $string;
+}
+
+### CLASS METHOD ###
+# Purpose     :
+# Returns     :
+# Parameters  :
+# Comments    :
+sub create_string_meta_condition_signature {
+	my $class     = shift;
+	my $href_args = shift;
+	
+	my $string =
+	  "<pol:condition-signature ifmap-cardinality=\"singleValue\" xmlns:pol=\"http://trust.f4.hs-hannover.de/projects/visitmeta/XMLSchema/1\" />";
 
 	return $string;
 }
