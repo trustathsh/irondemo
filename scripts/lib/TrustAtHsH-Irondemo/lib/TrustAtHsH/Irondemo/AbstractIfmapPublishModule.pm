@@ -59,7 +59,6 @@ sub send_soap_publish_request {
 
 	# configure the user agent
 	my $ua = LWP::UserAgent->new;
-	$ua->ssl_opts( 'SSL_version' => 'SSLv3' );
 	$ua->ssl_opts( 'SSL_verify_mode' => 'SSL_VERIFY_NONE' ); # TODO enable server cert verification
 
 	my $result = 1;
