@@ -1,0 +1,26 @@
+context {
+    ctxWindow := SLIDING = "00:01:00";
+}
+
+hint {
+    trafficHint := "ids.smartphone.trafficCount" "de.fhhannover.inform.trust.irondetectprocedures.Mean" "1000";
+}
+ 
+anomaly {
+    anoHighTraffic := trafficHint > 0.5 ctxWindow;
+}
+
+signature {
+}
+
+condition {
+    conHighTraffic:= anoHighTraffic;
+}
+
+action {
+    appAlert := "alert.name" "Anormal High Traffic Detected";
+}
+
+rule {
+    highTraffic := if conHighTraffic do appAlert;
+}
