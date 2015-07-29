@@ -9,4 +9,7 @@ projects:
   - id: ironsyslog
   - id: irontemplate
   - id: irondetect
-#  - id: irongenlog
+  - id: irongenlog
+  - id: irongpm
+  - id: ironnmap
+
