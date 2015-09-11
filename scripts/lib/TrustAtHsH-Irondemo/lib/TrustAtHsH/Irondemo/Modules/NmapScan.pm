@@ -76,7 +76,9 @@ sub execute {
     
     %meta_service_impl = ( extended => TrustAtHsH::Irondemo::SimuUtilities->create_string_meta_service_implementation());
     
-    $result &= $self->publish( $data->{$IFMAP_USER}, $data->{$IFMAP_PASS}, \%service, \%meta_service_impl, \%implementation );
+    $result &= $self->publish(
+        $data->{$USER_NMAP}, $data->{$PASS_NMAP}, \%service, \%meta_service_impl, \%implementation
+    );
 	
 	return $result;
 }
