@@ -16,8 +16,8 @@ my $SERVICE_TYPE = "service-type";
 my $SERVICE_NAME = "service-name";
 my $SERVICE_IP = "service-ip";
 my $SERVICE_PORT = 'service-port';
-my $USER_NMAP = 'ifmap-user-nmap';
-my $PASS_NMAP = 'ifmap-pass-nmap';
+my $USER_NMAP = 'ifmap-user';
+my $PASS_NMAP = 'ifmap-pass';
 
 my @REQUIRED_ARGS = (
 	$DISCOVERER_DEVICE, $SERVICE_IP, $SERVICE_PORT, $SERVICE_NAME, $SERVICE_TYPE, $USER_NMAP, $PASS_NMAP);
