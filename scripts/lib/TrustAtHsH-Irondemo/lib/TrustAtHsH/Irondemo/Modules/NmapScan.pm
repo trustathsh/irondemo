@@ -16,11 +16,15 @@ my $SERVICE_TYPE = "service-type";
 my $SERVICE_NAME = "service-name";
 my $SERVICE_IP = "service-ip";
 my $SERVICE_PORT = 'service-port';
+my $IMPL_NAME = "impl-name";
+my $IMPL_VERSION = "impl-version";
+my $IMPL_PLATFORM = 'impl-platform';
+my $IMPL_PATCH    = 'impl-patch';
 my $USER_NMAP = 'ifmap-user';
 my $PASS_NMAP = 'ifmap-pass';
 
 my @REQUIRED_ARGS = (
-	$DISCOVERER_DEVICE, $SERVICE_IP, $SERVICE_PORT, $SERVICE_NAME, $SERVICE_TYPE, $USER_NMAP, $PASS_NMAP);
+	$DISCOVERER_DEVICE, $SERVICE_IP, $SERVICE_PORT, $SERVICE_NAME, $SERVICE_TYPE, $IMPL_NAME, $IMPL_VERSION, $USER_NMAP, $PASS_NMAP);
 
 
 ### INSTANCE METHOD ###
@@ -34,7 +38,16 @@ sub execute {
 
 	my $result = 1;
 
-	my ( %device, %service, %ip, %meta_service_ip, %meta_service_discovered_by );
+	my ( %device, %service, %ip, %implementation, %meta_service_ip, %meta_service_discovered_by, %meta_service_impl );
+    
+    %implementation = ( extended =>
+    TrustAtHsH::Irondemo::SimuUtilities->create_string_id_implementation({
+        name          => $data->{$IMPL_NAME},
+        version       => $data->{$IMPL_VERSION},
+        local_version => $data->{$IMPL_PATCH},
+        platform      => $data->{$IMPL_PLATFORM}
+        })
+    );
 	
 	%service = ( extended =>
 	  TrustAtHsH::Irondemo::SimuUtilities->create_string_id_service({
@@ -60,6 +73,10 @@ sub execute {
 	$result &= $self->publish(
 	  $data->{$USER_NMAP}, $data->{$PASS_NMAP}, \%device, \%meta_service_discovered_by, \%service
 	);
+    
+    %meta_service_impl = ( extended => TrustAtHsH::Irondemo::SimuUtilities->create_string_meta_service_implementation());
+    
+    $result &= $self->publish( $data->{$IFMAP_USER}, $data->{$IFMAP_PASS}, \%service, \%meta_service_impl, \%implementation );
 	
 	return $result;
 }
