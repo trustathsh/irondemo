@@ -229,6 +229,12 @@
     ifmap-user: door
     ifmap-pass: door
 
+"TrustAtHsH::Irondemo::Modules::IcsGraph":
+  alias: IcsGraph
+  config:
+    ifmap-user: test
+    ifmap-pass: test
+
 "SIMU::SIT::Irondemo::Modules::DoorClosedEvent":
   alias: DoorClosedEvent
   config:
