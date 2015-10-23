@@ -181,7 +181,8 @@ sub build_project {
 		}
 		for my $command (@commands) {
 			$return_val |= system($command);
-		}
+		}	
+		
 	} else {
 		$log->debug("Source directory not found, doing nothing. \n");
 		$return_val = -1;
@@ -220,7 +221,7 @@ sub build_scenario {
 	#make sure scenario dir exists
 	if ( -d $scenario_dir ) {
 		$log->info("Scenario dir $scenario_dir exists. Doing nothing.");
-		return 0;
+		return 2;
 	} else {
 		mkdir($scenario_dir);
 	}

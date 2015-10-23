@@ -12,10 +12,13 @@ use lib "$FindBin::Bin/lib/TrustAtHsH-Irondemo/lib";
 use lib "$FindBin::Bin/lib/SIMU-SIT-Irondemo/lib";
 use lib "$FindBin::Bin/lib/SIMU-Macmon-Irondemo/lib";
 use TrustAtHsH::Irondemo;
+use Log::Log4perl qw/:easy/;
 
 use Data::Dumper;
 
 our $VERSION = '0.52';
+
+my $log = Log::Log4perl->get_logger();
 
 #process commandline options
 my %options;
@@ -79,16 +82,28 @@ elsif ( $command eq 'run_scenario' ) {
 sub update_sources {
 	my @projects = @_;
 	my $return_val = 0;
+	my %ReturnCodesUpdate = ();
+	my $strReturnCodeInterpretation = "";
 
 	if ( @projects < 1 ) {
 		@projects = $irondemo->get_projects();
 	}	
 	for my $project ( @projects ) {
-		$return_val |= $irondemo->update_project({
+		$ReturnCodesUpdate{ $project } = $irondemo->update_project({
 			project_id => $project,
 			clean      => $options{clean},
 		});
+		$return_val |= $ReturnCodesUpdate{ $project };
 	}
+	for my $key ( keys %ReturnCodesUpdate ) {
+        my $value = $ReturnCodesUpdate{$key};
+        if($value == 0){
+        	$strReturnCodeInterpretation = sprintf("%20s UPDATE .... SUCCESS\n",$key);
+        }else{
+        	$strReturnCodeInterpretation = sprintf("%20s UPDATE .... UNSUCCESS\n",$key);
+        }
+        $log->info($strReturnCodeInterpretation);
+    }
 	
 	return $return_val;
 }
@@ -96,16 +111,28 @@ sub update_sources {
 sub build_sources {
 	my @projects = @_;
 	my $return_val = 0;
+	my %ReturnCodesBuild = ();
+	my $strReturnCodeInterpretation = "";
 
 	if ( @projects < 1 ) {
 		@projects = $irondemo->get_projects();
 	}
 	for my $project ( @projects ) {
-		$return_val |= $irondemo->build_project({
+		$ReturnCodesBuild{ $project } = $irondemo->build_project({
 			project_id => $project,
 			clean      => $options{clean},
 		});
+		$return_val |= $ReturnCodesBuild{ $project };
 	}
+	for my $key ( keys %ReturnCodesBuild ) {
+        my $value = $ReturnCodesBuild{$key};
+        if($value == 0){
+        	$strReturnCodeInterpretation = sprintf("%20s BUILD .... SUCCESS\n",$key);
+        }else{
+        	$strReturnCodeInterpretation = sprintf("%20s BUILD .... UNSUCCESS\n",$key);
+        }
+        $log->info($strReturnCodeInterpretation);
+    }
 	
 	return $return_val;
 }
@@ -113,16 +140,30 @@ sub build_sources {
 sub build_scenarios {
 	my @scenarios = @_;
 	my $return_val = 0;
+	my %ReturnCodesBuild = ();
+	my $strReturnCodeInterpretation = "";
 	
 	if ( @scenarios < 1 ) {
 		@scenarios = $irondemo->get_scenarios();
 	}
 	for my $scenario ( @scenarios ) {
-		$return_val |= $irondemo->build_scenario({
+		$ReturnCodesBuild{ $scenario } = $irondemo->build_scenario({
 			scenario => $scenario,
 			clean    => $options{clean}
 		});
+		$return_val |= $ReturnCodesBuild{ $scenario };
 	}
+	for my $key ( keys %ReturnCodesBuild ) {
+        my $value = $ReturnCodesBuild{$key};
+        if($value == 1){
+        	$strReturnCodeInterpretation = sprintf("%20s BUILD .... SUCCESS\n",$key);
+        }elsif($value == 2){
+        	$strReturnCodeInterpretation = sprintf("%20s BUILD .... DOING NOTHING\n",$key);
+        }else{
+        	$strReturnCodeInterpretation = sprintf("%20s BUILD .... UNSUCCESS\n",$key);
+        }
+        $log->info($strReturnCodeInterpretation);
+    }
 	
 	return $return_val;
 }
