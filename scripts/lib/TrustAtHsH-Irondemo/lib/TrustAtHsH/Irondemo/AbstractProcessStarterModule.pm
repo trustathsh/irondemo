@@ -6,6 +6,7 @@ use warnings;
 use Carp qw(croak);
 use File::Temp qw/tempfile/;
 use File::Spec;
+use Path::Tiny;
 use lib '../../';
 use TrustAtHsH::Irondemo::Config;
 use parent 'TrustAtHsH::Irondemo::AbstractModule';
@@ -25,13 +26,20 @@ sub start_process {
 	my $dir_pidfiles = TrustAtHsH::Irondemo::Config->instance->get_pid_dir();
 	my ($fh_pidfile, $pidfile)  = tempfile( DIR => $dir_pidfiles, SUFFIX => '.pid' );
 	my $pid          = fork();
+	
 
 	if ( !defined $pid ) {    # Unable to fork
 		croak("ERROR: Could not fork: $!\n");
 	}
-	elsif ( $pid == 0 ) {     # Child
-		open( STDOUT, '>', File::Spec->devnull ) or croak( "Could not re-open STDOUT. Aborting." );
-		open( STDERR, '>', File::Spec->devnull ) or croak( "Could not re-open STDERR. Aborting." );
+	elsif ( $pid == 0 ) {     # Child	
+		my $parentPath = path($command)->parent;	
+		my $logFileName = ref($self);
+ 		$logFileName = substr($logFileName,rindex($logFileName, "::") +7 );
+ 		$logFileName = $logFileName . "-IrondemoLog.txt";
+ 		my $logFilePath = path($parentPath)->child($logFileName);
+	
+		open( STDOUT, '>', $logFilePath ) or croak( "Could not re-open STDOUT. Aborting." );
+		open( STDERR, '>>', $logFilePath ) or croak( "Could not re-open STDERR. Aborting." );
 		exec( $command, @args ) or croak( "Could not execute " . $command . ". Aborting." );
 	}
 	else {                    # Parent

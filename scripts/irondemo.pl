@@ -100,7 +100,7 @@ sub update_sources {
         if($value == 0){
         	$strReturnCodeInterpretation = sprintf("%20s UPDATE .... SUCCESS\n",$key);
         }else{
-        	$strReturnCodeInterpretation = sprintf("%20s UPDATE .... UNSUCCESS\n",$key);
+        	$strReturnCodeInterpretation = sprintf("%20s UPDATE .... FAILED\n",$key);
         }
         $log->info($strReturnCodeInterpretation);
     }
@@ -129,7 +129,7 @@ sub build_sources {
         if($value == 0){
         	$strReturnCodeInterpretation = sprintf("%20s BUILD .... SUCCESS\n",$key);
         }else{
-        	$strReturnCodeInterpretation = sprintf("%20s BUILD .... UNSUCCESS\n",$key);
+        	$strReturnCodeInterpretation = sprintf("%20s BUILD .... FAILED\n",$key);
         }
         $log->info($strReturnCodeInterpretation);
     }
@@ -160,7 +160,7 @@ sub build_scenarios {
         }elsif($value == 2){
         	$strReturnCodeInterpretation = sprintf("%20s BUILD .... DOING NOTHING\n",$key);
         }else{
-        	$strReturnCodeInterpretation = sprintf("%20s BUILD .... UNSUCCESS\n",$key);
+        	$strReturnCodeInterpretation = sprintf("%20s BUILD .... FAILED\n",$key);
         }
         $log->info($strReturnCodeInterpretation);
     }
