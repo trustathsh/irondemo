@@ -32,4 +32,14 @@ sub execute {
 	return $self->start_process( $irond );
 }
 
+### INSTANCE METHOD ###
+# Purpose     : Override
+# Returns     : name of component
+# Parameters  :
+# Comments    :
+sub _getIronName {
+	 return "Irongui";
+}
+
+
 1;

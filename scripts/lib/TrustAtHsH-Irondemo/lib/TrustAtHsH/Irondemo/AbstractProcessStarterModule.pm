@@ -11,6 +11,8 @@ use lib '../../';
 use TrustAtHsH::Irondemo::Config;
 use parent 'TrustAtHsH::Irondemo::AbstractModule';
 
+my @EXPORT = qw(_getIronName);
+
 my @REQUIRED_ARGS;
 
 ### INSTANCE METHOD ###
@@ -33,8 +35,7 @@ sub start_process {
 	}
 	elsif ( $pid == 0 ) {     # Child	
 		my $parentPath = path($command)->parent;	
-		my $logFileName = ref($self);
- 		$logFileName = substr($logFileName,rindex($logFileName, "::") +7 );
+		my $logFileName = $self->_getIronName();
  		$logFileName = $logFileName . "-IrondemoLog.txt";
  		my $logFilePath = path($parentPath)->child($logFileName);
 	
@@ -78,5 +79,12 @@ sub get_required_arguments {
 
 	return @REQUIRED_ARGS;
 }
+
+### INTERNAL UTILITY ###
+# Purpose     : get the name of the iron component to start
+# Returns     : name of component
+# Parameters  :
+# Comments    :
+sub _getIronName { croak 'You must override _getIronName() in a subclass' }
 
 1;

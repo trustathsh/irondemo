@@ -32,4 +32,13 @@ sub execute {
 	return $self->start_process( $visitmeta );
 }
 
+### INSTANCE METHOD ###
+# Purpose     : Override
+# Returns     : name of component
+# Parameters  :
+# Comments    :
+sub _getIronName {
+	 return "VisitMData";
+}
+
 1;
