@@ -7,6 +7,9 @@
 "TrustAtHsH::Irondemo::Modules::StartIrongui":
   alias: StartIrongui
 
+"TrustAtHsH::Irondemo::Modules::StartIronloggui":
+  alias: StartIronloggui
+
 "TrustAtHsH::Irondemo::Modules::StartVisitmetaDataservice":
   alias: StartVisitmetaDataservice
 

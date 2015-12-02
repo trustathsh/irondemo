@@ -297,3 +297,22 @@ ironnmap:
           path: /
           rename: ironnmap
   executable_dir: ironnmap
+
+ironloggui:
+  sources:
+    scm: git
+    uri: http://github.com/trustathsh/ironloggui.git
+  build:
+    tool: mvn
+    commands:
+     - mvn package
+  binaries: 
+    archives:
+      - archive:
+        source:
+          path: target
+          match: ironloggui-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+        destination:
+          path: /
+          rename: ironloggui
+  executable_dir: ironloggui
