@@ -1,0 +1,101 @@
+visualization:
+  connection:
+    default:
+      name: localhost
+      url: http://10.10.10.5:8000
+      rawxml: true
+  network:
+    interval: 5000
+  calculation:
+    interval: 5000
+    iterations: 100
+  highlights:
+    timeout: 5000
+  node:
+    translation:
+      duration: 3000
+    information:
+      style: XML_BREAKDOWN
+  identifier:
+    text:
+      style: SINGLE_LINE
+  metadata:
+    text:
+      style: SINGLE_LINE
+  history:
+    navigation:
+      style: TAB_BASED_NAVIGATION
+  searchandfilter:
+    style: SIMPLE_SEARCH_AND_NO_FILTER
+    transparency: 0.2
+dataservice:
+  connectiontype: rest
+guicontroller:
+  zfactor: 0.03
+  xyfactor: 20.0
+window:
+  width: 1280
+  height: 720
+  divider: 170
+  position:
+    x: 0
+    y: 0
+color:
+  background: '0xFFFFFF'
+  edge: '0x000000'
+  metadata:
+    text: '0x000000'
+    inside: '0xFF9966'
+    outside: '0xFF9966'
+    border: '0x000000'
+  node:
+    new: '0x266E62'
+    delete: '0xA73946'
+    selected: '0xCEB100'
+    search: '0x88A538'
+  identifier:
+    access-request:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    device:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    identity:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    ip-address:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    mac-address:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    extended:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+  ironvas-b1c809e2-281d-4b33-a354-853c2f330f13:
+    inside: '0xff9933'
+    outside: '0xff9933'
+  nmap-b3c9d2fe-00d9-47ef-9701-5ffe51a4dab4:
+    inside: '0x66ff66'
+    outside: '0x66ff66'
+  radius-d240c2ae-1223-4dfa-acf9-7002f9227be7:
+    inside: '0x33ffff'
+    outside: '0x33ffff'
+  snort-fce9a8e2-8e99-4530-ada7-ad89dd485a9a:
+    inside: '0xffff33'
+    outside: '0xffff33'
+  iptables-2d3ae3f8-ce8f-4a10-974d-bc5fa178a37e:
+    inside: '0x33ffff'
+    outside: '0x33ffff'

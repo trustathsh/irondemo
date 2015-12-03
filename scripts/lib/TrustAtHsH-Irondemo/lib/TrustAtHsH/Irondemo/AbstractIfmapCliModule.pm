@@ -1,6 +1,6 @@
 package TrustAtHsH::Irondemo::AbstractIfmapCliModule;
 
-use 5.006;
+use 5.16.0;
 use strict;
 use warnings;
 use Carp qw(croak);
@@ -50,8 +50,6 @@ sub call_ifmap_cli {
 	push @command, $cli_jar;
 	push @command, $mode if defined $mode;
 
-	push @command, @{$args_list} if @{$args_list};
-
 	push @command, '--url';
 	push @command, $url;
 
@@ -68,6 +66,8 @@ sub call_ifmap_cli {
 	push @command, $keystorePass;
 
 	push @command, $verbosity;
+
+	push @command, @{$args_list} if @{$args_list};
 
 	$log->debug("Executing '@command'");
 	my $result;

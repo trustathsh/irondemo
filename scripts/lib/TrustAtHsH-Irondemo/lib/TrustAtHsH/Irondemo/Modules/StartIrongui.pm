@@ -1,6 +1,6 @@
 package TrustAtHsH::Irondemo::Modules::StartIrongui;
 
-use 5.006;
+use 5.16.0;
 use strict;
 use warnings;
 use File::Spec;
@@ -31,5 +31,15 @@ sub execute {
 	
 	return $self->start_process( $irond );
 }
+
+### INSTANCE METHOD ###
+# Purpose     : Override
+# Returns     : name of component
+# Parameters  :
+# Comments    :
+sub _getIronName {
+	 return "Irongui";
+}
+
 
 1;

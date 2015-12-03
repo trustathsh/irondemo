@@ -1,0 +1,77 @@
+{
+   "abstract" : "The great new TrustAtHsH::Irondemo!",
+   "author" : [
+      "Trust@HsH, C<< <trust at f4-i.fh-hannover.de> >>",
+      "Trust@HsH <trust@f4-i.fh-hannover.de>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Module::Install version 1.16, CPAN::Meta::Converter version 2.150005",
+   "license" : [
+      "apache_2_0"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "TrustAtHsH-Irondemo",
+   "no_index" : {
+      "directory" : [
+         "inc",
+         "t"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.59",
+            "Test::Kwalitee" : "0",
+            "Test::More" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.59"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Archive::Extract" : "0",
+            "Carp" : "0",
+            "Data::Dumper" : "0",
+            "File::Basename" : "0",
+            "File::Copy" : "0",
+            "File::Copy::Recursive" : "0",
+            "File::Path" : "0",
+            "File::Slurp" : "0",
+            "File::Spec" : "0",
+            "File::Temp" : "0",
+            "File::Tempdir" : "0",
+            "HTTP::Request" : "0",
+            "IO::File" : "0",
+            "IPC::Run" : "0",
+            "LWP::Protocol::https" : "0",
+            "LWP::UserAgent" : "0",
+            "Log::Log4perl" : "0",
+            "MIME::Base64" : "0",
+            "Parse::RecDescent" : "0",
+            "Scalar::Util" : "0",
+            "Storable" : "0",
+            "Thread::Queue" : "0",
+            "Time::HiRes" : "0",
+            "Try::Tiny" : "0",
+            "XML::XPath" : "0",
+            "XML::XPath::XMLParser" : "0",
+            "YAML" : "0",
+            "perl" : "5.006"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://apache.org/licenses/LICENSE-2.0"
+      ]
+   },
+   "version" : "0.51",
+   "x_serialization_backend" : "JSON::PP version 2.27202"
+}

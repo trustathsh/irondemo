@@ -1,0 +1,14 @@
+At 0 do StartIrond();
+
+At 3 do StartVisitmetaDataservice();
+
+At 4 do Break();
+
+At 5 do StartVisitmetaGUI();
+
+At 6 do Break();
+
+At 9 do IcsGraph();
+	
+	
+At 12 do Break();

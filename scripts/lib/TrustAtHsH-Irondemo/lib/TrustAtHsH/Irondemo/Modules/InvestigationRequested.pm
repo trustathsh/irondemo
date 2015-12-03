@@ -1,6 +1,6 @@
 package TrustAtHsH::Irondemo::Modules::InvestigationRequested;
 
-use 5.006;
+use 5.16.0;
 use strict;
 use warnings;
 use Carp qw(croak);

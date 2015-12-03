@@ -1,6 +1,6 @@
 package TrustAtHsH::Irondemo::Modules::StartVisitmetaDataservice;
 
-use 5.006;
+use 5.16.0;
 use strict;
 use warnings;
 use File::Spec;
@@ -30,6 +30,15 @@ sub execute {
 	}
 	
 	return $self->start_process( $visitmeta );
+}
+
+### INSTANCE METHOD ###
+# Purpose     : Override
+# Returns     : name of component
+# Parameters  :
+# Comments    :
+sub _getIronName {
+	 return "VisitMData";
 }
 
 1;

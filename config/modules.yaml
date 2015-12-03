@@ -10,11 +10,17 @@
 "TrustAtHsH::Irondemo::Modules::PolicyRule":
   alias: PolicyRule
 
+"TrustAtHsH::Irondemo::Modules::NmapScan":
+  alias: NmapScan
+
 "TrustAtHsH::Irondemo::Modules::SingleSmartphoneFeatureDetected":
   alias: SingleSmartphoneFeatureDetected
 
 "TrustAtHsH::Irondemo::Modules::StartIrongui":
   alias: StartIrongui
+
+"TrustAtHsH::Irondemo::Modules::StartIronloggui":
+  alias: StartIronloggui
 
 "TrustAtHsH::Irondemo::Modules::StartVisitmetaDataservice":
   alias: StartVisitmetaDataservice
@@ -234,6 +240,12 @@
   config:
     ifmap-user: door
     ifmap-pass: door
+
+"TrustAtHsH::Irondemo::Modules::IcsGraph":
+  alias: IcsGraph
+  config:
+    ifmap-user: test
+    ifmap-pass: test
 
 "SIMU::SIT::Irondemo::Modules::DoorClosedEvent":
   alias: DoorClosedEvent

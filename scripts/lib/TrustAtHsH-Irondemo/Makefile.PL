@@ -36,6 +36,7 @@ requires 'Archive::Extract';
 requires 'Storable';
 requires 'YAML';
 requires 'Time::HiRes';
+requires 'Path::Tiny';
 
 auto_install;
 

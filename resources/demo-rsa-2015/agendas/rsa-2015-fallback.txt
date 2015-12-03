@@ -1,12 +1,14 @@
 At 0 do StartIrond();
 
-At 3 do StartVisitmetaDataservice();
+At 2 do StartVisitmetaDataservice();
 
-At 4 do Break();
+At 3 do Break();
 
-At 5 do StartVisitmetaGUI();
+At 4 do StartVisitmetaGUI();
 
-At 6 do Break();
+At 5 do Break();
+
+At 6 do StartIronloggui();
 
 At 7 do InitVulnerableInfrastructure(
 	discoverer => nmap,

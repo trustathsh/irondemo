@@ -1,6 +1,6 @@
 package TrustAtHsH::Irondemo;
 
-use 5.006;
+use 5.16.0;
 use strict;
 use warnings;
 
@@ -24,7 +24,7 @@ use Time::HiRes qw/time sleep/;
 use File::Slurp qw/read_file/;
 
 
-our $VERSION = '0.51';
+our $VERSION = '0.61';
 my $VERBOSE  = 1;
 my $log      = Log::Log4perl->get_logger();
 
@@ -181,7 +181,8 @@ sub build_project {
 		}
 		for my $command (@commands) {
 			$return_val |= system($command);
-		}
+		}	
+		
 	} else {
 		$log->debug("Source directory not found, doing nothing. \n");
 		$return_val = -1;
@@ -220,7 +221,7 @@ sub build_scenario {
 	#make sure scenario dir exists
 	if ( -d $scenario_dir ) {
 		$log->info("Scenario dir $scenario_dir exists. Doing nothing.");
-		return 0;
+		return 2;
 	} else {
 		mkdir($scenario_dir);
 	}

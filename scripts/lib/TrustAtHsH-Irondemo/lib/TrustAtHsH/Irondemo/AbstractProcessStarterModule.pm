@@ -1,14 +1,17 @@
 package TrustAtHsH::Irondemo::AbstractProcessStarterModule;
 
-use 5.006;
+use 5.16.0;
 use strict;
 use warnings;
 use Carp qw(croak);
 use File::Temp qw/tempfile/;
 use File::Spec;
+use Path::Tiny;
 use lib '../../';
 use TrustAtHsH::Irondemo::Config;
 use parent 'TrustAtHsH::Irondemo::AbstractModule';
+
+my @EXPORT = qw(_getIronName);
 
 my @REQUIRED_ARGS;
 
@@ -25,13 +28,19 @@ sub start_process {
 	my $dir_pidfiles = TrustAtHsH::Irondemo::Config->instance->get_pid_dir();
 	my ($fh_pidfile, $pidfile)  = tempfile( DIR => $dir_pidfiles, SUFFIX => '.pid' );
 	my $pid          = fork();
+	
 
 	if ( !defined $pid ) {    # Unable to fork
 		croak("ERROR: Could not fork: $!\n");
 	}
-	elsif ( $pid == 0 ) {     # Child
-		open( STDOUT, '>', File::Spec->devnull ) or croak( "Could not re-open STDOUT. Aborting." );
-		open( STDERR, '>', File::Spec->devnull ) or croak( "Could not re-open STDERR. Aborting." );
+	elsif ( $pid == 0 ) {     # Child	
+		my $parentPath = path($command)->parent;	
+		my $logFileName = $self->_getIronName();
+ 		$logFileName = $logFileName . "-IrondemoLog.txt";
+ 		my $logFilePath = path($parentPath)->child($logFileName);
+	
+		open( STDOUT, '>', $logFilePath ) or croak( "Could not re-open STDOUT. Aborting." );
+		open( STDERR, '>>', $logFilePath ) or croak( "Could not re-open STDERR. Aborting." );
 		exec( $command, @args ) or croak( "Could not execute " . $command . ". Aborting." );
 	}
 	else {                    # Parent
@@ -70,5 +79,12 @@ sub get_required_arguments {
 
 	return @REQUIRED_ARGS;
 }
+
+### INTERNAL UTILITY ###
+# Purpose     : get the name of the iron component to start
+# Returns     : name of component
+# Parameters  :
+# Comments    :
+sub _getIronName { croak 'You must override _getIronName() in a subclass' }
 
 1;
