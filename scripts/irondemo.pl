@@ -16,7 +16,7 @@ use Log::Log4perl qw/:easy/;
 
 use Data::Dumper;
 
-our $VERSION = '0.60';
+our $VERSION = '0.61';
 
 my $log = Log::Log4perl->get_logger();
 
