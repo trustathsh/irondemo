@@ -1,5 +1,17 @@
 # 10x Devices connect and 10x users login
 # ---------------------------------------
+StartIrond();
+
+StartVisitmetaDataservice();
+
+Break();
+
+StartVisitmetaGUI();
+
+StartIronloggui();
+
+Break();
+
 DeviceConnects(
 	pdp => freeradius-pdp,
 	access-request => 190,

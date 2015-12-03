@@ -1,3 +1,15 @@
+StartIrond();
+
+StartVisitmetaDataservice();
+
+Break();
+
+StartVisitmetaGUI();
+
+StartIronloggui();
+
+Break();
+
 InitPdpInfrastructure(
 	pdp => freeradius-pdp,
 	pdp-ip-address => 192.168.0.6,
@@ -71,3 +83,4 @@ LoginSuccess(
 	device => ssh-server,
 	host => server01);
 	
+Break();
