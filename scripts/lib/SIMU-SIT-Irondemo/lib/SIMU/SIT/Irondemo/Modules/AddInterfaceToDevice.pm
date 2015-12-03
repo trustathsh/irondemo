@@ -1,6 +1,6 @@
 package SIMU::SIT::Irondemo::Modules::AddInterfaceToDevice;
 
-use 5.006;
+use 5.16.0;
 use strict;
 use warnings;
 use Carp qw(croak);
