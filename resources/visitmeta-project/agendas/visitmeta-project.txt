@@ -1,6 +1,16 @@
 # cebit-2014 demo
 
-At 1 do InitPdpInfrastructure(
+At 0 do StartIrond();
+
+At 2 do StartVisitmetaDataservice();
+
+At 4 do StartVisitmetaGUI();
+
+At 5 do StartIronloggui();
+
+At 6 do Break();
+
+At 7 do InitPdpInfrastructure(
 	pdp => freeradius-pdp,
 	pdp-ip-address => 10.0.0.6,
 	iptables => iptables,

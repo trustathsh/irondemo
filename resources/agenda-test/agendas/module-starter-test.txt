@@ -1,10 +1,12 @@
 At 0 do StartIrond();
 
-At 3 do StartVisitmetaDataservice();
+At 1 do StartVisitmetaDataservice();
 
 At 3 do StartIrongui();
 
-At 6 do StartVisitmetaGUI();
+At 3 do StartVisitmetaGUI();
+
+At 6 do StartIronloggui();
 
 At 7 do Break();
 

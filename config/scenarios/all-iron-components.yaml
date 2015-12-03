@@ -12,4 +12,4 @@ projects:
   - id: irongenlog
   - id: irongpm
   - id: ironnmap
-
+  - id: ironloggui

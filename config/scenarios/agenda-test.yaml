@@ -3,6 +3,7 @@ projects:
   - id: irond
   - id: irongui
   - id: visitmeta
+  - id: ironloggui
 
 files:
   - source: agendas/generated-agenda-seq.txt

@@ -1,28 +1,38 @@
-At 0 do DiscoveredBy(
+At 0 do StartIrond();
+
+At 2 do StartVisitmetaDataservice();
+
+At 4 do StartVisitmetaGUI();
+
+At 5 do StartIronloggui();
+
+At 6 do Break();
+
+At 7 do DiscoveredBy(
 	device => io-tool,
 	id-type => ipv4,
 	identifier => 10.0.0.6);
 	
-At 2 do DiscoveredBy(
+At 9 do DiscoveredBy(
 	device => io-tool,
 	id-type => ipv4,
 	identifier => 10.0.0.10);
 
-At 5 do ServiceIp(
+At 12 do ServiceIp(
 	service => nac, 
 	service-ip => 10.0.0.6,
 	host => macmon-nac,
 	device => macmon-nac,
 	port => 1234);
 
-At 7 do ServiceIp(
+At 14 do ServiceIp(
 	service => ssh, 
 	service-ip => 10.0.0.10,
 	host => server01,
 	port => 22,
 	device => server01);
 	
-At 11 do ImplementationVulnerability(
+At 18 do ImplementationVulnerability(
 	service => ssh,
 	host => server01,
 	port => 22,
@@ -32,7 +42,7 @@ At 11 do ImplementationVulnerability(
 	vuln-id => CVE-2001-0572,
 	vuln-severity => 7.5);
 
-At 20 do DeviceConnects(
+At 27 do DeviceConnects(
 	access-request => ar:1,
 	pdp => macmon-nac,
 	mac => 00:11:22:33:44:55,
@@ -40,12 +50,12 @@ At 20 do DeviceConnects(
 	device => laptop01,
 	device-attribute => anti-virus-running);
 
-At 21 do UserLogin(
+At 28 do UserLogin(
 	name => Max Mustermann,
 	access-request => ar:1,
 	role => employee);
 
-At 35 do AttackDetected(
+At 42 do AttackDetected(
 	service => ssh,
 	host => server01,
 	port => 22,
@@ -55,12 +65,12 @@ At 35 do AttackDetected(
 	ref-id => CVE-2001-0572,
 	comment => EXPLOIT ssh CRC32 overflow );
 
-At 45 do UserLogout(
+At 52 do UserLogout(
 	name => Max Mustermann,
 	access-request => ar:1,
 	role => employee);
 
-At 46 do DeviceDisconnects(
+At 53 do DeviceDisconnects(
 	access-request => ar:1,
 	pdp => macmon-nac,
 	mac => 00:11:22:33:44:55,
@@ -68,7 +78,7 @@ At 46 do DeviceDisconnects(
 	device => laptop01,
 	device-attribute => anti-virus-running);
 
-At 56 do  LoginFailed(
+At 63 do  LoginFailed(
 	user-login => Max Mustermann,
 	user-ip => 10.0.0.17,
 	cred => Password,
@@ -80,13 +90,13 @@ At 56 do  LoginFailed(
 	device => macmon-nac,
 	host => macmon-nac);
 
-At 57 do Break();
+At 64 do Break();
 
-At 60 do PurgeMetadata(
+At 67 do PurgeMetadata(
 	ifmap-user => test,
 	ifmap-pass => test);
-At 60 do PurgeMetadata(
+At 67 do PurgeMetadata(
 	ifmap-user => dhcp,
 	ifmap-pass => dhcp);
 
-At 65 do Nothing();
+At 72 do Nothing();

@@ -2,6 +2,7 @@ projects:
   - id: ifmapcli
   - id: irond
   - id: visitmeta
+  - id: ironloggui
 
 files:
   - source: agendas/ext-ifmapcli.txt

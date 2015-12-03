@@ -8,6 +8,10 @@ At 5 do StartVisitmetaGUI();
 
 At 6 do Break();
 
+At 7 do StartIronloggui();
+
+At 8 do Break();
+
 At 9 do IcsGraph();
 	
 	

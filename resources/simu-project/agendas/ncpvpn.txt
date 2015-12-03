@@ -1,4 +1,3 @@
-
 At 1 do AccessrequestNCP(
 	access-request => ncp-vpn:03,
 	device => NCP_SES,
