@@ -1,0 +1,246 @@
+At 0 do StartIrond();
+
+At 2 do StartVisitmetaDataservice();
+
+At 3 do Break(message => Done - MAP Server and VisITMeta Dataservice started - Next - VisITMeta GUI and ironloggui);
+
+At 4 do StartVisitmetaGUI();
+
+At 5 do StartIronloggui();
+
+At 6 do Break(message => Next: infrastructure with vulnerable service is published);
+
+At 7 do DeviceIp(
+	mode => update,
+	device => nmap,
+	ip-address => 10.10.10.5,
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+
+At 8 do InitVulnerableInfrastructure(
+	discoverer => nmap,
+	service-type => ssh,
+	service-name => ssh-server01,
+	service-ip => 10.10.10.5,
+	service-port => 22,
+	impl-name => openssh,
+	impl-version => 6.6,
+	vulnerability-type => CVE,
+	vulnerability-value => CVE-ID-392474,
+	vulnerability-severity => 100);
+
+At 9 do DeviceIp(
+	mode => update,
+	device => ssh-server,
+	ip-address => 10.10.10.5,
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+	
+At 10 do ServiceIp(
+	service => web-server,
+	service-ip => 10.10.10.10,
+	device => web,
+	host => apache,
+	port => 80);
+
+At 11 do DeviceIp(
+	mode => update,
+	device => web,
+	ip-address => 10.10.10.10,
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+	
+At 12 do DeviceIp(
+	mode => update,
+	device => nmap,
+	ip-address => 10.10.10.10,
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+	
+At 13 do ServiceIp(
+	service => database-server,
+	service-ip => 10.10.10.11,
+	device => database,
+	host => mysql,
+	port => 90);
+	
+At 14 do DeviceIp(
+	mode => update,
+	device => database,
+	ip-address => 10.10.10.11,
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+	
+At 15 do DeviceIp(
+	mode => update,
+	device => nmap,
+	ip-address => 10.10.10.11,
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+
+At 16 do ServiceIp(
+	service => mail-server,
+	service-ip => 10.10.10.12,
+	device => mail,
+	host => sentmail,
+	port => 993);
+	
+At 17 do DeviceIp(
+	mode => update,
+	device => mail,
+	ip-address => 10.10.10.12,
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+
+At 18 do DeviceIp(
+	mode => update,
+	device => nmap,
+	ip-address => 10.10.10.12,
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+
+At 19 do Break(message => Next: 5 Devices connect and 5 Users log in);
+
+At 20 do DeviceConnects(
+	access-request => ar:1,
+	pdp => radius,
+	mac => aa:bb:cc:dd:ee:aa,
+	ip-address => 10.10.10.234,
+	ifmap-user-pdp => radius,
+	ifmap-pass-pdp => radius,
+	ifmap-user-dhcp => dhcp,
+	ifmap-pass-dhcp => dhcp);
+	
+At 21 do UserLogin(
+	name => John Doe,
+	access-request => ar:1,
+	role => employee,
+	ifmap-user => radius,
+	ifmap-pass => radius);
+	
+At 22 do DeviceConnects(
+	access-request => ar:2,
+	pdp => radius,
+	mac => aa:bb:cc:dd:ee:bb,
+	ip-address => 10.10.10.235,
+	ifmap-user-pdp => radius,
+	ifmap-pass-pdp => radius,
+	ifmap-user-dhcp => dhcp,
+	ifmap-pass-dhcp => dhcp);
+	
+At 23 do UserLogin(
+	name => Steve,
+	access-request => ar:2,
+	role => employee,
+	ifmap-user => radius,
+	ifmap-pass => radius);
+	
+At 24 do DeviceConnects(
+	access-request => ar:3,
+	pdp => radius,
+	mac => aa:bb:cc:dd:ee:cc,
+	ip-address => 10.10.10.236,
+	ifmap-user-pdp => radius,
+	ifmap-pass-pdp => radius,
+	ifmap-user-dhcp => dhcp,
+	ifmap-pass-dhcp => dhcp);
+	
+At 25 do UserLogin(
+	name => Alan,
+	access-request => ar:3,
+	role => employee,
+	ifmap-user => radius,
+	ifmap-pass => radius);
+
+At 26 do DeviceConnects(
+	access-request => ar:4,
+	pdp => radius,
+	mac => aa:bb:cc:dd:ee:dd,
+	ip-address => 10.10.10.237,
+	ifmap-user-pdp => radius,
+	ifmap-pass-pdp => radius,
+	ifmap-user-dhcp => dhcp,
+	ifmap-pass-dhcp => dhcp);
+	
+At 27 do UserLogin(
+	name => Marvin,
+	access-request => ar:4,
+	role => employee,
+	ifmap-user => radius,
+	ifmap-pass => radius);
+	
+At 28 do DeviceConnects(
+	access-request => ar:5,
+	pdp => radius,
+	mac => aa:bb:cc:dd:ee:ff,
+	ip-address => 10.10.10.238,
+	ifmap-user-pdp => radius,
+	ifmap-pass-pdp => radius,
+	ifmap-user-dhcp => dhcp,
+	ifmap-pass-dhcp => dhcp);
+	
+At 29 do UserLogin(
+	name => John Smith,
+	access-request => ar:5,
+	role => employee,
+	ifmap-user => radius,
+	ifmap-pass => radius);
+
+At 30 do Break(message => Next: Attack from IP .234 on ssh-server01);
+
+At 31 do AttackDetected(
+	service => ssh,
+	host => ssh-server01,
+	port => 22,
+	source-ip => 10.10.10.234,
+	rule => 1324:6,
+	ref-type => CVE,
+	ref-id => CVE-ID-392474,
+	severity => 100,
+	ifmap-user => snort,
+	ifmap-pass => snort);
+
+At 32 do Break(message => Next: Attack is detected by GPM);
+
+At 33 do VulnerabilityDetected(
+	ip-address => 10.10.10.234,
+	event-name => attack-detected on vulnerable server,
+	discoverer-id => gpm,
+	ifmap-user => gpm,
+	ifmap-pass => gpm);
+	
+At 34 do Break(message => Next: Radius puts Attacker into quarantine state);
+
+At 35 do EnforcementAction(
+	pep-device => radius,
+	ip-address => 10.10.10.234,
+	type => quarantine);
+
+At 36 do Break(message => All done - next is purging all metadata);
+
+At 37 do PurgeMetadata(
+	ifmap-user => radius,
+	ifmap-pass => radius);
+At 37 do PurgeMetadata(
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+At 37 do PurgeMetadata(
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas);
+At 37 do PurgeMetadata(
+	ifmap-user => snort,
+	ifmap-pass => snort);
+At 37 do PurgeMetadata(
+	ifmap-user => gpm,
+	ifmap-pass => gpm);
+At 37 do PurgeMetadata(
+	ifmap-user => test,
+	ifmap-pass => test);
+At 37 do PurgeMetadata(
+	ifmap-user => iptables,
+	ifmap-pass => iptables);
+At 37 do PurgeMetadata(
+	ifmap-user => dhcp,
+	ifmap-pass => dhcp);
+
+At 38 do Break(message => Scenario is finished);
