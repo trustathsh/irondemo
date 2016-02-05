@@ -173,6 +173,9 @@ color:
   nmap-b3c9d2fe-00d9-47ef-9701-5ffe51a4dab4:
     inside: '0xffcc00'
     outside: '0xffcc00'
+  ironcontrol-5580e5d4-1877-4fb3-8daa-0ff12e9881c4:
+    inside: '0xffcc00'
+    outside: '0xffcc00'   
   radius-d240c2ae-1223-4dfa-acf9-7002f9227be7:
     inside: '0xF7F4AD'
     outside: '0xF7F4AD'
