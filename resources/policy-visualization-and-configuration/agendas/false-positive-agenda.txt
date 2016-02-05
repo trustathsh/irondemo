@@ -1,0 +1,69 @@
+#java -jar auth-by.jar update ar1 freeradius-pdp
+#java -jar ar-dev.jar update ar1 dev1
+#java -jar featureSingle.jar update smartphone.android.app.name qualified WrongAppName dev1
+#java -jar featureSingle.jar update smartphone.android.app.name qualified TestAppName dev1
+
+At 0 do StartIrond();
+
+At 2 do StartVisitmetaDataservice();
+
+At 3 do Break(message => Done - MAP Server and VisITMeta Dataservice started - Next - VisITMeta GUI and irondetect and ironloggui);
+
+At 4 do StartVisitmetaGUI();
+
+At 5 do StartIrondetect();
+
+At 6 do StartIronloggui();
+
+At 7 do Break(message => Next - Smartphone device connects);
+
+At 8 do DeviceConnects(
+	access-request => ar:1,
+	pdp => freeradius-pdp,
+	mac => aa:bb:cc:dd:ee:ff,
+	ip-address => 10.10.10.234,
+	device => Google Nexus,
+	ifmap-user-pdp => radius,
+	ifmap-pass-pdp => radius,
+	ifmap-user-dhcp => dhcp,
+	ifmap-pass-dhcp => dhcp);
+
+At 9 do Break(message => Next - App on Smartphone is detected);
+
+At 10 do SingleSmartphoneFeatureDetected(
+	device => Google Nexus,
+	access-request => ar:1,
+	feature-id => smartphone.android.app.name,
+	feature-type => qualified,
+	feature-value => TestAppName,
+	ifmap-user => ironcontrol,
+	ifmap-pass => ironcontrol);
+
+At 11 do Break(message => Next - Purge all data);
+
+At 12 do PurgeMetadata(
+	ifmap-user => radius,
+	ifmap-pass => radius);
+At 12 do PurgeMetadata(
+	ifmap-user => iptables,
+	ifmap-pass => iptables);
+At 12 do PurgeMetadata(
+	ifmap-user => ironcontrol,
+	ifmap-pass => ironcontrol);
+At 12 do PurgeMetadata(
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+At 12 do PurgeMetadata(
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas);
+At 12 do PurgeMetadata(
+	ifmap-user => snort,
+	ifmap-pass => snort);
+At 12 do PurgeMetadata(
+	ifmap-user => dhcp,
+	ifmap-pass => dhcp);
+At 12 do PurgeMetadata(
+	ifmap-user => test,
+	ifmap-pass => test);
+
+At 13 do Break(message => Agenda finished);

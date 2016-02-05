@@ -1,0 +1,27 @@
+context {
+
+}
+
+hint {
+
+}
+ 
+anomaly {
+
+}
+
+signature {
+     testSignature := "smartphone.android.app.Name" = "TestAppName";
+}
+
+condition {
+     testCondition := testSignature;
+}
+
+action {
+     testAction := "Action" "Enforcement";
+}
+
+rule {
+     testRule := if testCondition do testAction;
+}
