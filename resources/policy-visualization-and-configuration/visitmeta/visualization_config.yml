@@ -136,6 +136,10 @@ color:
     selected: '0xCEB100'
     search: '0x88A538'
     mouseover: '0x708090'
+    blank: '0xFFFFFF'
+    highlight:
+      value: '0xFF0000'
+      typenames: policy-action
   identifier:
     access-request:
       text: '0x000000'
