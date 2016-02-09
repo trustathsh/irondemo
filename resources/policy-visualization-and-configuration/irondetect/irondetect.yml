@@ -50,6 +50,8 @@ irondetect:
   policy:
     # Filename of the policy
     filename: /policy/policy.pol
+    # Subscribe to graph changes of policy
+    reloadfromgraph: true
   procedures:
     # Directory for procedure JARs
     directory: procedures

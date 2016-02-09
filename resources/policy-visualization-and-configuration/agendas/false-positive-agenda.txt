@@ -35,35 +35,46 @@ At 10 do SingleSmartphoneFeatureDetected(
 	access-request => ar:1,
 	feature-id => smartphone.android.app.name,
 	feature-type => qualified,
+	feature-value => WrongAppName,
+	ifmap-user => ironcontrol,
+	ifmap-pass => ironcontrol);
+
+At 11 do Break(message => Next - Publish feature again);
+
+At 12 do SingleSmartphoneFeatureDetected(
+	device => Google Nexus,
+	access-request => ar:1,
+	feature-id => smartphone.android.app.name,
+	feature-type => qualified,
 	feature-value => TestAppName,
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
-At 11 do Break(message => Next - Purge all data);
+At 13 do Break(message => Next - Purge all data);
 
-At 12 do PurgeMetadata(
+At 14 do PurgeMetadata(
 	ifmap-user => radius,
 	ifmap-pass => radius);
-At 12 do PurgeMetadata(
+At 14 do PurgeMetadata(
 	ifmap-user => iptables,
 	ifmap-pass => iptables);
-At 12 do PurgeMetadata(
+At 14 do PurgeMetadata(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
-At 12 do PurgeMetadata(
+At 14 do PurgeMetadata(
 	ifmap-user => nmap,
 	ifmap-pass => nmap);
-At 12 do PurgeMetadata(
+At 14 do PurgeMetadata(
 	ifmap-user => ironvas,
 	ifmap-pass => ironvas);
-At 12 do PurgeMetadata(
+At 14 do PurgeMetadata(
 	ifmap-user => snort,
 	ifmap-pass => snort);
-At 12 do PurgeMetadata(
+At 14 do PurgeMetadata(
 	ifmap-user => dhcp,
 	ifmap-pass => dhcp);
-At 12 do PurgeMetadata(
+At 14 do PurgeMetadata(
 	ifmap-user => test,
 	ifmap-pass => test);
 
-At 13 do Break(message => Agenda finished);
+At 15 do Break(message => Agenda finished);

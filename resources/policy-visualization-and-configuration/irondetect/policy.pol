@@ -11,7 +11,8 @@ anomaly {
 }
 
 signature {
-     testSignature := "smartphone.android.app.Name" = "TestAppName";
+#     testSignature := "smartphone.android.app.Name" = "TestAppName";
+     testSignature := "smartphone.android.app.Name" = "WrongAppName";
 }
 
 condition {

@@ -27,7 +27,7 @@ visualization:
       # URL of the VisITMeta dataservice REST service
       url: http://localhost:8000
       # Connection name that is used to retrieve JSON graph data
-      connectionname: localMAPServer
+      connectionname: default
   network:
     # The time interval (milliseconds) to request the dataservice for new changes.
     interval: 10000
@@ -63,7 +63,7 @@ visualization:
       style: COMPACT
       # If true, the prefix 'extended identifier: ' is shown before the actual name of an extended identifier.
       # This is not supported by all styles. 
-      showextendedidentifierprefix: true
+      showextendedidentifierprefix: false
     node:
       # Sets the geometric style of identifier nodes; possible values are:
       # RECTANGLES_WITH_ROUNDED_CORNERS
@@ -139,7 +139,7 @@ color:
     blank: '0xFFFFFF'
     highlight:
       value: '0xFF0000'
-      typenames: policy-action
+      typenames: policy-action,policy-feature
   identifier:
     access-request:
       text: '0x000000'
