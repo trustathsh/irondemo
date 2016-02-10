@@ -30,19 +30,19 @@ visualization:
       connectionname: default
   network:
     # The time interval (milliseconds) to request the dataservice for new changes.
-    interval: 10000
+    interval: 5000
   calculation:
     # The time interval (milliseconds) to recalculate the position of the nodes.
-    interval: 5000
+    interval: 3000
     # Count of Iterations for the position calculation of the nodes.
     iterations: 100
   highlights:
     # Timeout (milliseconds) to show the highlights for new and deleted nodes.
-    timeout: 5000
+    timeout: 3000
   node:
     translation:
       # The animation time for the translation of a node to the new position.
-      duration: 3000
+      duration: 2000
     information:
       # Sets the style for detailed node information when a node is selected
       # Possible values are:
@@ -60,7 +60,7 @@ visualization:
       # COMPACT:     a style that tries to use a single line, but will use
       #              additional lines when necessary and useful (for example
       #              for Extended Identifiers)
-      style: COMPACT
+      style: POLICY_COMPACT
       # If true, the prefix 'extended identifier: ' is shown before the actual name of an extended identifier.
       # This is not supported by all styles. 
       showextendedidentifierprefix: false
@@ -77,7 +77,7 @@ visualization:
       # SINGLE_LINE:    just the typename of the metadata is used
       # WITH_TIMESTAMP: adds a line with the publisher timestamp to the typename
       # COMPACT:        further information on additional lines
-      style: COMPACT
+      style: POLICY_COMPACT
     node:
       # Sets the geometric style of identifier nodes; possible values are:
       # RECTANGLES_WITH_ROUNDED_CORNERS
