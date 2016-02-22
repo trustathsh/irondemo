@@ -8,6 +8,8 @@ projects:
 files:
   - source: agendas/false-positive-agenda.txt
     destination: /
+  - source: agendas/false-positive-agenda-without-infrastructure.txt
+    destination: /
   - source: irond/basicauthusers.properties
     destination: /irond
   - source: irond/publisher.properties

@@ -11,18 +11,18 @@ anomaly {
 }
 
 signature {
-#     testSignature := "smartphone.android.app.Name" = "TestAppName";
-     testSignature := "smartphone.android.app.Name" = "WrongAppName";
+     maliciousApp := "smartphone.android.app.Name" = "Benign App";
+     openPortForSshServerFound := "vulnerability-scan-result.vulnerability.Port" = "22";
 }
 
 condition {
-     testCondition := testSignature;
+     maliciousAppWithSshServer := maliciousApp and openPortForSshServerFound;
 }
 
 action {
-     testAction := "Action" "Enforcement";
+     reactionToSshServerOnSmartphone := "Action" "Alert Administrator";
 }
 
 rule {
-     testRule := if testCondition do testAction;
+     sshServerOnSmartphone := if maliciousAppWithSshServer do reactionToSshServerOnSmartphone;
 }

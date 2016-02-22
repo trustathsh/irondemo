@@ -1,18 +1,6 @@
-At 0 do StartIrond();
+At 1 do Break(message => Next - Smartphone device connects);
 
-At 2 do StartVisitmetaDataservice();
-
-At 3 do Break(message => Done - MAP Server and VisITMeta Dataservice started - Next - VisITMeta GUI and irondetect and ironloggui);
-
-At 4 do StartVisitmetaGUI();
-
-At 5 do StartIrondetect();
-
-At 6 do StartIronloggui();
-
-At 7 do Break(message => Next - Smartphone device connects);
-
-At 8 do DeviceConnects(
+At 2 do DeviceConnects(
 	access-request => ar:1,
 	pdp => freeradius-pdp,
 	mac => aa:bb:cc:dd:ee:ff,
@@ -23,9 +11,9 @@ At 8 do DeviceConnects(
 	ifmap-user-dhcp => dhcp,
 	ifmap-pass-dhcp => dhcp);
 
-At 9 do Break(message => Next - App on Smartphone is detected);
+At 3 do Break(message => Next - App on Smartphone is detected);
 
-At 10 do SingleSmartphoneFeatureDetected(
+At 4 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => smartphone.android.app.name,
@@ -34,9 +22,9 @@ At 10 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
-At 11 do Break(message => Next - Open port on Smartphone is detected);
+At 5 do Break(message => Next - Open port on Smartphone is detected);
 
-At 12 do SingleSmartphoneFeatureDetected(
+At 6 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => vulnerability-scan-result.vulnerability:1.Port,
@@ -45,7 +33,7 @@ At 12 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironvas,
 	ifmap-pass => ironvas);
 
-At 13 do SingleSmartphoneFeatureDetected(
+At 7 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => vulnerability-scan-result.vulnerability:1.Name,
@@ -54,9 +42,9 @@ At 13 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironvas,
 	ifmap-pass => ironvas);
 
-At 14 do Break(message => Next - Publish smartphone feature again);
+At 8 do Break(message => Next - Publish smartphone feature again);
 
-At 15 do SingleSmartphoneFeatureDetected(
+At 9 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => smartphone.android.app.name,
@@ -65,31 +53,31 @@ At 15 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
-At 16 do Break(message => Next - Purge all data);
+At 10 do Break(message => Next - Purge all data);
 
-At 17 do PurgeMetadata(
+At 11 do PurgeMetadata(
 	ifmap-user => radius,
 	ifmap-pass => radius);
-At 17 do PurgeMetadata(
+At 11 do PurgeMetadata(
 	ifmap-user => iptables,
 	ifmap-pass => iptables);
-At 17 do PurgeMetadata(
+At 11 do PurgeMetadata(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
-At 17 do PurgeMetadata(
+At 11 do PurgeMetadata(
 	ifmap-user => nmap,
 	ifmap-pass => nmap);
-At 17 do PurgeMetadata(
+At 11 do PurgeMetadata(
 	ifmap-user => ironvas,
 	ifmap-pass => ironvas);
-At 17 do PurgeMetadata(
+At 11 do PurgeMetadata(
 	ifmap-user => snort,
 	ifmap-pass => snort);
-At 17 do PurgeMetadata(
+At 11 do PurgeMetadata(
 	ifmap-user => dhcp,
 	ifmap-pass => dhcp);
-At 17 do PurgeMetadata(
+At 11 do PurgeMetadata(
 	ifmap-user => test,
 	ifmap-pass => test);
 
-At 18 do Break(message => Agenda finished);
+At 12 do Break(message => Agenda finished);
