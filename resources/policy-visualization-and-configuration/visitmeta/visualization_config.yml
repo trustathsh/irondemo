@@ -139,7 +139,7 @@ color:
     blank: '0xFFFFFF'
     highlight:
       value: '0xFF0000'
-      typenames: policy-action,policy-feature
+      typenames: policy-action,policy-feature,policy-evaluation,policy-partial-result
   identifier:
     access-request:
       text: '0x000000'

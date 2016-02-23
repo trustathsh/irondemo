@@ -11,7 +11,7 @@ anomaly {
 }
 
 signature {
-     maliciousApp := "smartphone.android.app.Name" = "Benign App";
+     maliciousApp := "smartphone.android.app.Name" = "BenignApp";
      openPortForSshServerFound := "vulnerability-scan-result.vulnerability.Port" = "22";
 }
 

@@ -30,7 +30,7 @@ At 10 do SingleSmartphoneFeatureDetected(
 	access-request => ar:1,
 	feature-id => smartphone.android.app.name,
 	feature-type => qualified,
-	feature-value => Benign App,
+	feature-value => BenignApp,
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
@@ -61,7 +61,7 @@ At 15 do SingleSmartphoneFeatureDetected(
 	access-request => ar:1,
 	feature-id => smartphone.android.app.name,
 	feature-type => qualified,
-	feature-value => Benign App,
+	feature-value => BenignApp,
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 

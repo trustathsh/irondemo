@@ -18,7 +18,7 @@ At 4 do SingleSmartphoneFeatureDetected(
 	access-request => ar:1,
 	feature-id => smartphone.android.app.name,
 	feature-type => qualified,
-	feature-value => Benign App,
+	feature-value => BenignApp,
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
@@ -27,7 +27,7 @@ At 5 do Break(message => Next - Open port on Smartphone is detected);
 At 6 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
-	feature-id => vulnerability-scan-result.vulnerability:1.Port,
+	feature-id => vulnerability-scan-result.vulnerability.Port,
 	feature-type => qualified,
 	feature-value => 22,
 	ifmap-user => ironvas,
@@ -36,7 +36,7 @@ At 6 do SingleSmartphoneFeatureDetected(
 At 7 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
-	feature-id => vulnerability-scan-result.vulnerability:1.Name,
+	feature-id => vulnerability-scan-result.vulnerability.Name,
 	feature-type => qualified,
 	feature-value => OpenSSH Server v7.1,
 	ifmap-user => ironvas,
@@ -49,7 +49,7 @@ At 9 do SingleSmartphoneFeatureDetected(
 	access-request => ar:1,
 	feature-id => smartphone.android.app.name,
 	feature-type => qualified,
-	feature-value => Benign App,
+	feature-value => BenignApp,
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
