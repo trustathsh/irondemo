@@ -18,11 +18,45 @@ In order to use irondemo, you will need the following software installed on your
 	- File::Basename
 	- Pod::Usage
 
+So, on Ubuntu for example, you could install all prerequisites via
+`$ sudo apt-get install git openjdk-7-jdk maven`
+
+To prepare your Perl installation for later auto-installation of the required CPAN modules, you need to manually install *Module::Install* via
+`$ sudo cpan install Module::Install`
+
 irondemo should work on any unix based system as well as Microsoft Windows. If you experience problems on your platform, please report.
+
+Building & Quick Start
+========
+Download the Git repository for irondemo:
+* `$ git clone https://github.com/trustathsh/irondemo.git`
+
+Install dependencies:
+* `$ sudo apt-get install git openjdk-7-jdk maven`
+* `$ sudo cpan install Module::Install`
+* `$ cd <irondemo root>/scripts/lib/TrustAtHsH-Irondemo/`
+* `$ perl Makefile.PL`
+* `$ make installdeps`
+
+Fetch and build the projects' sources:
+* `$ cd <irondemo root>/scripts/`
+* `$ perl irondemo.pl update_projects`
+* `$ perl irondemo.pl build_projects`
+
+Finally, build all provided scenarios:
+* `$ perl irondemo.pl build_scenarios`
+
+To test if everything works, run a scenario - e.g. **demo-rsa-2015** that comes with an agenda that automatically starts all components - via
+* `$ perl irondemo.pl --agenda=rsa-2015-fallback-biggraph.txt run_scenario demo-rsa-2015`
 
 Structure
 ========
 Irondemo's directory structure is organized as follows:
+* config
+* scripts
+* scenarios
+* resources
+* sources
 
 config/
 -------
@@ -36,6 +70,14 @@ Contains irondemo's project config file **projects.yaml**, that contains instruc
 * irondhcp
 * ironvas
 * visitmeta
+* ironflow
+* ironsyslog
+* irontemplate
+* irondetect
+* irongenlog
+* irongpm
+* ironnmap
+* ironloggui
 
 The **modules.yaml** configuration file contains configuration properties for executable *modules* used in irondemo. Modules define vocabulary to be used in *agendas*, i.e. they carry out operations that you can use to put together a demonstration, simulation, test case ... you name it. You can easily build your own modules, just take a look at our modules in the /scripts/lib/ directory for examples or get in touch if you need help.
 
@@ -57,34 +99,24 @@ sources/
 --------
 Sourcecode and the compiled binaries of projects reside here.
 
-Building
-========
-Download:
-* $ git clone https://github.com/trustatfhh/irondemo.git
-
-Install dependencies:
-* $ sudo cpan install Module::Install
-* $ cd <irondemo root>/scripts/lib/TrustAtHsH-Irondemo/
-* $ perl Makefile.PL
-* $ make installdeps
-
-Fetch and build the projects' sources:
-* $ cd <irondemo root>/scripts/
-* $ perl irondemo.pl update_projects
-* $ perl irondemo.pl build_projects
-
 Using the scenarios
 ===================
-After downloading and compiling the sources, you can build the scenarios. Call `$ irondemo.pl build_scenarios <scenario>` providing the name of the scenario you would like to built (which is identical to the name of its config file without the file ending). The corresponding scenario will be assembled in the scenarios directory.
+After downloading and compiling the sources, you can build the scenarios. To build all scenarios, just call
+`$ perl irondemo.pl build_scenarios`.
+
+If you want to build a single specific scenario, you can call 
+`$ perl irondemo.pl build_scenarios <scenario>`
+providing the name of the scenario you would like to built (which is identical to the name of its config file without the file ending). The corresponding scenario will be assembled in the scenarios directory.
 
 Running a scenario
 ==================
 After building a scenario, you can run an agenda by calling `$ irondemo.pl run_scenario <scenario> --agenda=<filename-of-agenda>`. So if you build a scenario called 'scenario1' and it contains an agenda file called 'agenda.txt', you would start it by calling `$ irondemo.pl run_scenario scenario1 --agenda=agenda.txt`.
-Please note, that you have to start all components needed for your scenario, like MAP server, visualization client etc., by hand from within the scenario folder.
+
+Please note, regarding to the scenarios and the specific agenda, that you *may* have to start all components needed for your scenario, like MAP server, visualization client etc., by hand from within the scenario folder.
 
 Updating the sources
 ====================
-Just re-run the last step of the instructions for building irondemo. This will update the sources and build them. You will need to also rebuilt any scenarios using the projects that got updated if you want them to make use of the new versions.
+Just re-run `update_projects` and `build_projects` again. This will update the sources and build them. You will need to also rebuilt any scenarios using the projects that got updated if you want them to make use of the new versions.
 
 More Information
 ================
@@ -96,7 +128,7 @@ Feel free to get in touch with us at <trust@f4-i.fh-hannover.de> to post feedbac
 
 ---
 
-[1]: https://github.com/trustatfhh/irondemo
+[1]: https://github.com/trustathsh/irondemo
 [git]: http://git-scm.com/
 [java]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
 [maven]: http://maven.apache.org/
