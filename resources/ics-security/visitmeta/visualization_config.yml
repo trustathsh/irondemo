@@ -1,38 +1,117 @@
 visualization:
   connection:
-    default:
-      name: localhost
-      url: http://10.10.10.5:8000
-      rawxml: true
+    # IF-MAP connection settings
+    ifmap:
+      # URL of the MAP server
+      url: http://localhost:8443
+      # username for basic authentication
+      username: visitmeta-publisher
+      # password for basic authentication
+      password: visitmeta-publisher
+      # Truststore configuration
+      truststore:
+        # path and filename of the keystore
+        path: config/visitmeta.jks
+        # password of the keystore
+        password: visitmeta
+      # connection uses a thread-safe SSRC
+      threadsafe: true
+      # initial connection timeout
+      initialconnectiontimeout: 120000
+    # irondetect connection settings
+    irondetect:
+      # URL of the irondetect REST service
+      url: http://localhost:8001
+    # additional connection to a VisITMeta dataservice
+    dataservice:
+      # URL of the VisITMeta dataservice REST service
+      url: http://localhost:8000
+      # Connection name that is used to retrieve JSON graph data
+      connectionname: default
   network:
+    # The time interval (milliseconds) to request the dataservice for new changes.
     interval: 5000
   calculation:
+    # The time interval (milliseconds) to recalculate the position of the nodes.
     interval: 5000
+    # Count of Iterations for the position calculation of the nodes.
     iterations: 100
   highlights:
+    # Timeout (milliseconds) to show the highlights for new and deleted nodes.
     timeout: 5000
   node:
     translation:
-      duration: 3000
+      # The animation time for the translation of a node to the new position.
+      duration: 500
     information:
+      # Sets the style for detailed node information when a node is selected
+      # Possible values are:
+      # XML_BREAKDOWN: breaks down the XML structure of nodes; the encapsulated XML
+      #                of Extended Identifiers will be shown as a sub XML tree
+      # PLAIN_XML:     a simple output of a nodes information, encapsulated XML
+      #                will remain a single String
       style: XML_BREAKDOWN
   identifier:
     text:
-      style: SINGLE_LINE
+      # Sets the text style for identifier nodes; possible values are:
+      # SINGLE_LINE: a minimized style with all information in a single line
+      # MULTI_LINE:  a more detailed style with possibly more information,
+      #              using multiple lines
+      # COMPACT:     a style that tries to use a single line, but will use
+      #              additional lines when necessary and useful (for example
+      #              for Extended Identifiers)
+      style: COMPACT
+      # If true, the prefix 'extended identifier: ' is shown before the actual name of an extended identifier.
+      # This is not supported by all styles. 
+      showextendedidentifierprefix: false
+    node:
+      # Sets the geometric style of identifier nodes; possible values are:
+      # RECTANGLES_WITH_ROUNDED_CORNERS
+      # RECTANGLES_WITH_RECTANGULAR_CORNERS
+      # ELLIPSE
+      # EXAMPLE (shows how different types of identifier/metadata can be rendered differently)
+      style: RECTANGLES_WITH_ROUNDED_CORNERS
   metadata:
     text:
-      style: SINGLE_LINE
+      # Sets the text style for metadata nodes; possible values are:
+      # SINGLE_LINE:    just the typename of the metadata is used
+      # WITH_TIMESTAMP: adds a line with the publisher timestamp to the typename
+      # COMPACT:        further information on additional lines
+      style: COMPACT
+    node:
+      # Sets the geometric style of identifier nodes; possible values are:
+      # RECTANGLES_WITH_ROUNDED_CORNERS
+      # RECTANGLES_WITH_RECTANGULAR_CORNERS
+      # ELLIPSE
+      # EXAMPLE (shows how different types of identifier/metadata can be rendered differently)
+      style: RECTANGLES_WITH_RECTANGULAR_CORNERS
+  edge:
+    # Sets the style of edges; possible values are:
+    # STRAIGHT_LINE
+    # STRAIGHT_DASHED_LINE
+    # ORTHOGONAL_LINE
+    # CURVED_LINE
+    # EXAMPLE (shows how different types of identifier/metadata can be rendered differently)
+    style: STRAIGHT_LINE
   history:
     navigation:
+      # Sets the control mechanism for history navigation; possible values are:
+      # TAB_BASED_NAVIGATION:          uses multiple tabs to switch between
+      #                                live view, history view and delta view
+      # RANGE_SLIDER_BASED_NAVIGATION: uses a slider with two knobs that
+      #                                includes all possible modes
       style: TAB_BASED_NAVIGATION
   searchandfilter:
+    # Sets the search and filtering mechanism; possible values are:
+    # SIMPLE_SEARCH_AND_NO_FILTER: a simple search functionality, using a single textfield
+    #                              and matches every node containing the given 
+    #                              input string
     style: SIMPLE_SEARCH_AND_NO_FILTER
-    transparency: 0.2
-dataservice:
-  connectiontype: rest
+  
 guicontroller:
   zfactor: 0.03
   xyfactor: 20.0
+
 window:
   width: 1280
   height: 720
@@ -40,6 +119,7 @@ window:
   position:
     x: 0
     y: 0
+
 color:
   background: '0xFFFFFF'
   edge: '0x000000'
@@ -53,6 +133,11 @@ color:
     delete: '0xA73946'
     selected: '0xCEB100'
     search: '0x88A538'
+    mouseover: '0x708090'
+    blank: '0xFFFFFF'
+    highlight:
+      value: '0xFF0000'
+      typenames: event,unexpected-behavior
   identifier:
     access-request:
       text: '0x000000'

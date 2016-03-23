@@ -1,9 +1,33 @@
 visualization:
   connection:
-    default:
-      name: localhost
+    # IF-MAP connection settings
+    ifmap:
+      # URL of the MAP server
+      url: http://localhost:8443
+      # username for basic authentication
+      username: visitmeta-publisher
+      # password for basic authentication
+      password: visitmeta-publisher
+      # Truststore configuration
+      truststore:
+        # path and filename of the keystore
+        path: config/visitmeta.jks
+        # password of the keystore
+        password: visitmeta
+      # connection uses a thread-safe SSRC
+      threadsafe: true
+      # initial connection timeout
+      initialconnectiontimeout: 120000
+    # irondetect connection settings
+    irondetect:
+      # URL of the irondetect REST service
+      url: http://localhost:8001
+    # additional connection to a VisITMeta dataservice
+    dataservice:
+      # URL of the VisITMeta dataservice REST service
       url: http://localhost:8000
-      rawxml: true
+      # Connection name that is used to retrieve JSON graph data
+      connectionname: default
   network:
     # The time interval (milliseconds) to request the dataservice for new changes.
     interval: 1000
@@ -19,19 +43,56 @@ visualization:
     translation:
       # The animation time for the translation of a node to the new position.
       duration: 500
+    information:
+      # Sets the style for detailed node information when a node is selected
+      # Possible values are:
+      # XML_BREAKDOWN: breaks down the XML structure of nodes; the encapsulated XML
+      #                of Extended Identifiers will be shown as a sub XML tree
+      # PLAIN_XML:     a simple output of a nodes information, encapsulated XML
+      #                will remain a single String
+      style: XML_BREAKDOWN
   identifier:
     text:
       # Sets the text style for identifier nodes; possible values are:
       # SINGLE_LINE: a minimized style with all information in a single line
       # MULTI_LINE:  a more detailed style with possibly more information,
       #              using multiple lines
-      style: SINGLE_LINE
+      # COMPACT:     a style that tries to use a single line, but will use
+      #              additional lines when necessary and useful (for example
+      #              for Extended Identifiers)
+      style: COMPACT
+      # If true, the prefix 'extended identifier: ' is shown before the actual name of an extended identifier.
+      # This is not supported by all styles. 
+      showextendedidentifierprefix: false
+    node:
+      # Sets the geometric style of identifier nodes; possible values are:
+      # RECTANGLES_WITH_ROUNDED_CORNERS
+      # RECTANGLES_WITH_RECTANGULAR_CORNERS
+      # ELLIPSE
+      # EXAMPLE (shows how different types of identifier/metadata can be rendered differently)
+      style: RECTANGLES_WITH_ROUNDED_CORNERS
   metadata:
     text:
       # Sets the text style for metadata nodes; possible values are:
       # SINGLE_LINE:    just the typename of the metadata is used
       # WITH_TIMESTAMP: adds a line with the publisher timestamp to the typename
-      style: SINGLE_LINE
+      # COMPACT:        further information on additional lines
+      style: COMPACT
+    node:
+      # Sets the geometric style of identifier nodes; possible values are:
+      # RECTANGLES_WITH_ROUNDED_CORNERS
+      # RECTANGLES_WITH_RECTANGULAR_CORNERS
+      # ELLIPSE
+      # EXAMPLE (shows how different types of identifier/metadata can be rendered differently)
+      style: RECTANGLES_WITH_RECTANGULAR_CORNERS
+  edge:
+    # Sets the style of edges; possible values are:
+    # STRAIGHT_LINE
+    # STRAIGHT_DASHED_LINE
+    # ORTHOGONAL_LINE
+    # CURVED_LINE
+    # EXAMPLE (shows how different types of identifier/metadata can be rendered differently)
+    style: STRAIGHT_LINE
   history:
     navigation:
       # Sets the control mechanism for history navigation; possible values are:
@@ -46,9 +107,6 @@ visualization:
     #                              and matches every node containing the given 
     #                              input string
     style: SIMPLE_SEARCH_AND_NO_FILTER
-      
-dataservice:
-  connectiontype: rest
   
 guicontroller:
   zfactor: 0.03
@@ -70,26 +128,16 @@ color:
     inside: '0xFF9966'
     outside: '0xFF9966'
     border: '0x000000'
-  dhcp-4d02574f-888a-4a09-8b6b-a87ae38ce69b:
-    inside: '0x99ccff'
-    outside: '0x99ccff'
-  iptables-d6bd8aff-0036-4fe1-9a22-f8e5984af112:
-    inside: '0xffffcc'
-    outside: '0xffffcc'
-  ironvas-83e0dcd7-4607-46c3-b6e0-8a1ab138b2b9:
-    inside: '0x99ff99'
-    outside: '0x99ff99'
-  pdp-4f00a270-dd47-480c-bd02-e1574dad7e12:
-    inside: '0xcc99ff'
-    outside: '0xcc99ff'
-  test-0eb4f123-605f-4eae-9f35-83c3dea2cdf9:
-    inside: '0xff9999'
-    outside: '0xff9999'
   node:
     new: '0x228B22'
     delete: '0x82150F'
     selected: '0xFFF02E'
     search: '0x228B22'
+    mouseover: '0x708090'
+    blank: '0xFFFFFF'
+    highlight:
+      value: '0xFF0000'
+      typenames: event,unexpected-behavior
   identifier:
     access-request:
       text: '0x000000'
@@ -121,3 +169,18 @@ color:
       inside: '0x9999FF'
       outside: '0x9999FF'
       border: '0x000000'
+  dhcp-4d02574f-888a-4a09-8b6b-a87ae38ce69b:
+    inside: '0x99ccff'
+    outside: '0x99ccff'
+  iptables-d6bd8aff-0036-4fe1-9a22-f8e5984af112:
+    inside: '0xffffcc'
+    outside: '0xffffcc'
+  ironvas-83e0dcd7-4607-46c3-b6e0-8a1ab138b2b9:
+    inside: '0x99ff99'
+    outside: '0x99ff99'
+  pdp-4f00a270-dd47-480c-bd02-e1574dad7e12:
+    inside: '0xcc99ff'
+    outside: '0xcc99ff'
+  test-0eb4f123-605f-4eae-9f35-83c3dea2cdf9:
+    inside: '0xff9999'
+    outside: '0xff9999'

@@ -1,4 +1,33 @@
 visualization:
+  connection:
+    # IF-MAP connection settings
+    ifmap:
+      # URL of the MAP server
+      url: http://localhost:8443
+      # username for basic authentication
+      username: visitmeta-publisher
+      # password for basic authentication
+      password: visitmeta-publisher
+      # Truststore configuration
+      truststore:
+        # path and filename of the keystore
+        path: config/visitmeta.jks
+        # password of the keystore
+        password: visitmeta
+      # connection uses a thread-safe SSRC
+      threadsafe: true
+      # initial connection timeout
+      initialconnectiontimeout: 120000
+    # irondetect connection settings
+    irondetect:
+      # URL of the irondetect REST service
+      url: http://localhost:8001
+    # additional connection to a VisITMeta dataservice
+    dataservice:
+      # URL of the VisITMeta dataservice REST service
+      url: http://localhost:8000
+      # Connection name that is used to retrieve JSON graph data
+      connectionname: default
   network:
     # The time interval (milliseconds) to request the dataservice for new changes.
     interval: 5000
@@ -13,7 +42,7 @@ visualization:
   node:
     translation:
       # The animation time for the translation of a node to the new position.
-      duration: 3000
+      duration: 500
     information:
       # Sets the style for detailed node information when a node is selected
       # Possible values are:
@@ -78,13 +107,11 @@ visualization:
     #                              and matches every node containing the given 
     #                              input string
     style: SIMPLE_SEARCH_AND_NO_FILTER
-    # value in 0.0 to 1.0 for transparency of elements that do not match a search value
-    transparency : 0.2
-dataservice:
-  connectiontype: rest
+  
 guicontroller:
   zfactor: 0.03
   xyfactor: 20.0
+
 window:
   width: 1280
   height: 720
@@ -92,6 +119,7 @@ window:
   position:
     x: 0
     y: 0
+
 color:
   background: '0xFFFFFF'
   edge: '0x000000'
@@ -105,6 +133,11 @@ color:
     delete: '0xA73946'
     selected: '0xCEB100'
     search: '0x88A538'
+    mouseover: '0x708090'
+    blank: '0xFFFFFF'
+    highlight:
+      value: '0xFF0000'
+      typenames: event,unexpected-behavior
   identifier:
     access-request:
       text: '0x000000'

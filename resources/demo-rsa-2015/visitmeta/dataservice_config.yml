@@ -20,7 +20,7 @@ ifmap:
   # default settings for all connections, each connection can set its own settings
   # if a connection has no setting specified, the following settings are used as default
   defaultConnectionSettings:
-    truststorePath: /visitmeta.jks
+    truststorePath: config/visitmeta.jks
     truststorePassword: visitmeta
     maxPollResultSize: 1000000000
     subscriptionMaxDepth: 1000
