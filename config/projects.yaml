@@ -59,7 +59,7 @@ ifmapj:
   build: 
     tool: mvn
     commands:
-      - mvn package
+      - mvn install
 
 ifmapj-examples:
   sources:
@@ -69,6 +69,25 @@ ifmapj-examples:
     tool: mvn
     commands:
       - mvn package
+
+visitmeta:
+  sources:
+    scm: git
+    uri: https://github.com/trustathsh/visitmeta.git
+  build:
+    tool: mvn
+    commands:
+     - mvn install
+  binaries: 
+    archives:
+      - archive:
+        source:
+          path: visitmeta-distribution/target
+          match: visitmeta-distribution-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
+        destination:
+          path: /
+          rename: visitmeta
+  executable_dir: visitmeta
 
 ifmapcli:
   sources:
@@ -164,25 +183,6 @@ ironvas:
           path: /
           rename: ironvas
   executable_dir: ironvas
-
-visitmeta:
-  sources:
-    scm: git
-    uri: https://github.com/trustathsh/visitmeta.git
-  build:
-    tool: mvn
-    commands:
-     - mvn package
-  binaries: 
-    archives:
-      - archive:
-        source:
-          path: visitmeta-distribution/target
-          match: visitmeta-distribution-(\d+\.)?(\d+\.)?(\d+)-bundle\.zip
-        destination:
-          path: /
-          rename: visitmeta
-  executable_dir: visitmeta
 
 ironflow:
   sources:
