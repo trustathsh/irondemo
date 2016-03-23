@@ -24,7 +24,7 @@ use Time::HiRes qw/time sleep/;
 use File::Slurp qw/read_file/;
 
 
-our $VERSION = '0.70';
+our $VERSION = '0.71';
 my $VERBOSE  = 1;
 my $log      = Log::Log4perl->get_logger();
 
