@@ -8,8 +8,6 @@ projects:
 files:
   - source: agendas/ifmap-spec-example.txt
     destination: /
-  - source: irond/basicauthusers.properties
-    destination: /irond
   - source: irongui/irongui.properties
     destination: /irongui
   - source: visitmeta/config/dataservice_connections.yml

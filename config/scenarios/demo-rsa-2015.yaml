@@ -10,8 +10,6 @@ files:
   - source: agendas/rsa-2015-gpm.txt
   - source: agendas/rsa-2015-fallback-biggraph.txt
     destination: /
-  - source: irond/basicauthusers.properties
-    destination: /irond
   - source: irond/publisher.properties
     destination: /irond
   - source: visitmeta/dataservice_connections.yml

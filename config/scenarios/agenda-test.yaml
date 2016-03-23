@@ -18,7 +18,5 @@ files:
     destination: /
   - source: agendas/module-starter-test.txt
     destination: /
-  - source: irond/basicauthusers.properties
-    destination: /irond
   - source: irongui/irongui.properties
     destination: /irongui

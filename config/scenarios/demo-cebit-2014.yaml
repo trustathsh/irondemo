@@ -8,8 +8,6 @@ projects:
 files:
   - source: agendas/cebit-2014.txt
     destination: /
-  - source: irond/basicauthusers.properties
-    destination: /irond
   - source: irongui/irongui.properties
     destination: /irongui
   - source: visitmeta/dataservice_connections.yml

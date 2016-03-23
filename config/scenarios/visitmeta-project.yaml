@@ -7,8 +7,6 @@ projects:
 files:
   - source: agendas/visitmeta-project.txt
     destination: /
-  - source: irond/basicauthusers.properties
-    destination: /irond
   - source: irond/publisher.properties
     destination: /irond
   - source: visitmeta/config/dataservice_connections.yml

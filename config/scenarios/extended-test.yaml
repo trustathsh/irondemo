@@ -7,8 +7,6 @@ projects:
 files:
   - source: agendas/ext-ifmapcli.txt
     destination: /
-  - source: irond/basicauthusers.properties
-    destination: /irond
   - source: irond/ifmap.properties
     destination: /irond
   - source: irond/schema/simu.xsd

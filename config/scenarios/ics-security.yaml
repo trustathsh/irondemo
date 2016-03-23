@@ -7,8 +7,6 @@ projects:
 files:
   - source: agendas/ics-security.txt
     destination: /
-  - source: irond/basicauthusers.properties
-    destination: /irond
   - source: irond/publisher.properties
     destination: /irond
   - source: visitmeta/dataservice_connections.yml
