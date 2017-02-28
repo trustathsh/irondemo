@@ -1,0 +1,87 @@
+At 0 do Break();
+
+At 1 do InitVulnerableInfrastructure(
+	discoverer => nmap,
+	service-type => ssh,
+	service-name => ssh-server01,
+	service-ip => 10.10.10.5,
+	service-port => 22,
+	impl-name => openssh,
+	impl-version => 6.6,
+	vulnerability-type => CVE,
+	vulnerability-value => CVE-ID-392474,
+	vulnerability-severity => 100);
+
+At 2 do DeviceIp(
+	mode => update,
+	device => nmap,
+	ip-address => 10.10.10.5,
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+	
+At 3 do DeviceIp(
+	mode => update,
+	device => radius,
+	ip-address => 10.10.10.5,
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+	
+	
+At 4 do Break();
+
+At 5 do DeviceConnects(
+	access-request => ar:1,
+	pdp => radius,
+	mac => aa:bb:cc:dd:ee:ff,
+	ip-address => 10.10.10.234,
+	ifmap-user-pdp => radius,
+	ifmap-pass-pdp => radius,
+	ifmap-user-dhcp => radius,
+	ifmap-pass-dhcp => radius);
+	
+At 6 do UserLogin(
+	name => John Doe,
+	access-request => ar:1,
+	role => employee,
+	ifmap-user => radius,
+	ifmap-pass => radius);
+
+At 7 do Break();
+
+At 8 do AttackDetected(
+	service => ssh,
+	host => ssh-server01,
+	port => 22,
+	source-ip => 10.10.10.234,
+	rule => 1324:6,
+	ref-type => CVE,
+	ref-id => CVE-ID-392474,
+	severity => 100,
+	ifmap-user => snort,
+	ifmap-pass => snort);
+
+At 9 do Break();
+
+At 10 do PurgeMetadata(
+	ifmap-user => radius,
+	ifmap-pass => radius);
+At 10 do PurgeMetadata(
+	ifmap-user => nmap,
+	ifmap-pass => nmap);
+At 10 do PurgeMetadata(
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas);
+At 10 do PurgeMetadata(
+	ifmap-user => snort,
+	ifmap-pass => snort);
+At 10 do PurgeMetadata(
+	ifmap-user => gpm,
+	ifmap-pass => gpm);
+At 10 do PurgeMetadata(
+	ifmap-user => test,
+	ifmap-pass => test);
+At 10 do PurgeMetadata(
+	ifmap-user => iptables,
+	ifmap-pass => iptables);
+
+At 11 do Break();

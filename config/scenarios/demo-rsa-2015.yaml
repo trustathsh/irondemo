@@ -8,6 +8,7 @@ files:
   - source: agendas/rsa-2015.txt
   - source: agendas/rsa-2015-fallback.txt
   - source: agendas/rsa-2015-gpm.txt
+  - source: agendas/rsa-2015-gpm-without-infrastructure.txt
   - source: agendas/rsa-2015-fallback-biggraph.txt
     destination: /
   - source: irond/publisher.properties
