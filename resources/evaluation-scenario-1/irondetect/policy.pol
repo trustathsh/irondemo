@@ -1,0 +1,28 @@
+context {
+
+}
+
+hint {
+
+}
+ 
+anomaly {
+
+}
+
+signature {
+     maliciousApp := "smartphone.android.app.Name" = "BenignApp";
+     openPortForSshServerFound := "vulnerability-scan-result.vulnerability.Port" = "22";
+}
+
+condition {
+     maliciousAppWithSshServer := maliciousApp and openPortForSshServerFound;
+}
+
+action {
+     reactionToSshServerOnSmartphone := "Action" "Alert Administrator";
+}
+
+rule {
+     sshServerOnSmartphone := if maliciousAppWithSshServer do reactionToSshServerOnSmartphone;
+}

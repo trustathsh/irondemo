@@ -1,0 +1,25 @@
+projects:
+  - id: ifmapcli
+  - id: irond
+  - id: visitmeta
+  - id: irondetect
+  - id: irongpm
+  - id: ironloggui
+
+files:
+  - source: agendas/evaluation-scenario-3.txt
+    destination: /
+  - source: irond/publisher.properties
+    destination: irond
+  - source: irond/basicauthusers.properties
+    destination: irond
+  - source: visitmeta/dataservice_connections.yml
+    destination: visitmeta/config/
+  - source: visitmeta/visualization_config.yml
+    destination: visitmeta/config/
+  - source: visitmeta/dataservice_config.yml
+    destination: visitmeta/config/
+  - source: irondetect/irondetect.yml
+    destination: irondetect/
+  - source: irondetect/policy.pol
+    destination: irondetect/policy/

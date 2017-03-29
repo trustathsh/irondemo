@@ -1,0 +1,80 @@
+irondetect:
+  # IF-MAP connection settings
+  ifmap:
+    # Authentication method
+    method: basic
+    # Basic authentication settings
+    basic:
+      # URL of the MAP server
+      url: http://localhost:8443
+      # Authentication for PDP subscriber
+      pdpsubscriber:
+        # username for basic authentication
+        username: irondetect-pdp
+        # password for basic authentication
+        password: irondetect-pdp
+      # Authentication information for PDP and Device subscriber
+      devicesubscriber:
+        # username for basic authentication
+        username: irondetect
+        # password for basic authentication
+        password: irondetect
+      # Authentication for policy publisher
+      policypublisher:
+        # username for basic authentication
+        username: irondetect-publisher
+        # password for basic authentication
+        password: irondetect-publisher
+    # Certificate-based authentication settings
+    cert:
+      # URL of the MAP server
+      url: http://localhost:8444
+    # Truststore configuration
+    truststore:
+      # path and filename of the keystore
+      path: irondetect.jks
+      # password of the keystore
+      password: irondetect
+    # connection uses a thread-safe SSRC
+    threadsafe: true
+    # initial connection timeout
+    initialconnectiontimeout: 120000
+    # Max sizes for results (in bytes)
+    maxresultsize: 100000000
+  # Settings for training data
+  training:
+    # Is training enabled?
+    enabled: false
+    # Directory for training data, stored as a DB4O databases
+    directory: training-dbs
+  policy:
+    # Filename of the policy
+    filename: /policy/policy.pol
+    # Subscribe to graph changes of policy
+    reloadfromgraph: true
+  procedures:
+    # Directory for procedure JARs
+    directory: procedures
+  # if TRUE, a minimalistic GUI will be started together with irondetect
+  gui:
+    enabled: true
+  # Subscriber settings
+  subscriber:
+    devicename: freeradius-pdp
+  # Publisher settings
+  publisher:
+    # if TRUE, actions will also be published as IF-MAP standard events; if FALSE, they will only be published as 'alert' metadata
+    actionasifmapevent: false
+    # if TRUE, actions will be published via PublishNotify; if FALSE, they will be published via PublishUpdate
+    notify: false
+    # 
+    policy:
+      enabled: true
+      # if TRUE, sends a policy-action metadata always even when no fired rules
+      nofiredrules: false
+      # is the value of the specific start identifier for the policy graph
+      devicename: irondetect-policy
+  # REST service settings
+  rest:
+    # URL of the REST service
+    url: http://127.0.0.1:8001

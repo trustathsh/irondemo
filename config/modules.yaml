@@ -1,3 +1,15 @@
+"TrustAtHsH::Irondemo::Modules::IrongenlogFreeradiusConnect":
+  alias: IrongenlogFreeradiusConnect
+  config:
+    ifmap-user: pdp
+    ifmap-pass: pdp
+
+"TrustAtHsH::Irondemo::Modules::IronDhcpEntry":
+  alias: IronDhcpEntry
+
+"TrustAtHsH::Irondemo::Modules::SelfPublish":
+  alias: SelfPublish
+
 "TrustAtHsH::Irondemo::Modules::StartIrondetect":
   alias: StartIrondetect
 
