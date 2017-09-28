@@ -1,0 +1,1 @@
+<simu:service type="nac" name="macmon" port="4443" administrative-domain="simu.de" xmlns:simu="http://simu-project.de/XMLSchema/1" />

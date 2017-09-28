@@ -4,12 +4,8 @@ localMAPServer:
   ifmapServerUrl: https://localhost:8443
   useConnectionAsStartup: true
   subscriptions:
-    subOnFreeRadiusPdP:
-      startIdentifier: ''
-      identifierType: device
-      matchLinksFilter: root
     ironvas:
-      startIdentifier: openvas-device
+      startIdentifier: macmon-nac
       identifierType: device
       useSubscriptionAsStartup: true
       maxDepth: 5000000

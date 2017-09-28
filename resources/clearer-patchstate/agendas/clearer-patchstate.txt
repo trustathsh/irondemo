@@ -1,58 +1,85 @@
 At 1 do StartIrond();
 At 2 do StartVisitmetaDataservice();
-At 4 do StartVisitmetaGUI();
-At 5 do Break();
+At 3 do StartVisitmetaGUI();
+At 4 do Break();
+
+At 5 do MacmonInitPdp(
+	pep-device => macmon-nac,
+	pep-ip => 10.0.0.1,
+	ifmap-user => pdp,
+	ifmap-pass => pdp);
 
 At 11 do DeviceConnects(
 	access-request => ar:11,
 	pdp => macmon-nac,
 	mac => 00:11:22:33:44:11,
 	ip-address => 10.0.0.11,
+	vlan-name => dmz,
+	vlan-number => 1,
+	switch-port => 1,
+	switch-device => switch,
 	device => server01,
-	device-attribute => SERVER);
+	device-attribute => server);
 
 At 21 do DeviceConnects(
 	access-request => ar:21,
 	pdp => macmon-nac,
 	mac => 00:11:22:33:44:21,
 	ip-address => 10.0.0.21,
+	vlan-name => productive,
+	vlan-number => 2,
+	switch-port => 11,
+	switch-device => switch,
 	device => pc01,
-	device-attribute => PC);
+	device-attribute => pc);
 
 At 22 do DeviceConnects(
 	access-request => ar:22,
 	pdp => macmon-nac,
 	mac => 00:11:22:33:44:22,
 	ip-address => 10.0.0.22,
+	vlan-name => productive,
+	vlan-number => 2,
+	switch-port => 12,
+	switch-device => switch,
 	device => pc02,
-	device-attribute => PC);
+	device-attribute => pc);
 
 At 23 do DeviceConnects(
 	access-request => ar:23,
 	pdp => macmon-nac,
 	mac => 00:11:22:33:44:23,
 	ip-address => 10.0.0.23,
+	vlan-name => productive,
+	vlan-number => 2,
+	switch-port => 13,
+	switch-device => switch,
 	device => pc03,
-	device-attribute => PC);
-
+	device-attribute => pc);
 
 At 24 do DeviceConnects(
 	access-request => ar:24,
 	pdp => macmon-nac,
 	mac => 00:11:22:33:44:24,
 	ip-address => 10.0.0.24,
+	vlan-name => productive,
+	vlan-number => 2,
+	switch-port => 14,
+	switch-device => switch,
 	device => pc04,
-	device-attribute => PC);
+	device-attribute => pc);
 
 At 25 do DeviceConnects(
 	access-request => ar:25,
 	pdp => macmon-nac,
 	mac => 00:11:22:33:44:25,
 	ip-address => 10.0.0.25,
+	vlan-name => productive,
+	vlan-number => 2,
+	switch-port => 15,
+	switch-device => switch,
 	device => pc05,
-	device-attribute => PC);
-
-
+	device-attribute => pc);
 
 At 31 do UserLogin(
 	name => Max Mustermann1,
@@ -77,6 +104,6 @@ At 34 do UserLogin(
 At 35 do UserLogin(
 	name => Max Mustermann5,
 	access-request => ar:25,
-	role => employee);
+	role => system);
 
 At 36 do Break();
