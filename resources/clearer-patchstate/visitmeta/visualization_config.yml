@@ -1,0 +1,106 @@
+visualization:
+  connection:
+    ifmap:
+      url: http://localhost:8443
+      username: visitmeta-publisher
+      password: visitmeta-publisher
+      truststore:
+        path: config/visitmeta.jks
+        password: visitmeta
+      threadsafe: true
+      initialconnectiontimeout: 120000
+    irondetect:
+      url: http://localhost:8001
+    dataservice:
+      url: http://localhost:8000
+      connectionname: localMAPServer
+  network:
+    interval: 10000
+  calculation:
+    interval: 5000
+    iterations: 100
+  highlights:
+    timeout: 5000
+  node:
+    translation:
+      duration: 3000
+    information:
+      style: XML_BREAKDOWN
+  identifier:
+    text:
+      style: COMPACT
+      showextendedidentifierprefix: true
+    node:
+      style: RECTANGLES_WITH_ROUNDED_CORNERS
+  metadata:
+    text:
+      style: COMPACT
+    node:
+      style: RECTANGLES_WITH_RECTANGULAR_CORNERS
+  edge:
+    style: STRAIGHT_LINE
+  history:
+    navigation:
+      style: TAB_BASED_NAVIGATION
+  searchandfilter:
+    style: SIMPLE_SEARCH_AND_NO_FILTER
+    transparency: 0.2
+guicontroller:
+  zfactor: 0.03
+  xyfactor: 20.0
+window:
+  width: 1882
+  height: 1031
+  divider: 386
+  position:
+    x: 0
+    y: 25
+color:
+  background: '0xFFFFFF'
+  edge: '0x000000'
+  metadata:
+    text: '0x000000'
+    inside: '0xFF9966'
+    outside: '0xFF9966'
+    border: '0x000000'
+  node:
+    new: '0x266E62'
+    delete: '0xA73946'
+    selected: '0xCEB100'
+    search: '0x88A538'
+    mouseover: '0x708090'
+    blank: '0xFFFFFF'
+    highlight:
+      value: '0xFF0000'
+      typenames: event,unexpected-behavior
+  identifier:
+    access-request:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    device:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    identity:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    ip-address:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    mac-address:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'
+    extended:
+      text: '0x000000'
+      inside: '0x9999FF'
+      outside: '0x9999FF'
+      border: '0x000000'

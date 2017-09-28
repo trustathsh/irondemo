@@ -1,0 +1,82 @@
+At 1 do StartIrond();
+At 2 do StartVisitmetaDataservice();
+At 4 do StartVisitmetaGUI();
+At 5 do Break();
+
+At 11 do DeviceConnects(
+	access-request => ar:11,
+	pdp => macmon-nac,
+	mac => 00:11:22:33:44:11,
+	ip-address => 10.0.0.11,
+	device => server01,
+	device-attribute => SERVER);
+
+At 21 do DeviceConnects(
+	access-request => ar:21,
+	pdp => macmon-nac,
+	mac => 00:11:22:33:44:21,
+	ip-address => 10.0.0.21,
+	device => pc01,
+	device-attribute => PC);
+
+At 22 do DeviceConnects(
+	access-request => ar:22,
+	pdp => macmon-nac,
+	mac => 00:11:22:33:44:22,
+	ip-address => 10.0.0.22,
+	device => pc02,
+	device-attribute => PC);
+
+At 23 do DeviceConnects(
+	access-request => ar:23,
+	pdp => macmon-nac,
+	mac => 00:11:22:33:44:23,
+	ip-address => 10.0.0.23,
+	device => pc03,
+	device-attribute => PC);
+
+
+At 24 do DeviceConnects(
+	access-request => ar:24,
+	pdp => macmon-nac,
+	mac => 00:11:22:33:44:24,
+	ip-address => 10.0.0.24,
+	device => pc04,
+	device-attribute => PC);
+
+At 25 do DeviceConnects(
+	access-request => ar:25,
+	pdp => macmon-nac,
+	mac => 00:11:22:33:44:25,
+	ip-address => 10.0.0.25,
+	device => pc05,
+	device-attribute => PC);
+
+
+
+At 31 do UserLogin(
+	name => Max Mustermann1,
+	access-request => ar:21,
+	role => employee);
+
+At 32 do UserLogin(
+	name => Max Mustermann2,
+	access-request => ar:22,
+	role => employee);
+
+At 33 do UserLogin(
+	name => Max Mustermann3,
+	access-request => ar:23,
+	role => manager);
+
+At 34 do UserLogin(
+	name => Max Mustermann4,
+	access-request => ar:24,
+	role => admin);
+
+At 35 do UserLogin(
+	name => Max Mustermann5,
+	access-request => ar:25,
+	role => employee);
+
+At 36 do Break();

@@ -1,0 +1,22 @@
+projects:
+  - id: ifmapcli
+  - id: irond
+  - id: visitmeta
+
+files:
+  - source: agendas/clearer-patchstate.txt
+    destination: /
+  - source: irond/publisher.properties
+    destination: /irond
+  - source: visitmeta/dataservice_connections.yml
+    destination: visitmeta/config/
+  - source: visitmeta/visualization_config.yml
+    destination: visitmeta/config/
+  - source: visitmeta/dataservice_config.yml
+    destination: visitmeta/config/
+  - source: xml/service-discovered-by.xml
+    destination: /
+  - source: xml/service-implementation.xml
+    destination: /
+  - source: xml/service-ip.xml
+    destination: /

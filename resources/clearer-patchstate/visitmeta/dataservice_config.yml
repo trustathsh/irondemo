@@ -1,0 +1,30 @@
+# REST-Service url for the dataservice
+restServiceUrl: http://127.0.0.1:8000/
+
+# settings of each database connection
+database:
+  # path to the db directory
+  path: /tmp/visitmeta.db
+  # algorithm to calculate hashes for identifiers, needed for quick lookup in the db
+  hashAlgorithm: MD5
+  # if erase = true, deletes the database of all connections on the application's startup
+  erase: true
+  cache:
+    # true: enable the database cache; false: disable the database cache
+    enable: true
+    # sets the database cache size, default is 100
+    size: 100
+
+# settings for ifmap
+ifmap:
+  # default settings for all connections, each connection can set its own settings
+  # if a connection has no setting specified, the following settings are used as default
+  defaultConnectionSettings:
+    truststorePath: config/visitmeta.jks
+    truststorePassword: visitmeta
+    maxPollResultSize: 1000000000
+    subscriptionMaxDepth: 1000
+    # try to connect to the specified url for a connection when the data service is started
+    useConnectionAsStartup: false
+    # if the connection has persisted subscriptions, send them to the ifmap server when the data service starts up
+    useSubscriptionAsStartup: false
