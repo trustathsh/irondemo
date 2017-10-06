@@ -1,0 +1,18 @@
+At 1 do PurgeMetadata(
+	ifmap-user => pdp,
+	ifmap-pass => pdp);
+
+At 2 do PurgeMetadata(
+	ifmap-user => dhcp,
+	ifmap-pass => dhcp);
+
+At 3 do PurgeMetadata(
+	ifmap-user => test,
+	ifmap-pass => test);
+
+
+At 4 do PurgeMetadata(
+	ifmap-user => macmon,
+	ifmap-pass => macmon);
+
+At 5 do Break();

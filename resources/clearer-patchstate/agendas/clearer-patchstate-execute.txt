@@ -1,19 +1,15 @@
-At 1 do StartIrond();
-At 2 do StartVisitmetaDataservice();
-At 3 do StartVisitmetaGUI();
-At 4 do Break();
 
-At 5 do MacmonInitPdp(
+At 1 do MacmonInitPdp(
 	pep-device => macmon-nac,
 	pep-ip => 10.0.0.1,
 	ifmap-user => pdp,
 	ifmap-pass => pdp);
 
-At 11 do DeviceConnects(
-	access-request => ar:11,
+At 5 do DeviceConnects(
+	access-request => ar:5,
 	pdp => macmon-nac,
-	mac => 00:11:22:33:44:11,
-	ip-address => 10.0.0.11,
+	mac => 00:11:22:33:44:05,
+	ip-address => 10.0.0.5,
 	vlan-name => dmz,
 	vlan-number => 1,
 	switch-port => 1,
@@ -21,11 +17,11 @@ At 11 do DeviceConnects(
 	device => server01,
 	device-attribute => server);
 
-At 21 do DeviceConnects(
-	access-request => ar:21,
+At 11 do DeviceConnects(
+	access-request => ar:11,
 	pdp => macmon-nac,
-	mac => 00:11:22:33:44:21,
-	ip-address => 10.0.0.21,
+	mac => 00:11:22:33:44:11,
+	ip-address => 192.168.1.108,
 	vlan-name => productive,
 	vlan-number => 2,
 	switch-port => 11,
@@ -33,11 +29,11 @@ At 21 do DeviceConnects(
 	device => pc01,
 	device-attribute => pc);
 
-At 22 do DeviceConnects(
-	access-request => ar:22,
+At 12 do DeviceConnects(
+	access-request => ar:12,
 	pdp => macmon-nac,
-	mac => 00:11:22:33:44:22,
-	ip-address => 10.0.0.22,
+	mac => 00:11:22:33:44:12,
+	ip-address => 10.0.0.12,
 	vlan-name => productive,
 	vlan-number => 2,
 	switch-port => 12,
@@ -45,11 +41,11 @@ At 22 do DeviceConnects(
 	device => pc02,
 	device-attribute => pc);
 
-At 23 do DeviceConnects(
-	access-request => ar:23,
+At 13 do DeviceConnects(
+	access-request => ar:13,
 	pdp => macmon-nac,
-	mac => 00:11:22:33:44:23,
-	ip-address => 10.0.0.23,
+	mac => 00:11:22:33:44:13,
+	ip-address => 10.0.0.13,
 	vlan-name => productive,
 	vlan-number => 2,
 	switch-port => 13,
@@ -57,11 +53,11 @@ At 23 do DeviceConnects(
 	device => pc03,
 	device-attribute => pc);
 
-At 24 do DeviceConnects(
-	access-request => ar:24,
+At 14 do DeviceConnects(
+	access-request => ar:14,
 	pdp => macmon-nac,
-	mac => 00:11:22:33:44:24,
-	ip-address => 10.0.0.24,
+	mac => 00:11:22:33:44:14,
+	ip-address => 10.0.0.14,
 	vlan-name => productive,
 	vlan-number => 2,
 	switch-port => 14,
@@ -69,11 +65,11 @@ At 24 do DeviceConnects(
 	device => pc04,
 	device-attribute => pc);
 
-At 25 do DeviceConnects(
-	access-request => ar:25,
+At 15 do DeviceConnects(
+	access-request => ar:15,
 	pdp => macmon-nac,
-	mac => 00:11:22:33:44:25,
-	ip-address => 10.0.0.25,
+	mac => 00:11:22:33:44:15,
+	ip-address => 10.0.0.15,
 	vlan-name => productive,
 	vlan-number => 2,
 	switch-port => 15,
@@ -81,29 +77,27 @@ At 25 do DeviceConnects(
 	device => pc05,
 	device-attribute => pc);
 
-At 31 do UserLogin(
+At 21 do UserLogin(
 	name => Max Mustermann1,
-	access-request => ar:21,
+	access-request => ar:11,
 	role => employee);
 
-At 32 do UserLogin(
+At 22 do UserLogin(
 	name => Max Mustermann2,
-	access-request => ar:22,
+	access-request => ar:12,
 	role => employee);
 
-At 33 do UserLogin(
+At 23 do UserLogin(
 	name => Max Mustermann3,
-	access-request => ar:23,
+	access-request => ar:13,
 	role => manager);
 
-At 34 do UserLogin(
+At 24 do UserLogin(
 	name => Max Mustermann4,
-	access-request => ar:24,
+	access-request => ar:14,
 	role => admin);
 
-At 35 do UserLogin(
+At 25 do UserLogin(
 	name => Max Mustermann5,
-	access-request => ar:25,
+	access-request => ar:15,
 	role => system);
-
-At 36 do Break();

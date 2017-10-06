@@ -1,0 +1,4 @@
+At 1 do StartIrond();
+At 4 do StartVisitmetaDataservice();
+At 7 do StartVisitmetaGUI();
+At 10 do Break();
