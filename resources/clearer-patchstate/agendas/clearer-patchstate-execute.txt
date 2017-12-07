@@ -56,8 +56,8 @@ At 13 do DeviceConnects(
 At 14 do DeviceConnects(
 	access-request => ar:14,
 	pdp => macmon-nac,
-	mac => 00:11:22:33:44:14,
-	ip-address => 10.0.0.14,
+	mac => b8:27:eb:a2:df:9f,
+	ip-address => 10.241.0.101,
 	vlan-name => productive,
 	vlan-number => 2,
 	switch-port => 14,
@@ -68,8 +68,8 @@ At 14 do DeviceConnects(
 At 15 do DeviceConnects(
 	access-request => ar:15,
 	pdp => macmon-nac,
-	mac => 00:11:22:33:44:15,
-	ip-address => 10.0.0.15,
+	mac => b8:27:eb:ae:9f:e9,
+	ip-address => 10.241.0.102,
 	vlan-name => productive,
 	vlan-number => 2,
 	switch-port => 15,
@@ -93,11 +93,11 @@ At 23 do UserLogin(
 	role => manager);
 
 At 24 do UserLogin(
-	name => Max Mustermann4,
+	name => Alice,
 	access-request => ar:14,
 	role => admin);
 
 At 25 do UserLogin(
-	name => Max Mustermann5,
+	name => Bob,
 	access-request => ar:15,
 	role => system);

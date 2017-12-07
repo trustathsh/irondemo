@@ -47,7 +47,7 @@ sub send_soap_publish_request {
 	my $connection_args = $args->{connection_args};
 	my $update_elements = $args->{update_elements};
 
-	my $url = $connection_args->{'ifmap-url'}   || 'https://localhost:8443';
+	my $url = $connection_args->{'ifmap-url'}   || 'https://10.240.100.201:8443';
 	my $user = $connection_args->{'ifmap-user'} || 'test';
 	my $pass = $connection_args->{'ifmap-pass'} || 'test';
 

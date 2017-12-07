@@ -2,11 +2,23 @@ localMAPServer:
   userName: visitmeta
   userPassword: visitmeta
   ifmapServerUrl: https://localhost:8443
+  useConnectionAsStartup: false
+  subscriptions:
+    ironvas:
+      startIdentifier: switch
+      identifierType: device
+      useSubscriptionAsStartup: false
+      maxDepth: 1000
+      maxSize: 1000000000
+decoitMAPServer:
+  userName: visitmeta
+  userPassword: visitmeta
+  ifmapServerUrl: https://10.240.100.201:8443
   useConnectionAsStartup: true
   subscriptions:
     ironvas:
-      startIdentifier: macmon-nac
+      startIdentifier: switch
       identifierType: device
       useSubscriptionAsStartup: true
-      maxDepth: 5000000
-      maxSize: 705032704
+      maxDepth: 1000
+      maxSize: 1000000000

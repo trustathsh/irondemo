@@ -38,7 +38,7 @@ sub call_ifmap_cli {
 	my $ifmapcli_path = $self->_bin_dir_for( 'ifmapcli' );
 	chdir($ifmapcli_path) or die "Could not open directory $ifmapcli_path: $! \n";
 
-	my $url = $connection_args->{'ifmap-url'}   || 'https://localhost:8443';
+	my $url = $connection_args->{'ifmap-url'}   || 'https://10.240.100.201:8443';
 	my $user = $connection_args->{'ifmap-user'} || 'test';
 	my $pass = $connection_args->{'ifmap-pass'} || 'test';
 	my $keystorePath = $connection_args->{'ifmap-keystore-path'} || '/ifmapcli.jks';

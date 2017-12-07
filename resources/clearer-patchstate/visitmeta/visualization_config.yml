@@ -12,8 +12,8 @@ visualization:
     irondetect:
       url: http://localhost:8001
     dataservice:
-      url: http://localhost:8000
-      connectionname: localMAPServer
+      url: http://10.240.100.201:8000/
+      connectionname: decoitMAPServer
   network:
     interval: 10000
   calculation:

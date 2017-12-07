@@ -18,6 +18,8 @@ files:
     destination: visitmeta/config/
   - source: visitmeta/dataservice_config.yml
     destination: visitmeta/config/
+  - source: visitmeta/dataservices.yml
+    destination: visitmeta/config/
   - source: xml/service-discovered-by.xml
     destination: /
   - source: xml/service-implementation.xml

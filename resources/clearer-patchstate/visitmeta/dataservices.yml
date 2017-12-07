@@ -1,4 +1,8 @@
 localDataservice:
   dataserviceRestUrl: http://localhost:8000
   rawXml: true
+  connected: false
+decoitDataservice:
+  dataserviceRestUrl: http://10.240.100.201:8000
+  rawXml: true
   connected: true
