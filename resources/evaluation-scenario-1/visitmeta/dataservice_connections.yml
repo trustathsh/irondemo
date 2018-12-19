@@ -33,12 +33,12 @@ default:
       # identifierType is one of the following:
       # access-request, device, ip-address, mac-address
       # identity as well as extended identifier not supported at the moment
-      identifierType: ip-address
+      identifierType: device
       # startIdentifier is the value of the specific identifier
       # when using ip-address as type, the syntax is:
       # IPv4,10.0.0.1
       # or
       # IPv6,...
-      startIdentifier: IPv4,10.0.0.1
+      startIdentifier: irondhcp-dhcp-server
       #  send this subscription when the data service is started
       useSubscriptionAsStartup: true

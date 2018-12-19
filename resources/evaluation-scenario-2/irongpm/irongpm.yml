@@ -1,0 +1,31 @@
+irongpm:
+  updateinterval: 1000
+  publisher:
+    selfpublish:
+      enabled: true
+      devicename: irongpm
+    policy:
+      enabled: true
+      # the value of the specific start identifier for the policy graph
+      devicename: irongpm-policy
+
+dataservice:
+  url: http://localhost:8000
+  connection: default
+  rawxml: true
+
+ifmap:
+  auth:
+    method: basic
+    basic:
+      url: https://127.0.0.1:8443
+      user: irongpm
+      password: irongpm
+    cert: 
+      url: https://127.0.0.1:8444
+  truststore:
+    path: /irongpm.jks
+    password: irongpm
+  # connection uses a thread-safe SSRC
+  threadsafe: true
+  initialconnectiontimeout: 120000

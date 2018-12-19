@@ -67,7 +67,13 @@ irondetect:
     actionasifmapevent: false
     # if TRUE, actions will be published via PublishNotify; if FALSE, they will be published via PublishUpdate
     notify: false
-    # 
+    # self-publish related setting
+    selfpublish:
+      # whether or not to publish self-information about irondetect
+      enabled: true
+      # the device-identifier for irondetect
+      device: irondetect
+    # policy-related publisher settings 
     policy:
       enabled: true
       # if TRUE, sends a policy-action metadata always even when no fired rules

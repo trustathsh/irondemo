@@ -1,21 +1,15 @@
-At 0 do StartIrond();
+At 0 do Break(message => Start MAP Server and VisITMeta Dataservice);
 
-At 2 do StartVisitmetaDataservice();
+At 2 do Break(message => Start VisITMeta GUI and ironloggui);
 
-At 3 do Break(message => Done - MAP Server and VisITMeta Dataservice started - Next - VisITMeta GUI and irongpm and ironloggui);
-
-At 4 do StartVisitmetaGUI();
-
-At 5 do DeviceIp(
+At 3 do DeviceIp(
 	device => irongpm,
 	ip-address => 10.0.0.6,
 	mode => update,
 	ifmap-user => irongpm,
 	ifmap-pass => irongpm);
 
-At 6 do StartIrongpm();
-
-#At 7 do StartIronloggui();
+At 4 do Break(message => Start irongpm);
 
 At 8 do Break(message => Step 1a - Infrastructure self publish - DHCP);
 

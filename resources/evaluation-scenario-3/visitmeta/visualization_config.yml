@@ -28,21 +28,83 @@ visualization:
       url: http://localhost:8000
       # Connection name that is used to retrieve JSON graph data
       connectionname: default
+    dataservicessl:
+      url: https://localhost:8445
+      connectionname: defaultssl
+      verifyhostname: false
   network:
     # The time interval (milliseconds) to request the dataservice for new changes.
     interval: 5000
   calculation:
     # The time interval (milliseconds) to recalculate the position of the nodes.
-    interval: 3000
+    interval: 500
     # Count of Iterations for the position calculation of the nodes.
     iterations: 100
+    # Layout type on startup; possible values are:
+    # FORCE_DIRECTED
+    # SPRING
+    # BIPARTITE
+    # FORCE_DIRECTED_ALTERNATIVE
+    # KAMADA_KAWAI
+    layouttype: FORCE_DIRECTED
+    # Sets JUNG layout algorithm related properties.
+    jung:
+      # Descriptions for force-directed layout settings from:
+      # http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/layout/FRLayout.html
+      forcedirected:
+        # Sets how much edges try to keep their vertices together.
+        attractionmultiplier: 0.75
+        # Sets how much vertices try to push each other apart.
+        repulsionmultiplier: 0.75
+        # Sets the maximum number of iterations.
+        maxiterations: 700
+      # Descriptions for Spring layout settings from:
+      # http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/layout/SpringLayout.html
+      spring:
+        # Sets the stretch parameter.
+        # This value specifies how much the degrees of an edge's incident vertices should 
+        # influence how easily the endpoints of that edge can move (that is, that edge's 
+        # tendency to change its length).
+        # The default value is 0.70. Positive values less than 1 cause high-degree 
+        # vertices to move less than low-degree vertices, and values > 1 cause 
+        # high-degree vertices to move more than low-degree vertices.
+        # Negative values will have unpredictable and inconsistent results.
+        stretch: 0.7
+        # Sets the node repulsion range (in drawing area units).
+        # Outside this range, nodes do not repel each other. The default value is 100.
+        # Negative values are treated as their positive equivalents.
+        repulsionrange: 100
+        # Sets the force multiplier.
+        # This value is used to specify how strongly an edge "wants" to be its default
+        # length (higher values indicate a greater attraction for the default length),
+        # which affects how much its endpoints move at each timestep. The default value
+        # is 1/3. A value of 0 turns off any attempt by the layout to cause edges to
+        # conform to the default length. Negative values cause long edges to get longer
+        # and short edges to get shorter; use at your own risk.
+        forcemultiplier: 0.33
+      # Descriptions for Kamada-Kawai layout settings from:
+      # http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/layout/KKLayout.html
+      kamadakawai:
+        # Shift all vertices so that the center of gravity is located at the center of
+        # the screen.
+        adjustforgravity: true
+        # Sets a multiplicative factor that specifies the fraction of the graph's diameter
+        # to be used as the inter-vertex distance between disconnected vertices.
+        disconnecteddistancemultiplier: 2.0
+        # Enable or disable the local minimum escape technique by exchanging vertices.
+        exchangevertices: true
+        # Sets a multiplicative factor which partly specifies the "preferred" length
+        # of an edge (L).
+        lengthfactor: 2.5
+        # Sets the maximum number of iterations.
+        maxiterations: 100
   highlights:
     # Timeout (milliseconds) to show the highlights for new and deleted nodes.
     timeout: 3000
   node:
     translation:
       # The animation time for the translation of a node to the new position.
-      duration: 2000
+      duration: 250
     information:
       # Sets the style for detailed node information when a node is selected
       # Possible values are:
@@ -139,7 +201,7 @@ color:
     blank: '0xFFFFFF'
     highlight:
       value: '0xFF0000'
-      typenames: policy-action,policy-feature,policy-evaluation,policy-partial-result
+      typenames: policy-action,policy-feature,policy-evaluation,policy-partial-result,pattern-matched,event,unexpected-behavior,attack-detected
   identifier:
     access-request:
       text: '0x000000'

@@ -3,11 +3,12 @@ projects:
   - id: irond
   - id: visitmeta
   - id: irondetect
-  - id: irongpm
   - id: ironloggui
 
 files:
   - source: agendas/evaluation-scenario-3.txt
+    destination: /
+  - source: agendas/evaluation-scenario-3-with-manual-component-startup.txt
     destination: /
   - source: irond/publisher.properties
     destination: irond

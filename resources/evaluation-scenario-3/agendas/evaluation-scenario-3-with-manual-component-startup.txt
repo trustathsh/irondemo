@@ -1,10 +1,6 @@
-At 0 do StartIrond();
+At 0 do Break(message => Start MAP Server and VisITMeta Dataservice);
 
-At 2 do StartVisitmetaDataservice();
-
-At 3 do Break(message => Done - MAP Server and VisITMeta Dataservice started - Next - VisITMeta GUI and irondetect and ironloggui);
-
-At 4 do StartVisitmetaGUI();
+At 2 do Break(message => Start VisITMeta GUI and ironloggui);
 
 At 5 do DeviceIp(
 	device => irondetect,
@@ -13,9 +9,7 @@ At 5 do DeviceIp(
 	ifmap-user => irondetect,
 	ifmap-pass => irondetect);
 
-At 6 do StartIrondetect();
-
-At 7 do StartIronloggui();
+At 6 do Break(message => Start irondetect);
 
 At 8 do Break(message => Step 1a - Infrastructure self publish - DHCP);
 

@@ -39,14 +39,7 @@ default:
       # IPv4,10.0.0.1
       # or
       # IPv6,...
-      startIdentifier: freeradius-pdp
+      startIdentifier: irondhcp-dhcp-server
       #  send this subscription when the data service is started
       useSubscriptionAsStartup: true
-    subOnIrondetect:
-      identifierType: device
-      startIdentifier: irondetect-policy
-      useSubscriptionAsStartup: true
-    subOnIrongpm:
-      identifierType: device
-      startIdentifier: irongpm-policy
-      useSubscriptionAsStartup: true
+      maxSize: 5000000
