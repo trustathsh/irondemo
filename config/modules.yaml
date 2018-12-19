@@ -1,3 +1,6 @@
+"TrustAtHsH::Irondemo::Modules::StartIrongpm":
+  alias: StartIrongpm
+
 "TrustAtHsH::Irondemo::Modules::IrongenlogFreeradiusConnect":
   alias: IrongenlogFreeradiusConnect
   config:

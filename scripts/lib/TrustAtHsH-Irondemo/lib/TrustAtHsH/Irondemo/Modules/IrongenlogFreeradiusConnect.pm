@@ -14,6 +14,7 @@ use parent 'TrustAtHsH::Irondemo::ExtMeta';
 my $ACCESS_REQUEST = 'access-request';
 my $PDP = 'pdp';
 my $IP = 'ip';
+my $MAC = 'mac';
 my $DEVICE = 'device';
 my $ROLE = 'role';
 my $NAME = 'name';
@@ -26,7 +27,7 @@ my $IFMAP_USER = 'ifmap-user';
 my $IFMAP_PASS = 'ifmap-pass';
 
 my @REQUIRED_ARGS = (
-	$ACCESS_REQUEST, $PDP, $IP, $DEVICE, $ROLE, $NAME, $IFMAP_USER, $IFMAP_PASS);
+	$ACCESS_REQUEST, $PDP, $IP, $MAC, $DEVICE, $ROLE, $NAME, $IFMAP_USER, $IFMAP_PASS);
 
 ### INSTANCE METHOD ###
 # Purpose     :
@@ -44,6 +45,7 @@ sub execute {
 		"ifmap-pass" => $data->{$IFMAP_PASS}};
 
 	my @argsListArIp = ($data->{$ACCESS_REQUEST}, $data->{$IP});
+	my @argsListArMac = ($data->{$ACCESS_REQUEST}, $data->{$MAC});
     my @argsListAuthBy = ($data->{$ACCESS_REQUEST}, $data->{$PDP});
     my @argsListArDev = ($data->{$ACCESS_REQUEST}, $data->{$DEVICE});
     my @argsListAuthAs = ($data->{$ACCESS_REQUEST}, $data->{$NAME});
@@ -58,6 +60,11 @@ sub execute {
 		'cli_tool' => "ar-ip",
 		'mode' => "update",
 		'args_list' => \@argsListArIp,
+		'connection_args' => $connectionArgs});
+	$result &= $self->call_ifmap_cli({
+		'cli_tool' => "ar-mac",
+		'mode' => "update",
+		'args_list' => \@argsListArMac,
 		'connection_args' => $connectionArgs});
     $result &= $self->call_ifmap_cli({
         'cli_tool' => "auth-as",
