@@ -101,102 +101,23 @@ At 19 do DeviceIp(
 	ifmap-user => ironnmap,
 	ifmap-pass => ironnmap);
 
-At 20 do Break(message => Step 2 - Service detection via req-for-investigation);
+At 20 do Break(message => Step 3 - Smartphone connects);
 
 At 21 do IronDhcpEntry(
-	ip => 10.0.0.10,
-	mac => bb:bb:cc:dd:ee:aa,
-	discoverer => irondhcp-dhcp-server,
-	ifmap-user => irondhcp,
-	ifmap-pass => irondhcp);
-
-At 22 do InvestigationRequested(
-	device => irondhcp-dhcp-server,
-	mac => bb:bb:cc:dd:ee:aa,
-	qualifier => nmap,
-	ifmap-user => irondhcp,
-	ifmap-pass => irondhcp);
-
-At 23 do NmapScan(
-	discoverer => nmap,
-	service-type => database-server,
-	service-name => database-server,
-	service-ip => 10.0.0.10,
-	service-port => 3306,
-	impl-name => MySQL Server,
-	impl-version => 1.0,
-	ifmap-user => ironnmap,
-	ifmap-pass => ironnmap);
-
-At 24 do IronDhcpEntry(
-	ip => 10.0.0.11,
-	mac => bb:bb:cc:dd:ee:bb,
-	discoverer => irondhcp-dhcp-server,
-	ifmap-user => irondhcp,
-	ifmap-pass => irondhcp);
-
-At 25 do InvestigationRequested(
-	device => irondhcp-dhcp-server,
-	mac => bb:bb:cc:dd:ee:bb,
-	qualifier => nmap:openvas,
-	ifmap-user => irondhcp,
-	ifmap-pass => irondhcp);
-
-#At 26 do InitVulnerableInfrastructure(
-#	discoverer => nmap,
-#	service-type => web-server,
-#	service-name => web-server,
-#	service-ip => 10.0.0.11,
-#	service-port => 20,
-#	impl-name => Apache Server,
-#	impl-version => 2.0,
-#	vulnerability-type => CVE,
-#	vulnerability-value => 1234,
-#	ifmap-user-nmap => ironnmap,
-#	ifmap-pass-nmap => ironnmap,
-#	ifmap-user-vas => ironvas,
-#	ifmap-pass-vas => ironvas);
-
-At 27 do NmapScan(
-	discoverer => nmap,
-	service-type => web-server,
-	service-name => web-server,
-	service-ip => 10.0.0.11,
-	service-port => 80,
-	impl-name => Apache HTTP Server,
-	impl-version => 2.4.23,
-	ifmap-user => ironnmap,
-	ifmap-pass => ironnmap);
-
-# event via OpenVAS
-At 28 do VulnerabilityDetected(
-	ip-address => 10.0.0.11,
-	event-name => CVE-2016-8740 Denial of Service Vulnerability,
-	discoverer-id => ironvas:OpenVASv8.0,
-	event-magnitude => 50,
-	event-confidence => 100,
-	event-significance => important,
-	vulnerability-uri => CVE-2016-8740,
-	ifmap-user => ironvas,
-	ifmap-pass => ironvas);
-
-At 29 do Break(message => Step 3 - Smartphone connects);
-
-At 30 do IronDhcpEntry(
 	ip => 10.0.0.20,
 	mac => cc:bb:cc:dd:ee:aa,
 	discoverer => irondhcp-dhcp-server,
 	ifmap-user => irondhcp,
 	ifmap-pass => irondhcp);
 
-At 31 do InvestigationRequested(
+At 22 do InvestigationRequested(
 	device => irondhcp-dhcp-server,
 	mac => cc:bb:cc:dd:ee:aa,
 	qualifier => nmap:openvas,
 	ifmap-user => irondhcp,
 	ifmap-pass => irondhcp);
 
-At 32 do IrongenlogFreeradiusConnect(
+At 23 do IrongenlogFreeradiusConnect(
 	access-request => ar:1,
 	pdp => freeradius-pdp,
 	ip => 10.0.0.20,
@@ -211,9 +132,9 @@ At 32 do IrongenlogFreeradiusConnect(
 	ifmap-user => irongenlog-freeradius,
 	ifmap-pass => irongenlog-freeradius);
 
-At 33 do Break(message => Next - Smartphone is detected - initial information is published);
+At 24 do Break(message => Next - Smartphone is detected - initial information is published);
 
-At 34 do SingleSmartphoneFeatureDetected(
+At 25 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => smartphone.system.imei,
@@ -222,7 +143,7 @@ At 34 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
-#At 35 do SingleSmartphoneFeatureDetected(
+#At 26 do SingleSmartphoneFeatureDetected(
 #	device => Google Nexus,
 #	access-request => ar:1,
 #	feature-id => smartphone.system.ip,
@@ -231,7 +152,7 @@ At 34 do SingleSmartphoneFeatureDetected(
 #	ifmap-user => ironcontrol,
 #	ifmap-pass => ironcontrol);
 
-At 36 do SingleSmartphoneFeatureDetected(
+At 27 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => smartphone.android.firmwareversion,
@@ -240,9 +161,9 @@ At 36 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
-At 37 do Break(message => Next - Two Apps on Smartphone is detected);
+At 28 do Break(message => Next - Two Apps on Smartphone is detected);
 
-At 38 do SingleSmartphoneFeatureDetected(
+At 29 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => smartphone.android.app:0.name,
@@ -251,7 +172,7 @@ At 38 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
-At 39 do SingleSmartphoneFeatureDetected(
+At 30 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => smartphone.android.app:0.installer,
@@ -260,7 +181,7 @@ At 39 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 	
-At 40 do SingleSmartphoneFeatureDetected(
+At 31 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => smartphone.android.app:0.permission.requested,
@@ -269,7 +190,7 @@ At 40 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
-At 41 do SingleSmartphoneFeatureDetected(
+At 32 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => smartphone.android.app:1.name,
@@ -278,7 +199,7 @@ At 41 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
-At 42 do SingleSmartphoneFeatureDetected(
+At 33 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => smartphone.android.app:1.installer,
@@ -287,9 +208,9 @@ At 42 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
 
-At 43 do Break(message => Next - Open port on Smartphone is detected);
+At 34 do Break(message => Next - Open port on Smartphone is detected);
 
-At 44 do SingleSmartphoneFeatureDetected(
+At 35 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => vulnerability-scan-result.vulnerability:0.Port,
@@ -298,7 +219,7 @@ At 44 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironvas,
 	ifmap-pass => ironvas);
 
-At 45 do SingleSmartphoneFeatureDetected(
+At 36 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => vulnerability-scan-result.vulnerability:0.Name,
@@ -307,7 +228,7 @@ At 45 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironvas,
 	ifmap-pass => ironvas);
 
-At 46 do SingleSmartphoneFeatureDetected(
+At 37 do SingleSmartphoneFeatureDetected(
 	device => Google Nexus,
 	access-request => ar:1,
 	feature-id => vulnerability-scan-result.vulnerability:0.Cveidentifier,
@@ -316,25 +237,25 @@ At 46 do SingleSmartphoneFeatureDetected(
 	ifmap-user => ironvas,
 	ifmap-pass => ironvas);
 
-At 47 do Break(message => Next - Purge all data);
+At 38 do Break(message => Next - Purge all data);
 
-At 48 do PurgeMetadata(
+At 39 do PurgeMetadata(
 	ifmap-user => ironcontrol,
 	ifmap-pass => ironcontrol);
-At 48 do PurgeMetadata(
+At 39 do PurgeMetadata(
 	ifmap-user => irongenlog-freeradius,
 	ifmap-pass => irongenlog-freeradius);
-At 48 do PurgeMetadata(
+At 39 do PurgeMetadata(
 	ifmap-user => decomap-snort,
 	ifmap-pass => decomap-snort);
-At 48 do PurgeMetadata(
+At 39 do PurgeMetadata(
 	ifmap-user => ironnmap,
 	ifmap-pass => ironnmap);
-At 48 do PurgeMetadata(
+At 39 do PurgeMetadata(
 	ifmap-user => ironvas,
 	ifmap-pass => ironvas);
-At 48 do PurgeMetadata(
+At 39 do PurgeMetadata(
 	ifmap-user => irondhcp,
 	ifmap-pass => irondhcp);
 
-At 49 do Break(message => Agenda finished);
+At 40 do Break(message => Agenda finished);
