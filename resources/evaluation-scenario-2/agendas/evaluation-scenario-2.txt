@@ -269,7 +269,7 @@ At 39 do Break(message => Step 4b - Endpoint 2 attacks webserver - CVE not ident
 # by decomap-snort
 At 40 do AttackDetected(
 		service => web-server,
-		host => web-server,
+		host => web-server-productive,
 		port => 80,
 		source-ip => 10.0.0.23,
 		rule => 1-2580,
