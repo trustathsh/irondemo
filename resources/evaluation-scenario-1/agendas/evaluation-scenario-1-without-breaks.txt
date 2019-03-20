@@ -1,0 +1,297 @@
+At 0 do StartIrond();
+
+At 2 do StartVisitmetaDataservice();
+
+At 3 do Break(message => Done - MAP Server and VisITMeta Dataservice started - Next - VisITMeta GUI and ironloggui);
+
+At 4 do StartVisitmetaGUI();
+
+At 5 do StartIronloggui();
+
+At 6 do Break(message => Step 1a - Infrastructure self publish - DHCP);
+
+At 7 do SelfPublish(
+	service-type => dhcp-server,
+	service-name => DHCP,
+	service-port => 67,
+	implementation-name => ISC DHCP Server,
+	implementation-version => 0.1,
+	device => irondhcp-dhcp-server,
+	ip => 10.0.0.1,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+	
+At 8 do IronDhcpEntry(
+	ip => 10.0.0.2,
+	mac => aa:bb:cc:dd:ee:aa,
+	discoverer => irondhcp-dhcp-server,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 9 do IronDhcpEntry(
+	ip => 10.0.0.3,
+	mac => aa:bb:cc:dd:ee:bb,
+	discoverer => irondhcp-dhcp-server,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 10 do IronDhcpEntry(
+	ip => 10.0.0.4,
+	mac => aa:bb:cc:dd:ee:cc,
+	discoverer => irondhcp-dhcp-server,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 11 do IronDhcpEntry(
+	ip => 10.0.0.5,
+	mac => aa:bb:cc:dd:ee:dd,
+	discoverer => irondhcp-dhcp-server,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+#At 12 do Break(message => Step 1b - Infrastructure self publish - other components);
+	
+At 13 do SelfPublish(
+	service-type => pdp,
+	service-name => radius,
+	service-port => 1812,
+	implementation-name => FreeRADIUS,
+	implementation-version => 3.0,
+	device => freeradius-pdp,
+	ip => 10.0.0.2,
+	ifmap-user => irongenlog-freeradius,
+	ifmap-pass => irongenlog-freeradius);
+	
+At 14 do SelfPublish(
+	service-type => vulnerability scanner,
+	service-name => openvas,
+	service-port => 9390,
+	implementation-name => OpenVAS,
+	implementation-version => 8.0,
+	device => openvas,
+	ip => 10.0.0.3,
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas);
+		
+At 15 do SelfPublish(
+	service-type => network monitor,
+	service-name => snort,
+	service-port => 67,
+	implementation-name => Snort,
+	implementation-version => 0.1,
+	device => snort,
+	ip => 10.0.0.4,
+	ifmap-user => decomap-snort,
+	ifmap-pass => decomap-snort);
+
+At 16 do DeviceIp(
+	device => nmap,
+	ip-address => 10.0.0.5,
+	mode => update,
+	ifmap-user => ironnmap,
+	ifmap-pass => ironnmap);
+
+#At 17 do Break(message => Step 2 - Service detection via req-for-investigation);
+
+At 18 do IronDhcpEntry(
+	ip => 10.0.0.10,
+	mac => bb:bb:cc:dd:ee:aa,
+	discoverer => irondhcp-dhcp-server,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 19 do InvestigationRequested(
+	device => irondhcp-dhcp-server,
+	mac => bb:bb:cc:dd:ee:aa,
+	qualifier => nmap,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 20 do NmapScan(
+	discoverer => nmap,
+	service-type => database-server,
+	service-name => database-server,
+	service-ip => 10.0.0.10,
+	service-port => 3306,
+	impl-name => MySQL Server,
+	impl-version => 1.0,
+	ifmap-user => ironnmap,
+	ifmap-pass => ironnmap);
+
+At 21 do IronDhcpEntry(
+	ip => 10.0.0.11,
+	mac => bb:bb:cc:dd:ee:bb,
+	discoverer => irondhcp-dhcp-server,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 22 do InvestigationRequested(
+	device => irondhcp-dhcp-server,
+	mac => bb:bb:cc:dd:ee:bb,
+	qualifier => nmap:openvas,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 23 do NmapScan(
+	discoverer => nmap,
+	service-type => web-server,
+	service-name => web-server,
+	service-ip => 10.0.0.11,
+	service-port => 80,
+	impl-name => Apache HTTP Server,
+	impl-version => 2.4.23,
+	ifmap-user => ironnmap,
+	ifmap-pass => ironnmap);
+
+# event via OpenVAS
+At 24 do VulnerabilityDetected(
+	ip-address => 10.0.0.11,
+	event-name => CVE-2016-8740 Denial of Service Vulnerability,
+	discoverer-id => ironvas:OpenVASv8.0,
+	event-magnitude => 50,
+	event-confidence => 100,
+	event-significance => important,
+	vulnerability-uri => CVE-2016-8740,
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas);
+
+# At 25 do Break(message => Step 3 - Two Endpoints and users connect and login);
+
+At 26 do IronDhcpEntry(
+	ip => 10.0.0.20,
+	mac => cc:bb:cc:dd:ee:aa,
+	discoverer => irondhcp-dhcp-server,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 27 do InvestigationRequested(
+	device => irondhcp-dhcp-server,
+	mac => cc:bb:cc:dd:ee:aa,
+	qualifier => nmap:openvas,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 28 do IrongenlogFreeradiusConnect(
+	access-request => ar:1,
+	pdp => radius-pdp,
+	ip => 10.0.0.20,
+	mac => cc:bb:cc:dd:ee:aa,
+	device => Google Nexus,
+	role => user:finance,
+	name => Clint,
+	login-success => true,
+	radius-service-name => radius,
+	radius-service-type => pdp,
+	radius-service-port => 1812,
+	ifmap-user => irongenlog-freeradius,
+	ifmap-pass => irongenlog-freeradius);
+	
+At 30 do IronDhcpEntry(
+	ip => 10.0.0.21,
+	mac => cc:bb:cc:dd:ee:bb,
+	discoverer => irondhcp-dhcp-server,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 31 do InvestigationRequested(
+	device => irondhcp-dhcp-server,
+	mac => cc:bb:cc:dd:ee:bb,
+	qualifier => nmap:openvas,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 32 do IrongenlogFreeradiusConnect(
+	access-request => ar:2,
+	pdp => radius-pdp,
+	ip => 10.0.0.21,
+	mac => cc:bb:cc:dd:ee:bb,
+	device => Lenovo Thinkpad,
+	role => admin:it-department,
+	name => Peter,
+	login-success => true,
+	radius-service-name => radius,
+	radius-service-type => pdp,
+	radius-service-port => 1812,
+	ifmap-user => irongenlog-freeradius,
+	ifmap-pass => irongenlog-freeradius);
+
+At 34 do NmapScan(
+	discoverer => nmap,
+	service-type => ssh-server,
+	service-name => ssh-server,
+	service-ip => 10.0.0.21,
+	service-port => 22,
+	impl-name => OpenSSH Server,
+	impl-version => 7.3,
+	ifmap-user => ironnmap,
+	ifmap-pass => ironnmap);
+
+# event via OpenVAS
+At 35 do VulnerabilityDetected(
+	ip-address => 10.0.0.21,
+	event-name => CVE-2016-10009 Remote Code Execution Vulnerability,
+	discoverer-id => ironvas:OpenVASv8.0,
+	event-magnitude => 75,
+	event-confidence => 100,
+	event-significance => critical,
+	vulnerability-uri => CVE-2016-10009,
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas);
+
+#At 36 do Break(message => Step 4 - One endpoint and its user disconnect and logout);
+
+At 37 do UserLogout(
+	access-request => ar:1,
+	role => user:finance,
+	name => Clint,
+	ifmap-user => irongenlog-freeradius,
+	ifmap-pass => irongenlog-freeradius);
+		
+At 38 do DeviceDisconnects(
+	access-request => ar:1,
+	pdp => radius-pdp,
+	mac => cc:bb:cc:dd:ee:aa,
+	ip-address => 10.0.0.20,
+	device => Google Nexus,
+	ifmap-user-pdp => irongenlog-freeradius,
+	ifmap-pass-pdp => irongenlog-freeradius,
+	ifmap-user-dhcp => irondhcp,
+	ifmap-pass-dhcp => irondhcp);
+
+#At 39 do UserLogout(
+#	access-request => ar:2,
+#	role => admin:it-department,
+#	name => Peter,
+#	ifmap-user => irongenlog-freeradius,
+#	ifmap-pass => irongenlog-freeradius);
+		
+#At 40 do DeviceDisconnects(
+#	access-request => ar:2,
+#	pdp => radius-pdp,
+#	mac => cc:bb:cc:dd:ee:bb,
+#	ip-address => 10.0.0.21,
+#	device => Lenovo Thinkpad,
+#	ifmap-user-pdp => irongenlog-freeradius,
+#	ifmap-pass-pdp => irongenlog-freeradius,
+#	ifmap-user-dhcp => irondhcp,
+#	ifmap-pass-dhcp => irondhcp);
+
+At 41 do Break(message => Step 5 - Purge all data);
+
+At 42 do PurgeMetadata(
+	ifmap-user => irongenlog-freeradius,
+	ifmap-pass => irongenlog-freeradius);
+At 42 do PurgeMetadata(
+	ifmap-user => decomap-snort,
+	ifmap-pass => decomap-snort);
+At 42 do PurgeMetadata(
+	ifmap-user => ironnmap,
+	ifmap-pass => ironnmap);
+At 42 do PurgeMetadata(
+	ifmap-user => ironvas,
+	ifmap-pass => ironvas);
+At 42 do PurgeMetadata(
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
+
+At 43 do Break(message => Agenda finished);

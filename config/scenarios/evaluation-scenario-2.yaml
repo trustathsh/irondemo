@@ -8,6 +8,8 @@ projects:
 files:
   - source: agendas/evaluation-scenario-2.txt
     destination: /
+  - source: agendas/evaluation-scenario-2-without-breaks.txt
+    destination: /
   - source: agendas/evaluation-scenario-2-with-manual-component-startup.txt
     destination: /
   - source: irond/publisher.properties
