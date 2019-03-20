@@ -58,12 +58,12 @@ At 13 do IronDhcpEntry(
 	ifmap-user => irondhcp,
 	ifmap-pass => irondhcp);
 
-#At 14 do IronDhcpEntry(
-#	ip => 10.0.0.6,
-#	mac => aa:bb:cc:dd:ee:ee,
-#	discoverer => irondhcp-dhcp-server,
-#	ifmap-user => irondhcp,
-#	ifmap-pass => irondhcp);
+At 14 do IronDhcpEntry(
+	ip => 10.0.0.6,
+	mac => aa:bb:cc:dd:ee:ee,
+	discoverer => irondhcp-dhcp-server,
+	ifmap-user => irondhcp,
+	ifmap-pass => irondhcp);
 
 At 15 do Break(message => Step 1b - Infrastructure self publish - other components);
 	
