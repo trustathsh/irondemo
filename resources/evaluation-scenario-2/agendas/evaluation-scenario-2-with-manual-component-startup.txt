@@ -230,7 +230,7 @@ At 35 do IrongenlogFreeradiusConnect(
 	access-request => ar:2,
 	pdp => radius-pdp,
 	ip => 10.0.0.23,
-	mac => cc:bb:cc:dd:ee:aa,
+	mac => cc:bb:cc:dd:ee:bb,
 	device => Google Nexus,
 	role => user:finance,
 	name => Alice,
