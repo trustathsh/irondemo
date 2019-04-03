@@ -12,7 +12,7 @@ files:
     destination: /
   - source: agendas/evaluation-scenario-2-with-manual-component-startup.txt
     destination: /
-  - source: agendas/evaluation-scenario-2-automatic-and-stretched-timestamps
+  - source: agendas/evaluation-scenario-2-automatic-and-stretched-timestamps.txt
     destination: /
   - source: irond/publisher.properties
     destination: irond
