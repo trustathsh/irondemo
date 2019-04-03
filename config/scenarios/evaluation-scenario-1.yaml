@@ -11,6 +11,8 @@ files:
     destination: /
   - source: agendas/evaluation-scenario-1-with-manual-component-startup.txt
     destination: /
+  - source: agendas/evaluation-scenario-1-automatic-and-stretched-timestamps
+    destination: /
   - source: irond/publisher.properties
     destination: irond
   - source: irond/basicauthusers.properties
