@@ -4,16 +4,16 @@ At 5 do StartVisitmetaDataservice();
 
 #At 6 do Break(message => Done - MAP Server and VisITMeta Dataservice started - Next - VisITMeta GUI and irondetect and ironloggui);
 
-At 10 do StartVisitmetaGUI();
-
-At 12 do DeviceIp(
+At 9 do DeviceIp(
 	device => irondetect,
 	ip-address => 10.0.0.6,
 	mode => update,
 	ifmap-user => irondetect,
 	ifmap-pass => irondetect);
 
-At 14 do StartIrondetect();
+At 10 do StartIrondetect();
+
+At 14 do StartVisitmetaGUI();
 
 #At 15 do Break(message => Step 1a - Infrastructure self publish - DHCP);
 
