@@ -199,7 +199,7 @@ At 31 do InvestigationRequested(
 
 At 32 do IrongenlogFreeradiusConnect(
 	access-request => ar:1,
-	pdp => radius-pdp,
+	pdp => freeradius-pdp,
 	ip => 10.0.0.20,
 	mac => cc:bb:cc:dd:ee:aa,
 	device => Google Nexus,
@@ -228,7 +228,7 @@ At 34 do InvestigationRequested(
 
 At 35 do IrongenlogFreeradiusConnect(
 	access-request => ar:2,
-	pdp => radius-pdp,
+	pdp => freeradius-pdp,
 	ip => 10.0.0.23,
 	mac => cc:bb:cc:dd:ee:bb,
 	device => Google Nexus,

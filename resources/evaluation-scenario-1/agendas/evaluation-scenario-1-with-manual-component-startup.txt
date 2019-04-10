@@ -167,7 +167,7 @@ At 27 do InvestigationRequested(
 
 At 28 do IrongenlogFreeradiusConnect(
 	access-request => ar:1,
-	pdp => radius-pdp,
+	pdp => freeradius-pdp,
 	ip => 10.0.0.20,
 	mac => cc:bb:cc:dd:ee:aa,
 	device => Google Nexus,
@@ -196,7 +196,7 @@ At 31 do InvestigationRequested(
 
 At 32 do IrongenlogFreeradiusConnect(
 	access-request => ar:2,
-	pdp => radius-pdp,
+	pdp => freeradius-pdp,
 	ip => 10.0.0.21,
 	mac => cc:bb:cc:dd:ee:bb,
 	device => Lenovo Thinkpad,
@@ -243,7 +243,7 @@ At 37 do UserLogout(
 		
 At 38 do DeviceDisconnects(
 	access-request => ar:1,
-	pdp => radius-pdp,
+	pdp => freeradius-pdp,
 	mac => cc:bb:cc:dd:ee:aa,
 	ip-address => 10.0.0.20,
 	device => Google Nexus,
@@ -261,7 +261,7 @@ At 38 do DeviceDisconnects(
 		
 #At 40 do DeviceDisconnects(
 #	access-request => ar:2,
-#	pdp => radius-pdp,
+#	pdp => freeradius-pdp,
 #	mac => cc:bb:cc:dd:ee:bb,
 #	ip-address => 10.0.0.21,
 #	device => Lenovo Thinkpad,
