@@ -14,7 +14,7 @@ database:
   # algorithm to calculate hashes for identifiers, needed for quick lookup in the db
   hashAlgorithm: MD5
   # if erase = true, deletes the database of all connections on the application's startup
-  erase: false
+  erase: true
   cache:
     # true: enable the database cache; false: disable the database cache
     enable: true
