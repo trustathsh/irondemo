@@ -51,7 +51,7 @@ irondetect:
     # Filename of the policy
     filename: /policy/policy.pol
     # Subscribe to graph changes of policy
-    reloadfromgraph: true
+    reloadfromgraph: false
   procedures:
     # Directory for procedure JARs
     directory: procedures
@@ -83,4 +83,4 @@ irondetect:
   # REST service settings
   rest:
     # URL of the REST service
-    url: http://127.0.0.1:8001
+    url: http://0.0.0.0:8001

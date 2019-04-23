@@ -130,7 +130,30 @@ At 62 do InvestigationRequested(
 	ifmap-user => irondhcp,
 	ifmap-pass => irondhcp);
 
-At 70 do NmapScan(
+#At 70 do NmapScan(
+#	discoverer => nmap,
+#	service-type => web-server,
+#	service-name => web-server,
+#	service-ip => 10.0.0.11,
+#	service-port => 80,
+#	impl-name => Apache HTTP Server,
+#	impl-version => 2.4.23,
+#	ifmap-user => ironnmap,
+#	ifmap-pass => ironnmap);
+
+# event via OpenVAS
+#At 75 do VulnerabilityDetected(
+#	ip-address => 10.0.0.11,
+#	event-name => CVE-2016-8740 Denial of Service Vulnerability,
+#	discoverer-id => ironvas:OpenVASv8.0,
+#	event-magnitude => 50,
+#	event-confidence => 100,
+#	event-significance => important,
+#	vulnerability-uri => CVE-2016-8740,
+#	ifmap-user => ironvas,
+#	ifmap-pass => ironvas);
+
+At 70 do InitVulnerableInfrastructure(
 	discoverer => nmap,
 	service-type => web-server,
 	service-name => web-server,
@@ -138,20 +161,12 @@ At 70 do NmapScan(
 	service-port => 80,
 	impl-name => Apache HTTP Server,
 	impl-version => 2.4.23,
-	ifmap-user => ironnmap,
-	ifmap-pass => ironnmap);
-
-# event via OpenVAS
-At 75 do VulnerabilityDetected(
-	ip-address => 10.0.0.11,
-	event-name => CVE-2016-8740 Denial of Service Vulnerability,
-	discoverer-id => ironvas:OpenVASv8.0,
-	event-magnitude => 50,
-	event-confidence => 100,
-	event-significance => important,
-	vulnerability-uri => CVE-2016-8740,
-	ifmap-user => ironvas,
-	ifmap-pass => ironvas);
+	vulnerability-type => CVE,
+	vulnerability-value => CVE-2016-8740,
+	ifmap-user-nmap => ironnmap,
+	ifmap-pass-nmap => ironnmap,
+	ifmap-user-vas => ironvas,
+	ifmap-pass-vas => ironvas);
 
 # At 76 do Break(message => Step 3 - Two Endpoints and users connect and login);
 
@@ -213,7 +228,30 @@ At 100 do IrongenlogFreeradiusConnect(
 	ifmap-user => irongenlog-freeradius,
 	ifmap-pass => irongenlog-freeradius);
 
-At 110 do NmapScan(
+#At 110 do NmapScan(
+#	discoverer => nmap,
+#	service-type => ssh-server,
+#	service-name => ssh-server,
+#	service-ip => 10.0.0.21,
+#	service-port => 22,
+#	impl-name => OpenSSH Server,
+#	impl-version => 7.3,
+#	ifmap-user => ironnmap,
+#	ifmap-pass => ironnmap);
+
+# event via OpenVAS
+#At 115 do VulnerabilityDetected(
+#	ip-address => 10.0.0.21,
+#	event-name => CVE-2016-10009 Remote Code Execution Vulnerability,
+#	discoverer-id => ironvas:OpenVASv8.0,
+#	event-magnitude => 75,
+#	event-confidence => 100,
+#	event-significance => critical,
+#	vulnerability-uri => CVE-2016-10009,
+#	ifmap-user => ironvas,
+#	ifmap-pass => ironvas);
+
+At 110 do InitVulnerableInfrastructure(
 	discoverer => nmap,
 	service-type => ssh-server,
 	service-name => ssh-server,
@@ -221,20 +259,12 @@ At 110 do NmapScan(
 	service-port => 22,
 	impl-name => OpenSSH Server,
 	impl-version => 7.3,
-	ifmap-user => ironnmap,
-	ifmap-pass => ironnmap);
-
-# event via OpenVAS
-At 115 do VulnerabilityDetected(
-	ip-address => 10.0.0.21,
-	event-name => CVE-2016-10009 Remote Code Execution Vulnerability,
-	discoverer-id => ironvas:OpenVASv8.0,
-	event-magnitude => 75,
-	event-confidence => 100,
-	event-significance => critical,
-	vulnerability-uri => CVE-2016-10009,
-	ifmap-user => ironvas,
-	ifmap-pass => ironvas);
+	vulnerability-type => CVE,
+	vulnerability-value => CVE-2016-10009,
+	ifmap-user-nmap => ironnmap,
+	ifmap-pass-nmap => ironnmap,
+	ifmap-user-vas => ironvas,
+	ifmap-pass-vas => ironvas);
 
 #At 116 do Break(message => Step 4 - One endpoint and its user disconnect and logout);
 
